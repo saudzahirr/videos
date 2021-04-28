@@ -78,7 +78,7 @@ class CubicFormula(Scene):
         self.play(Write(ted2),Write(ted3),Write(ted),run_time=8)
         self.wait(2)
         self.play(FadeOut(ted3),run_time=0.3)
-        texts = Text("See the similarity and symmetry!").scale(0.5).to_edge(5.5*UP).set_color_by_gradient(YELLOW)
+        texts = Text("See the similarity and symmetry!").scale(0.5).to_edge(5.5*UP).set_color(YELLOW)
         self.play(Write(texts),run_time=3)
         self.wait(2)
         quad = MathTex("ax^{2} + bx + c = 0").to_edge(3*UP)
