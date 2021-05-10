@@ -54,9 +54,9 @@ class PascalTriangle(Scene):
         #binomial theorem.
         
         binomial = Tex(r"Binomial Theorem").set_color(BLUE).to_edge(UP)
-        binomial_theorem = MathTex("(a+b)^{n} = \\sum_{k=0}^{n} \\binom{n}{k}a^{n-k}b^{k}").set_color(TEAL).to_edge(2*UP)
-        binomial2 = SurroundingRectangle(binomial_theorem)
-        eq2 = MathTex("a \\ + \\ b").to_edge(4*UP)
+        binomial_theorem = MathTex("(a+b)^{n} = \\sum_{k=0}^{n} \\binom{n}{k}a^{n-k}b^{k}").to_edge(5*UP).scale(1.2)
+        frame = SurroundingRectangle(binomial_theorem,color=TEAL)
+        eq2 = MathTex("a \\ + \\ b").to_edge(3*UP)
         eq3 = MathTex("a^{2} \\ + \\  2ab \\ + \\ b^{2}").next_to(eq2,DOWN)
         eq4 = MathTex("a^{3} \\ + \\  3a^{2}b \\ + \\ 3ab^{2} \\ + \\ b^{3}").next_to(eq3,DOWN)
         eq5 = MathTex("a^{4} \\ + \\  4a^{3}b \\ + \\ 6a^{2}b^{2} \\ + \\ 4ab^{3} \\ + \\ b^{4}").next_to(eq4,DOWN)
@@ -72,7 +72,13 @@ class PascalTriangle(Scene):
         )
         self.play(Write(binomial_theorem),run_time=3)
         self.wait(1)
-        self.play(Create(binomial2))
+        self.play(Create(frame))
+        self.wait(0.25)
+        self.play(FadeOut(frame),run_time=1)
+        self.wait(1)
+        self.play(FadeOut(binomial_theorem))
+        self.wait(1)
+
         self.play(
             Write(theorem),
             run_time=10
@@ -86,4 +92,8 @@ class PascalTriangle(Scene):
         self.play(Write(see),
                 run_time=6
         )
+        self.wait(2)
+        self.play(FadeOut(see),run_time=0.5)
+        self.wait(1)
+        self.play(FadeOut(theorem),FadeOut(binomial))
         self.wait(2)
