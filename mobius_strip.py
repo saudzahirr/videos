@@ -2,10 +2,7 @@ from manim import *
 
 class ThreeD(ThreeDScene):
     def construct(self):
-
-        circle2 = Circle(radius=0.25,fill_color=BLUE_A,stroke_color=WHITE,stroke_width=1.3,fill_opacity=0.2).to_edge(0.5*DOWN+0.7*RIGHT)
-        title2 = MathTex("\\alpha").to_edge(0.8*DOWN+0.9*RIGHT)
-
+        
         axes = ThreeDAxes()
         self.set_camera_orientation(phi=75 * DEGREES, theta=120 * DEGREES)
         
