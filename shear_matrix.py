@@ -3,12 +3,7 @@ from manim import *
 class LinearTransformation(LinearTransformationScene):
 
     def construct(self):
-
-        #LOGO
-        circle1 = Circle(radius=0.25,fill_color=BLUE_A,stroke_color=WHITE,stroke_width=1.3,fill_opacity=0.2).to_edge(0.5*DOWN+0.7*RIGHT)
-        title1 = MathTex("\\alpha").to_edge(0.8*DOWN+0.9*RIGHT)
-        self.add(circle1,title1)
-
+        
         vector1 = Vector([1,2])
         vector1.set_color(RED_B)
         vtext1 = MathTex("\\vec{u}").next_to(vector1,UP)
