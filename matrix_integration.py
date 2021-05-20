@@ -1,19 +1,28 @@
 from manim import *
 
-class MatrixTransformation(ThreeDScene):
+class Title(ThreeDScene):
     def construct(self):
+
+        circle1 = Circle(radius=1,fill_color=BLUE_A,stroke_color=WHITE,stroke_width=1.3,fill_opacity=0.2)
+        title1 = MathTex("\\alpha").scale(4.5)
+        name = Text("aljabrak").to_edge(4*DOWN)
+        self.add_fixed_in_frame_mobjects(circle1,title1,name)
+        self.play(Create(circle1),Write(title1),Write(name), run_time=5)
+        self.wait(2)
+
+        circle2 = Circle(radius=0.25,fill_color=BLUE_A,stroke_color=WHITE,stroke_width=1.3,fill_opacity=0.2).to_edge(0.5*DOWN+0.7*RIGHT)
+        title2 = MathTex("\\alpha").to_edge(0.8*DOWN+0.9*RIGHT)
+        self.play(Transform(circle1,circle2),Transform(title1,title2),FadeOut(name),run_time=1)
 
         label = Text("Matrix Integration \n \t \t and \n Matrix Function.")
         label.set_color(BLUE)
         label.scale(0.7)
-        label.to_edge(UP+LEFT)
-
 
         label_eq = MathTex("\\int \\mathbf{A}(t) dt = \\left [ \\int a_{ij}(t) dt \\right ]")
         label_eq.scale(0.8)
         label_eq.next_to(label,2*DOWN)
 
-        title = VGroup(label,label_eq)
+        title = VGroup(label,label_eq).to_edge(4*UP+4*LEFT)
 
         self.add_fixed_in_frame_mobjects(title)
 
@@ -39,13 +48,16 @@ class MatrixTransformation(ThreeDScene):
         cube = Cube(side_length=1.2, fill_color=BLUE, stroke_width=2, fill_opacity=0.1)
         cube.set_stroke(BLUE)
 
-        scale_cube = ApplyMatrix(M1, cube)
-
         self.play(
-            FadeIn(title),
+            Write(title),
+            run_time = 5
+        )
+        self.wait(0.25)
+
+        scale_cube = ApplyMatrix(M1, cube)
+        self.play(
             scale_cube,
         )
-
         self.wait(2)
 
         cube_to_plane = ApplyMatrix(M2,cube)
@@ -53,18 +65,28 @@ class MatrixTransformation(ThreeDScene):
         self.play(
             cube_to_plane,
         )
-
         self.wait(2)
+
         self.play(
             FadeOut(title),
             run_time = 0.5
         )
-        self.wait()
+        self.wait(0.5)
         self.clear()
+        self.set_camera_orientation(phi=55 * DEGREES, theta=-45 * DEGREES)
+        circle3 = Circle(radius=0.25,fill_color=BLUE_A,stroke_color=WHITE,stroke_width=1.3,fill_opacity=0.2).to_edge(0.5*DOWN+0.7*RIGHT)
+        title3 = MathTex("\\alpha").to_edge(0.8*DOWN+0.9*RIGHT)
+        self.add_fixed_in_frame_mobjects(circle3,title3)
+        self.add(circle3,title3)
         self.wait(1)
 
 class MatrixIntegration(Scene):
     def construct(self):
+        #LOGO
+        circle2 = Circle(radius=0.25,fill_color=BLUE_A,stroke_color=WHITE,stroke_width=1.3,fill_opacity=0.2).to_edge(0.5*DOWN+0.7*RIGHT)
+        title2 = MathTex("\\alpha").to_edge(0.8*DOWN+0.9*RIGHT)
+        self.add(circle2,title2)
+        self.wait(1)
 
         matrix_ = Text("What is a Matrix Function?")
         matrix_.scale(0.8)
