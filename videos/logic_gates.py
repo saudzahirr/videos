@@ -1,6 +1,6 @@
 from manim import *
 
-class Xor_Gate(Scene):
+class Logic_Gate(Scene):
     def construct(self):
         #LOGO
         circle = Circle(radius=0.25,fill_color=BLUE_A,stroke_color=WHITE,stroke_width=1.3,fill_opacity=0.2)
