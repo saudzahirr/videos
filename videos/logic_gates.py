@@ -53,7 +53,7 @@ class Logic_Gate(Scene):
             ],
             include_outer_lines=True)
         not_table.scale(0.5)
-        not_table.next_to(buffer_table, 10 * RIGHT)
+        not_table.next_to(buffer_table, 5 * RIGHT)
 
         or_table = MobjectTable(
             [
@@ -66,7 +66,7 @@ class Logic_Gate(Scene):
             ],
             include_outer_lines=True)
         or_table.scale(0.5)
-        or_table.next_to(not_table, 10 * RIGHT)
+        or_table.next_to(not_table, 5 * RIGHT)
 
         and_table = MobjectTable(
             [
@@ -79,7 +79,7 @@ class Logic_Gate(Scene):
             ],
             include_outer_lines=True)
         and_table.scale(0.5)
-        and_table.next_to(or_table, 8 * RIGHT)
+        and_table.next_to(or_table, 5 * RIGHT)
 
         nor_table = MobjectTable(
             [
@@ -92,7 +92,7 @@ class Logic_Gate(Scene):
             ],
             include_outer_lines=True)
         nor_table.scale(0.5)
-        nor_table.next_to(and_table, 8 * RIGHT)
+        nor_table.next_to(and_table, 5 * RIGHT)
 
         nand_table = MobjectTable(
             [
@@ -105,7 +105,7 @@ class Logic_Gate(Scene):
             ],
             include_outer_lines=True)
         nand_table.scale(0.5)
-        nand_table.next_to(nor_table, 8 * RIGHT)
+        nand_table.next_to(nor_table, 5 * RIGHT)
 
         xor_table = MobjectTable(
             [
@@ -118,7 +118,7 @@ class Logic_Gate(Scene):
             ],
             include_outer_lines=True)
         xor_table.scale(0.5)
-        xor_table.next_to(nand_table, 8 * RIGHT)
+        xor_table.next_to(nand_table, 5 * RIGHT)
 
         xnor_table = MobjectTable(
             [
@@ -131,20 +131,31 @@ class Logic_Gate(Scene):
             ],
             include_outer_lines=True)
         xnor_table.scale(0.5)
-        xnor_table.next_to(xor_table, 8 * RIGHT)
+        xnor_table.next_to(xor_table, 5 * RIGHT)
 
         gates = VGroup(buffer_table, not_table, or_table, and_table, nor_table, nand_table, xor_table, xnor_table)
-        gates.next_to(ORIGIN, 10 * RIGHT)
+        gates.next_to(ORIGIN, 5 * RIGHT)
         self.add(gates)
+        self.add(Tex(r"\large{Logic Gates}").scale(1.5).to_edge(UP))
 
         for gate in gates:
-            self.play(
-                gates.animate.shift(5 * LEFT),
-                run_time=2
-            )
-            self.play(
-                Indicate(gate, scale_factor=1.3),
-                run_time=3
-            )
-            self.wait(2)
-        self.wait()
+            if gate == gates[0] or gate == gates[1]:
+                self.play(
+                    gates.animate.shift( ( len(gate) - 4 ) * LEFT),
+                    run_time=2
+                )
+                self.play(
+                    Indicate(gate),
+                    run_time=3
+                    )
+                self.wait(2)
+            else:
+                self.play(
+                    gates.animate.shift( ( len(gate) - 7 ) * LEFT),
+                    run_time=2
+                )
+                self.play(
+                    Indicate(gate),
+                    run_time=3
+                    )
+                self.wait(2) 
