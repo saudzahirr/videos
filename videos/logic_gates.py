@@ -136,26 +136,37 @@ class Logic_Gate(Scene):
         gates = VGroup(buffer_table, not_table, or_table, and_table, nor_table, nand_table, xor_table, xnor_table)
         gates.next_to(ORIGIN, 5 * RIGHT)
         self.add(gates)
-        self.add(Tex(r"\large{Logic Gates}").scale(1.5).to_edge(UP))
+        self.add(Tex(r"\large{Logic Gates}").set_color(BLUE).scale(1.5).to_edge(UP))
 
         for gate in gates:
-            if gate == gates[0] or gate == gates[1]:
+            if gate == gates[0]:
                 self.play(
-                    gates.animate.shift( ( len(gate) - 4 ) * LEFT),
+                    gates.animate.shift(3.5 * LEFT),
                     run_time=2
                 )
                 self.play(
-                    Indicate(gate),
-                    run_time=3
-                    )
+                    Indicate(gate, run_time=3.5)
+                )
                 self.wait(2)
+
+            elif gate == gates[1]:
+                self.play(
+                    gates.animate.shift(5.5 * LEFT),
+                    run_time=2
+                )
+                self.play(
+                    Indicate(gate, run_time=3.5)
+                )
+                self.wait(2)
+            
             else:
                 self.play(
-                    gates.animate.shift( ( len(gate) - 7 ) * LEFT),
+                    gates.animate.shift(7 * LEFT),
                     run_time=2
                 )
                 self.play(
-                    Indicate(gate),
-                    run_time=3
-                    )
-                self.wait(2) 
+                    Indicate(gate, run_time=3.5)
+                )
+                self.wait(2)
+
+        self.wait()
