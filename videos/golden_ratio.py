@@ -85,10 +85,10 @@ class GoldenRatio(Scene):
             "x^{2} - x - 1 = 0",
         )
         mean = MathTex(
-            "x  = { {-1 \\pm \\sqrt{5}}\\over 2 } \\\\",
-            "\\left( d \\over a \\right) = { {-1 + \\sqrt{5}}\\over 2 } \\\\",
+            "x  = { {1 \\pm \\sqrt{5}}\\over 2 } \\\\",
+            "\\left( d \\over a \\right) = { {1 + \\sqrt{5}}\\over 2 } \\\\",
             "\\text{\\large{Golden Mean!}} \\\\",
-            "\\phi = { {-1 + \\sqrt{5}}\\over 2 }"
+            "\\phi = { {1 + \\sqrt{5}}\\over 2 }"
         )
         proof[0:2].scale(0.75)
         proof.to_edge(6*RIGHT + 4*UP)
