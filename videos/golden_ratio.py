@@ -1,5 +1,7 @@
 from manim import *
+from logo import *
 from thumbnail import *
+
 
 class GoldenRatio(Scene):
     def construct(self):
@@ -21,7 +23,7 @@ class GoldenRatio(Scene):
         circle.scale(2)
         self.play(
             Write(circle),
-            run_time = 2
+            run_time = 3
         )
         self.wait()
 
@@ -31,8 +33,8 @@ class GoldenRatio(Scene):
         )
         self.wait()
 
-        ptolmey_theorem = Tex(
-            r"\large{Ptolmey's Theorem}" "\\\\",
+        ptolemy_theorem = Tex(
+            r"\large{Ptolemy's Theorem}" "\\\\",
             r"\tiny{..............}" "\\\\",
             r"\small{\emph{If a quadrilateral is}}" "\\\\",
             r"\emph{inscribable in a circle then}" "\\\\",
@@ -43,20 +45,20 @@ class GoldenRatio(Scene):
             r"\tiny{..........}" "\\\\",
             r"\large{$\overline{\text{AC}}\cdot\overline{\text{BD}} = \overline{\text{AB}}\cdot\overline{\text{CD}} + \overline{\text{BC}}\cdot\overline{\text{AD}}$}"
         )
-        ptolmey_theorem.to_edge(RIGHT)
-        ptolmey_theorem[0].set_color(BLUE)
-        ptolmey_theorem[1].set_color(BLACK)
-        ptolmey_theorem[8].set_color(BLACK)
+        ptolemy_theorem.to_edge(RIGHT)
+        ptolemy_theorem[0].set_color(BLUE)
+        ptolemy_theorem[1].set_color(BLACK)
+        ptolemy_theorem[8].set_color(BLACK)
 
         self.play(
-            FadeIn(ptolmey_theorem),
+            FadeIn(ptolemy_theorem),
             run_time = 2
         )
-        self.wait()
+        self.wait(3)
 
         self.play(
-            FadeOut(ptolmey_theorem[0:8]),
-            ptolmey_theorem[9].animate.scale(0.75).shift(5*UP),
+            FadeOut(ptolemy_theorem[0:8]),
+            ptolemy_theorem[9].animate.scale(0.75).shift(5*UP),
             run_time = 1.5
         )
         self.wait(0.5)
@@ -64,10 +66,10 @@ class GoldenRatio(Scene):
         quote = Tex(r"Since the pentagon has equal side lengths!")
         quote.scale(0.75)
         quote.set_color(YELLOW)
-        quote.next_to(ptolmey_theorem[9], DOWN)
+        quote.next_to(ptolemy_theorem[9], DOWN)
         self.play(
             Write(quote),
-            run_time = 3
+            run_time = 3.5
         )
         self.wait()
 
@@ -104,25 +106,29 @@ class GoldenRatio(Scene):
         for words in proof[2:]:
             self.play(
                 Write(words),
+                lag_ratio = 0.35,
                 run_time = len(words)/3
             )
-        self.wait(2)
+            self.wait(2)
+        self.wait(1)
 
         self.play(
             FadeOut(proof[0:5]),
-            proof[5].animate.next_to(ptolmey_theorem[9], 2*DOWN)
+            proof[5].animate.next_to(ptolemy_theorem[9], 2*DOWN)
         )
         self.wait()
 
         for words in mean:
             self.play(
                 Write(words),
+                lag_ratio = 0.35,
                 run_time = len(words)/3
             )
-        self.wait()
+            self.wait(2)
 
         self.play(
-            Wiggle(mean[1])
+            Wiggle(mean[1]),
+            run_time = 2
         )
         self.wait()
         self.clear()
