@@ -38,7 +38,7 @@ def get_image_bits(image, bit_height=0.15/2, buff=MED_SMALL_BUFF):
     return bits
 
 
-class Neptune(Scene):
+class Voyager2(Scene):
     def construct(self):
         logo(self)
         bits = get_bit_grid(40, 33, height=6)
@@ -166,6 +166,152 @@ class Neptune(Scene):
         self.wait(3)
         self.clear()
 
+        
+        
+        
+class History(Scene):
+    def construct(self):
+        thumbnail(self)
+
+        dated_events = [
+            {
+                "date" : 1940, 
+                "text": "Richard Hamming invented \\\\ codes to investigate \\\\ automatic error-correction.",
+                "picture" : "Bell_Relay_Computer"
+            }
+        ]
+        speical_dates = [2021] + [
+            obj["date"] for obj in dated_events
+        ]
+        centuries = list(range(1850, 2050, 10))
+        timeline = NumberLine(
+            (centuries[0], centuries[-1], 2),
+            numbers_with_elongated_ticks=centuries,
+        )
+        timeline.add_numbers(centuries)
+        centers = [
+            Point(timeline.number_to_point(year))
+            for year in speical_dates
+        ]
+        timeline.add(*centers)
+        timeline.shift(-centers[0].get_center())
+
+        self.add(timeline)
+        self.wait()
+        run_times = iter([3, 1])
+        for point, event in zip(centers[1:], dated_events):
+
+            clock = Circle(radius = 2, color = WHITE)
+            clock.add(Dot(ORIGIN))
+
+            for vect in compass_directions(12):
+                clock.add(Line(1.8*vect, 2*vect, color = WHITE))
+
+            hour_hand = Line(ORIGIN, UP)
+            minute_hand = Line(ORIGIN, 1.5*UP)
+            clock.add(hour_hand, minute_hand)
+            hour_hand.get_center = lambda : clock.get_center()
+            minute_hand.get_center = lambda : clock.get_center()
+            clock.scale(0.5)
+            clock.to_edge(2*RIGHT+DOWN)
+            self.add(clock)
+
+            self.play(
+                Rotating(hour_hand, radians = -2*np.pi, about_point = clock.get_center(), run_time = 2),
+                Rotating(minute_hand, radians = -12*2*np.pi, about_point = clock.get_center(), run_time = 2),    
+                ApplyMethod(
+                timeline.shift, -point.get_center(),
+                run_time = 4,
+                rate_func = smooth)
+            )
+
+            event_mob = Tex(event["text"])
+            event_mob.shift(2*LEFT+2*UP)
+            date_mob = Tex(str(event["date"]) + str('s'))
+            date_mob.scale(0.5)
+            date_mob.shift(1*DOWN)
+            picture = ImageMobject(event["picture"], invert = False)
+            picture.scale(0.45)
+            picture.add(Tex("Model V Relay Computers.").set_color(YELLOW).scale(0.5).next_to(picture, 0.5*DOWN))
+            picture.next_to(event_mob, RIGHT)
+            line = Arrow(event_mob.get_bottom(), 0.2*UP)
+            self.play(
+                FadeIn(event_mob),
+                FadeIn(line),
+                FadeIn(date_mob)
+            )
+            self.play(FadeIn(picture), run_time = 2)
+            self.wait(2)
+            self.play(*list(map(FadeOut, [event_mob, date_mob, line, picture])))
+        self.wait(1)
+        self.remove(clock)
+        self.remove(timeline)
+
+
+        p1 = ImageMobject("entropy-1")
+        p1.scale(0.85)
+        p2 = ImageMobject("entropy-2")
+        p2.scale(0.85)
+        p2.next_to(p1, 0.25 * DOWN)
+        paper = Group(p1, p2)
+        paper.to_edge(8 * UP)
+        self.add(paper)
+        self.wait(2)
+        self.play(
+            paper.animate.shift(25 * UP),
+            run_time = 6
+        )
+        self.wait(2)
+        self.play(
+            paper.animate.shift(15 * UP),
+            run_time = 4
+        )
+        self.wait(2)
+        self.play(
+            FadeOut(paper)
+        )
+        self.wait(0.1)
+
+        hamming_image = ImageMobject("Richard_Hamming")
+        hamming_image.scale(2.3)
+        hamming_name = Tex("\\large Richard Hamming")
+        hamming_name.match_width(hamming_image)
+        hamming_image.add(SurroundingRectangle(hamming_image, color = GREY))
+        hamming_name.next_to(hamming_image, DOWN, MED_SMALL_BUFF)
+        hamming = Group(hamming_image, hamming_name)
+        hamming.to_corner(UL)
+
+        bell_logo = SVGMobject("BellTelephoneLaboratories")
+        bell_logo.scale(1.5)
+        bell_logo.to_edge(5*RIGHT+UP)
+
+        bell_system = Tex(r"Bell Telephone Laboratories.")
+        bell_system.next_to(bell_logo, DOWN)
+        bell_logo.add(bell_system)
+
+        punchcard = SVGMobject("punch-card")
+        punchcard.set_stroke(width=0)
+        punchcard.set_opacity(0.75)
+        punchcard.scale(1.35)
+        punchcard.next_to(bell_logo, DOWN)
+
+        self.play(
+            LaggedStartMap(FadeIn, hamming),
+            Write(bell_logo),
+            rate_func = smooth,
+            run_time = 5
+        )
+        self.wait()
+        self.play(
+            FadeIn(punchcard[0]),
+            Write(punchcard[1:], lag_ratio=0.5, run_time=10)
+        )
+        self.wait(3)
+        self.play(
+            FadeOut(hamming, bell_logo, punchcard),
+            run_time = 0.5
+        )
+        
 
 
         
