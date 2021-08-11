@@ -1,9 +1,13 @@
+"""Hello, world! = 01001000  01100101  01101100  01101100  01101111  00101100"""
+"""00100000  01110111  01101111  01110010  01101100  01100100  00100001"""
+
 from manim import *
 from numpy import *
 from random import *
 from itertools import *
 from logo import *
 from thumbnail import *
+
 
 
 def get_bit_grid(n_rows, n_cols, bits=None, buff=MED_SMALL_BUFF, height=4):
@@ -166,9 +170,10 @@ class Voyager2(Scene):
         self.wait(3)
         self.clear()
 
-        
-        
-        
+
+
+
+
 class History(Scene):
     def construct(self):
         thumbnail(self)
@@ -177,7 +182,7 @@ class History(Scene):
             {
                 "date" : 1940, 
                 "text": "Richard Hamming invented \\\\ codes to investigate \\\\ automatic error-correction.",
-                "picture" : "Bell_Relay_Computer"
+                "picture" : "Bell_Relay_Computer.png"
             }
         ]
         speical_dates = [2021] + [
@@ -217,12 +222,12 @@ class History(Scene):
             self.add(clock)
 
             self.play(
-                Rotating(hour_hand, radians = -2*np.pi, about_point = clock.get_center(), run_time = 2),
-                Rotating(minute_hand, radians = -12*2*np.pi, about_point = clock.get_center(), run_time = 2),    
+                Rotating(hour_hand, radians = 2*np.pi, about_point = clock.get_center(), run_time = 2),
+                Rotating(minute_hand, radians = 12*2*np.pi, about_point = clock.get_center(), run_time = 2),    
                 ApplyMethod(
                 timeline.shift, -point.get_center(),
-                run_time = 4,
-                rate_func = smooth)
+                run_time = 3,
+                rate_func = linear)
             )
 
             event_mob = Tex(event["text"])
@@ -246,33 +251,36 @@ class History(Scene):
         self.wait(1)
         self.remove(clock)
         self.remove(timeline)
+        self.clear()
 
 
-        p1 = ImageMobject("entropy-1")
+        p1 = ImageMobject("page1.jpg")
         p1.scale(0.85)
-        p2 = ImageMobject("entropy-2")
+        p2 = ImageMobject("page2.jpg")
         p2.scale(0.85)
         p2.next_to(p1, 0.25 * DOWN)
         paper = Group(p1, p2)
-        paper.to_edge(8 * UP)
+        paper.to_edge(2 * UP)
         self.add(paper)
         self.wait(2)
         self.play(
-            paper.animate.shift(25 * UP),
-            run_time = 6
+            paper.animate.shift(22 * UP),
+            run_time = 10
         )
-        self.wait(2)
+        self.wait(1)
         self.play(
-            paper.animate.shift(15 * UP),
-            run_time = 4
+            paper.animate.shift(12 * UP),
+            run_time = 8
         )
-        self.wait(2)
+        self.wait(1)
         self.play(
             FadeOut(paper)
         )
+
+        thumbnail(self)
         self.wait(0.1)
 
-        hamming_image = ImageMobject("Richard_Hamming")
+        hamming_image = ImageMobject("Richard_Hamming.jpg")
         hamming_image.scale(2.3)
         hamming_name = Tex("\\large Richard Hamming")
         hamming_name.match_width(hamming_image)
@@ -311,10 +319,11 @@ class History(Scene):
             FadeOut(hamming, bell_logo, punchcard),
             run_time = 0.5
         )
-        
 
 
-        
+
+
+
 class BenEater(Scene):
     def construct(self): 
         thumbnail(self)
