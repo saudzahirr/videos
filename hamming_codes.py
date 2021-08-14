@@ -356,3 +356,98 @@ class BenEater(Scene):
         )
         self.wait(4)
         self.clear()
+
+      
+    
+
+    
+def disk():
+    inner_r = 1
+    outer_r = 3
+    annulus = Annulus(
+        inner_radius=inner_r * 0.90,
+        outer_radius=outer_r * 1.02,
+        fill_color=GREY_D,
+    )
+    annulus.set_fill(color=[RED, YELLOW_B, GREEN_B, BLUE_B, WHITE], opacity=0.5)
+    annulus.set_gloss(0.5)
+    annulus.add(
+        Annulus(
+            inner_radius=inner_r * 0.50,
+            outer_radius=outer_r * 0.30,
+            fill_color=GREY_D,
+            )
+        )
+    ring = Annulus(
+            inner_radius=0.9,
+            outer_radius=1.0,
+            fill_color=GREY_D,
+            fill_opacity=0.5
+            )
+    annulus.add(ring)
+    dvd = SVGMobject("dvd")
+    dvd.scale(0.5)
+    dvd.set_color(GREY_D)
+    dvd.set_opacity(0.5)
+    dvd.next_to(ring, 2 * DOWN)
+    annulus.add(dvd)
+
+    cd = annulus.scale(0.75)
+    return cd
+
+class ReedSolomonCodes(Scene):
+    def construct(self):
+        thumbnail(self)
+
+        title = Tex("Reed-Solomon Codes.")
+        title.scale(1.5)
+        title.to_edge(UP)
+        self.play(
+            FadeIn(title)
+        )
+        self.wait()
+
+        qr_code = SVGMobject("qr")
+        qr_code.scale(0.75)
+        qr_code.set_color(WHITE)
+        barcode = SVGMobject("barcode")
+        barcode.scale(0.75)
+        barcode.set_color(WHITE)
+        cd = disk()
+
+        identifier_codes = VGroup(qr_code, barcode)
+        identifier_codes.arrange(2 * DOWN)
+        identifier_codes.next_to(cd, 2 * LEFT)
+
+        self.play(
+            GrowFromCenter(cd, run_time = 2),
+        )
+        self.wait()
+
+        for code in identifier_codes:
+            self.play(
+                FadeIn(code)
+            )
+            self.wait(0.5)
+        self.wait()
+
+        voyager2 = ImageMobject("voyager2.jpg")
+        voyager2.scale(0.70)
+        voyager2.next_to(cd, 2 * RIGHT)
+
+        screen = SurroundingRectangle(voyager2, color = GREY)
+        screen.add(Tex(r"Voyager 2.").set_color(BLUE).next_to(screen, UP))
+        voyager2.add(screen)
+
+        self.play(
+            FadeIn(voyager2),
+        )
+        self.wait(0.75)
+
+        self.play(
+            VFadeInThenOut(
+                Write(Tex(r"Cyclic Polynomial Codes!").set_color(YELLOW).next_to(cd, 2 * DOWN)),
+                run_time = 6
+            )
+        )
+        self.wait()
