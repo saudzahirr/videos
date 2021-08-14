@@ -388,7 +388,7 @@ def disk():
     dvd = SVGMobject("dvd")
     dvd.scale(0.5)
     dvd.set_color(GREY_D)
-    dvd.set_opacity(0.5)
+    dvd.set_opacity(0.65)
     dvd.next_to(ring, 2 * DOWN)
     annulus.add(dvd)
 
@@ -422,14 +422,14 @@ class ReedSolomonCodes(Scene):
         self.play(
             GrowFromCenter(cd, run_time = 2),
         )
-        self.wait()
+        self.wait(3)
 
         for code in identifier_codes:
             self.play(
                 FadeIn(code)
             )
             self.wait(0.5)
-        self.wait()
+        self.wait(2)
 
         voyager2 = ImageMobject("voyager2.jpg")
         voyager2.scale(0.70)
@@ -442,12 +442,18 @@ class ReedSolomonCodes(Scene):
         self.play(
             FadeIn(voyager2),
         )
-        self.wait(0.75)
+        self.wait(2)
 
         self.play(
             VFadeInThenOut(
-                Write(Tex(r"Cyclic Polynomial Codes!").set_color(YELLOW).next_to(cd, 2 * DOWN)),
-                run_time = 6
+                Tex(r"Cyclic Polynomial Codes!").set_color(YELLOW).next_to(cd, 2 * DOWN),
+                run_time = 10
             )
         )
-        self.wait()
+        self.wait(2)
+
+        self.play(
+            FadeOut(title, cd, identifier_codes, voyager2),
+            run_time = 1
+        )
+        self.wait(0.125)
