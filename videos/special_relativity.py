@@ -3,6 +3,26 @@ from manim import *
 
 class Relativity(MovingCameraScene):
     def construct(self):
+        rest_frame = self.camera.frame
+
+        t_tracker = VectorizedPoint()
+        k_tracker = VectorizedPoint(2*RIGHT)
+        always_shift(t_tracker, RIGHT, 1)
+
+        moving_frame = ScreenRectangle(height = 2)
+        moving_frame.to_edge(RIGHT)
+        always_shift(moving_frame, LEFT, 1)
+        moving_frame_movement = moving_frame
+
+
+        ref_frame1 = Tex("Rest frame")
+        ref_frame1.to_edge(UP)
+        ref_frame2 = Tex("Moving frame")
+        ref_frame2.next_to(moving_frame, UP)
+        ref_frame2_follow = Mobject.add_updater(
+            ref_frame2, lambda m : m.next_to(moving_frame, UP)
+        )
+
         clock = Circle(radius = 2, color = WHITE)
         clock.add(Dot(ORIGIN))
         for vect in compass_directions(12):
@@ -13,24 +33,31 @@ class Relativity(MovingCameraScene):
         minute_hand.get_center = lambda : clock.get_center()
         clock.add(hour_hand, minute_hand)
         clock.scale(0.5)
+        clock.to_edge(LEFT + DOWN)
 
-        rect = Rectangle(height = 2)
-        rect.scale(1.2)
-        clock.add(rect)
-        clock.shift(10 * RIGHT)
-        clock.to_edge(2 * UP)
-
-        moving_clock = always_shift(clock, direction = LEFT, rate = 2)
-        rest_frame = Rectangle(height = 2)
-        rest_frame.scale(1.2)
-        rest_frame.to_edge(2 * DOWN)
-
+        self.add(
+            t_tracker, moving_frame_movement,
+            ref_frame2_follow, ref_frame1,
+            clock
+        )
+        self.add(ref_frame1)
         self.play(
-            moving_clock.animate,
-            rest_frame.animate
+            Rotating(hour_hand, radians = -1*np.pi, about_point = clock.get_center(),run_time = 4),
+            Rotating(minute_hand, radians = -6*2*np.pi, about_point = clock.get_center(), run_time = 4),
+            rate_func = linear,
         )
         self.play(
-            Rotating(hour_hand, radians = -2*np.pi, about_point = clock.get_center(),run_time = 5),
-            Rotating(minute_hand, radians = -12*2*np.pi, about_point = clock.get_center(), run_time = 5),
+            MaintainPositionRelativeTo(
+                rest_frame, moving_frame,
+                run_time = 10
+            ),
+            Rotating(hour_hand, radians = -1*np.pi, about_point = clock.get_center(),run_time = 10),
+            Rotating(minute_hand, radians = -6*2*np.pi, about_point = clock.get_center(), run_time = 10),
+            rate_func = linear,
+        )
+        self.play(
+            #moving_frame.animate.shift(5 * RIGHT),
+            Rotating(hour_hand, radians = -1*np.pi, about_point = clock.get_center(),run_time = 4),
+            Rotating(minute_hand, radians = -6*2*np.pi, about_point = clock.get_center(), run_time = 4),
             rate_func = linear,
         )
