@@ -35,4 +35,4 @@ class ConcaveLens(VMobject):
         self.append_points(arc_2.points)
         self.add(line_up, arc_1, line_down, arc_2)
         self.move_to(ORIGIN)
-        self.set_color(BLUE_A)
+        self.set_color(BLUE_B)
