@@ -1,4 +1,4 @@
-from manim import *
+from manimce import *
 
 class EulerFormula(Scene):
     def construct(self):
