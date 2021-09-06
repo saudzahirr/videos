@@ -1,6 +1,4 @@
-from manim import *
-from logo import *
-from thumbnail import *
+from manimce import *
 
 
 class GoldenRatio(Scene):
