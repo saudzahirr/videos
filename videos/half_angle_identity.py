@@ -1,7 +1,8 @@
-from manim import *
+from manimce import *
 
 class HalfAngleIdentity(Scene):
     def construct(self):
+        logo_transformation(self)
         circle = Circle(radius = 2, color = GREY_B)
         points = circle.get_all_points()
         point = circle.get_top()
@@ -12,8 +13,68 @@ class HalfAngleIdentity(Scene):
         line = Line(start = points[3], end = points[0], color = BLUE_E)
         unit_circle = BraceLabel(diameter, "1", DOWN)
 
+        line_1 = Line(start = points[15], end = points[3], color = BLUE_C)
+        line_2 = Line(start = points[15], end = points[-4], color = BLUE_C)
+        line_3 = Line(start = center, end = points[3], color = YELLOW)
+        line_4 = Line(start = center, end = points[-4], color = YELLOW)
+
         self.play(
             Create(circle),
+        )
+        self.wait()
+        self.play(
+            GrowFromPoint(line_1, points[15]),
+            GrowFromPoint(line_2, points[15]),
+            GrowFromPoint(line_3, center),
+            GrowFromPoint(line_4,center)
+        )
+        self.wait()
+
+        half_angle = Angle(line_2, line_1, radius = 0.4, color = WHITE)
+        angle = Angle(line_4, line_3, radius = 0.5, color = WHITE)
+
+        self.play(
+            Create(half_angle),
+            Create(angle)
+        )
+        self.wait()
+
+        theta = MathTex("\\theta").next_to(half_angle, 0.5 * RIGHT)
+        double_theta = MathTex("2\\theta").next_to(angle, 0.5 * RIGHT)
+
+        self.play(
+            Write(theta),
+            Write(double_theta)
+        )
+        self.wait(2)
+
+        inscribed_angle_theorem = VGroup(
+            circle.copy(),
+            line_1.copy(),
+            line_2.copy(),
+            line_3.copy(),
+            line_4.copy(),
+            half_angle.copy(),
+            angle.copy(),
+            theta.copy(),
+            double_theta.copy()
+        )
+
+        self.play(
+            inscribed_angle_theorem.animate.to_edge(RIGHT)
+        )
+        self.play(
+            inscribed_angle_theorem.animate.scale(0.75),
+            FadeOut(
+                line_1,
+                line_2,
+                line_3,
+                line_4,
+                half_angle,
+                angle,
+                theta,
+                double_theta
+            )
         )
         self.wait()
 
