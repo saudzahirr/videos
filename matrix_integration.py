@@ -1,4 +1,4 @@
-from manim import *
+from manimce import *
 
 class Title(ThreeDScene):
     def construct(self):
