@@ -1,13 +1,19 @@
 from manimce import *
 
-class HalfAngleIdentity(Scene):
+class HalfAngleIdentity(MovingCameraScene):
     def construct(self):
+        frame = self.camera.frame
         logo_transformation(self)
+        theorem = Tex(r"Inscribed Angle Theorem")
+        theorem.scale(1.5)
+        theorem.to_edge(UP)
+
         circle = Circle(radius = 2, color = GREY_B)
         points = circle.get_all_points()
         point = circle.get_top()
         center = circle.get_center()
         diameter = Line(circle.get_left(), circle.get_right(), color = YELLOW)
+        dot = Dot(center, radius = 0.05)
         cricle_radius = Line(circle.get_center(), circle.get_right()),
         chord = Line(start = points[15], end = points[3], color = BLUE_C)
         line = Line(start = points[3], end = points[0], color = BLUE_E)
@@ -21,8 +27,14 @@ class HalfAngleIdentity(Scene):
         self.play(
             Create(circle),
         )
+        self.play(
+            Write(theorem),
+            run_time = 3,
+            lag_ratio = 0.1
+        )
         self.wait()
         self.play(
+            FadeIn(dot),
             GrowFromPoint(line_1, points[15]),
             GrowFromPoint(line_2, points[15]),
             GrowFromPoint(line_3, center),
@@ -40,16 +52,20 @@ class HalfAngleIdentity(Scene):
         self.wait()
 
         theta = MathTex("\\theta").next_to(half_angle, 0.5 * RIGHT)
-        double_theta = MathTex("2\\theta").next_to(angle, 0.5 * RIGHT)
+        double_theta = MathTex("2 \\cdot \\theta").next_to(angle, 0.5 * RIGHT)
 
         self.play(
-            Write(theta),
+            Write(theta)
+        )
+        self.wait(0.75)
+        self.play(
             Write(double_theta)
         )
         self.wait(2)
 
         inscribed_angle_theorem = VGroup(
             circle.copy(),
+            dot.copy(),
             line_1.copy(),
             line_2.copy(),
             line_3.copy(),
@@ -66,6 +82,7 @@ class HalfAngleIdentity(Scene):
         self.play(
             inscribed_angle_theorem.animate.scale(0.75),
             FadeOut(
+                theorem,
                 line_1,
                 line_2,
                 line_3,
@@ -123,6 +140,12 @@ class HalfAngleIdentity(Scene):
         )
         self.wait()
 
+        self.play(
+            frame.animate.shift(4.25 * LEFT),
+            run_time = 2,
+            rate_func = smooth
+        )
+
         angle_theta = theta.copy()
         angle_theta.next_to(triangle[4], 1.5 * LEFT)
         angle_theta.shift(0.1 * UP)
@@ -133,7 +156,28 @@ class HalfAngleIdentity(Scene):
         self.wait()
 
         cos = BraceLabel(triangle[1], "\\mathrm{cos}(\\theta)", DOWN)
+        sin = BraceLabel(triangle[2], "\\mathrm{sin}(\\theta)", LEFT)
         self.play(
-            Write(cos)
+            Write(cos),
+            Write(sin)
+        )
+        self.wait()
+
+        projection = diameter.get_projection(points[3])
+        projection_line = Line(points[15], projection, color = BLUE_D)
+        perpendicular_line = DashedLine(points[3], projection)
+        #projection_point = Point(projection, radius = 0.05)
+
+        self.play(
+            #Create(projection_point),
+            GrowFromPoint(projection_line, projection),
+            GrowFromPoint(perpendicular_line, points[3])
+        )
+        self.wait()
+
+        length_L = BraceLabel(projection_line, "L", DOWN)
+
+        self.play(
+            Transform(unit_circle, length_L)
         )
         self.wait()
