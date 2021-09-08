@@ -237,12 +237,19 @@ class HalfAngleIdentity(MovingCameraScene):
         self.wait()
 
 
-        double_angle = Angle(angled_line, circle_radius, radius = 0.5, color = WHITE)
+        double_angle = Angle(circle_radius, angled_line, radius = 0.5, color = WHITE)
         double_theta = MathTex("2\\theta").next_to(double_angle, 0.5 * RIGHT)
+        double_theta.shift(0.1 * UP)
 
-        radius_length = BraceLabel(radius, "1 \\over 2", DOWN)
-        angled_line_length = BraceBetweenPoints(center, points[3])
-        #angled_line_length.add(MathTex("1 \\over 2").next_to(angle_line_length, 0.5 * LEFT))
+        radius_length = BraceLabel(radius, "\\small{1 \\over 2}", DOWN, label_scale = 0.85)
+        angled_line_length = BraceBetweenPoints(points[3], center)
+        half = MathTex("\\small{1 \\over 2}")
+        half.scale(0.85)
+        #half.add_background_rectangle()
+        half.next_to(angled_line_length, 0.1 * LEFT + 0.1 * UP)
+        half.shift(0.25 * DOWN)
+        half.shift(0.25 * RIGHT)
+        angled_line_length.add(half)
 
         self.play(
             Create(double_angle),
@@ -251,7 +258,16 @@ class HalfAngleIdentity(MovingCameraScene):
         self.wait()
         
         self.play(
-            Write(radius_length),
+            ReplacementTransform(unit_circle, radius_length),
             Write(angled_line_length)
+        )
+        self.wait()
+
+        base = Line(center, projection, color = GREY_BROWN)
+        label_base = BraceLabel(base, "{1 \\over 2}{\\mathrm{cos}(2\\theta)}", DOWN, label_scale = 0.85)
+
+        self.play(
+            GrowFromPoint(base, center),
+            Write(label_base)
         )
         self.wait()
