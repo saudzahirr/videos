@@ -14,7 +14,7 @@ class HalfAngleIdentity(MovingCameraScene):
         center = circle.get_center()
         diameter = Line(circle.get_left(), circle.get_right(), color = YELLOW)
         dot = Dot(center, radius = 0.05)
-        cricle_radius = Line(circle.get_center(), circle.get_right(), color = CHARCOAL)
+        circle_radius = Line(circle.get_center(), circle.get_right(), color = CHARCOAL)
         chord = Line(start = points[15], end = points[3], color = BLUE_C)
         line = Line(start = points[3], end = points[0], color = BLUE_E)
         unit_circle = BraceLabel(diameter, "1", DOWN)
@@ -223,6 +223,7 @@ class HalfAngleIdentity(MovingCameraScene):
         perpendicular = Line(projection, points[3])
         angled_line = Line(circle.get_center(), points[3], color = MELON)
         radius = Line(circle.get_center(), circle.get_left(), color = CHARCOAL)
+        circle_radius = Line(circle.get_center(), circle.get_right(), color = YELLOW)
         unit_circle = BraceLabel(diameter, "1", DOWN)
 
         self.play(
@@ -232,6 +233,7 @@ class HalfAngleIdentity(MovingCameraScene):
             GrowFromPoint(perpendicular, points[3]),
             Create(angled_line)
         )
+        #self.add(circle_radius)
         self.wait()
 
 
@@ -240,7 +242,7 @@ class HalfAngleIdentity(MovingCameraScene):
 
         radius_length = BraceLabel(radius, "1 \\over 2", DOWN)
         angled_line_length = BraceBetweenPoints(center, points[3])
-        angled_line_length.add(MathTex("1 \\over 2").next_to(angle_line_length, 0.5 * LEFT))
+        #angled_line_length.add(MathTex("1 \\over 2").next_to(angle_line_length, 0.5 * LEFT))
 
         self.play(
             Create(double_angle),
