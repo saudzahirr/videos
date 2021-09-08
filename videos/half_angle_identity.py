@@ -14,7 +14,7 @@ class HalfAngleIdentity(MovingCameraScene):
         center = circle.get_center()
         diameter = Line(circle.get_left(), circle.get_right(), color = YELLOW)
         dot = Dot(center, radius = 0.05)
-        cricle_radius = Line(circle.get_center(), circle.get_right()),
+        cricle_radius = Line(circle.get_center(), circle.get_right(), color = CHARCOAL)
         chord = Line(start = points[15], end = points[3], color = BLUE_C)
         line = Line(start = points[3], end = points[0], color = BLUE_E)
         unit_circle = BraceLabel(diameter, "1", DOWN)
@@ -164,20 +164,92 @@ class HalfAngleIdentity(MovingCameraScene):
         self.wait()
 
         projection = diameter.get_projection(points[3])
-        projection_line = Line(points[15], projection, color = BLUE_D)
+        projection_line = Line(points[15], projection, color = DARK_PINK)
         perpendicular_line = DashedLine(points[3], projection)
-        #projection_point = Point(projection, radius = 0.05)
+        projection_point = Dot(projection, radius = 0.05)
 
         self.play(
-            #Create(projection_point),
+            Create(projection_point),
             GrowFromPoint(projection_line, projection),
             GrowFromPoint(perpendicular_line, points[3])
         )
         self.wait()
 
-        length_L = BraceLabel(projection_line, "L", DOWN)
+        length_L = BraceLabel(projection_line, "\\mathrm{cos}^{2}(\\theta)", DOWN)
+        hypotenuse = BraceBetweenPoints(points[3], points[15])
+        hyp = MathTex("\\mathrm{cos}(\\theta)")
+        hyp.add_background_rectangle()
+        hyp.next_to(hypotenuse, 0.25 * UP)
+        hyp.shift(0.35 * DOWN)
+        circle.add(dot, theta, projection_line, perpendicular_line, projection_point, length_L, hypotenuse, hyp)
+        theorem = circle.copy()
+        circle.remove(diameter, chord, line, right_angle, half_angle, half_angle, dot, theta, projection_line, perpendicular_line, projection_point, length_L, hypotenuse, hyp)
 
         self.play(
-            Transform(unit_circle, length_L)
+            Create(hypotenuse, run_time = 2, rate_func = smooth),
+            FadeIn(hyp)
+        )
+        self.wait()
+
+        self.play(
+            ReplacementTransform(unit_circle, length_L)
+        )
+        self.wait()
+
+
+        self.play(
+            frame.animate.shift(9 * RIGHT),
+            run_time = 2,
+            rate_func = smooth
+        )
+        self.play(
+            inscribed_angle_theorem.animate.shift(5 * RIGHT)
+        )
+        self.play(
+            #theorem.animate,
+            theorem.animate.shift(5 * RIGHT)
+        )
+        
+        self.play(
+            FadeOut(
+                perpendicular_line,
+                projection_line, hyp,
+                hypotenuse, length_L
+            )
+        )
+        self.remove(length_L)
+        self.wait(0.5)
+
+        perpendicular = Line(projection, points[3])
+        angled_line = Line(circle.get_center(), points[3], color = MELON)
+        radius = Line(circle.get_center(), circle.get_left(), color = CHARCOAL)
+        unit_circle = BraceLabel(diameter, "1", DOWN)
+
+        self.play(
+            Write(unit_circle),
+            #ReplacementTransform(length_L, unit_circle),
+            GrowFromPoint(radius, circle.get_center()),
+            GrowFromPoint(perpendicular, points[3]),
+            Create(angled_line)
+        )
+        self.wait()
+
+
+        double_angle = Angle(angled_line, circle_radius, radius = 0.5, color = WHITE)
+        double_theta = MathTex("2\\theta").next_to(double_angle, 0.5 * RIGHT)
+
+        radius_length = BraceLabel(radius, "1 \\over 2", DOWN)
+        angled_line_length = BraceBetweenPoints(center, points[3])
+        angled_line_length.add(MathTex("1 \\over 2").next_to(angle_line_length, 0.5 * LEFT))
+
+        self.play(
+            Create(double_angle),
+            Write(double_theta)
+        )
+        self.wait()
+        
+        self.play(
+            Write(radius_length),
+            Write(angled_line_length)
         )
         self.wait()
