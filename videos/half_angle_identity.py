@@ -1,9 +1,49 @@
 from manimce import *
 
 class HalfAngleIdentity(MovingCameraScene):
+    colors = [
+        PINK, RED, YELLOW, GREEN, GREEN_A, BLUE,
+        MAROON_E, MAROON_B, YELLOW, BLUE,
+    ]
+    text = "Geometry WonderLand"
+
     def construct(self):
         frame = self.camera.frame
         logo_transformation(self)
+        
+        word = self.get_geometry_wonder_land_word()
+        word_outlines = word.copy()
+        word_outlines.set_fill(opacity=0)
+        word_outlines.set_stroke(WHITE, 1)
+        colors = list(self.colors)
+        random.shuffle(colors)
+        word_outlines.set_color_by_gradient(*colors)
+        word_outlines.set_stroke(width=5)
+
+        circles = VGroup()
+        for letter in word:
+            circle = Circle()
+            # circle = letter.copy()
+            circle.replace(letter, dim_to_match=1)
+            circle.scale(3)
+            circle.set_stroke(WHITE, 0)
+            circle.set_fill(letter.get_color(), 0)
+            circles.add(circle)
+            circle.target = letter
+
+        self.play(
+            LaggedStartMap(MoveToTarget, circles),
+            run_time=2
+        )
+        self.add(word_outlines, circles)
+        self.play(LaggedStartMap(
+            FadeIn, word_outlines,
+            run_time=3,
+            rate_func=there_and_back,
+        ), Animation(circles))
+        self.wait()
+        self.clear()
+
         theorem = Tex(r"Inscribed Angle Theorem")
         theorem.scale(1.5)
         theorem.to_edge(UP)
@@ -229,7 +269,6 @@ class HalfAngleIdentity(MovingCameraScene):
         self.play(
             Write(unit_circle),
             #ReplacementTransform(length_L, unit_circle),
-            GrowFromPoint(radius, circle.get_center()),
             GrowFromPoint(perpendicular, points[3]),
             Create(angled_line)
         )
@@ -246,9 +285,9 @@ class HalfAngleIdentity(MovingCameraScene):
         half = MathTex("\\small{1 \\over 2}")
         half.scale(0.85)
         #half.add_background_rectangle()
-        half.next_to(angled_line_length, 0.1 * LEFT + 0.1 * UP)
-        half.shift(0.25 * DOWN)
-        half.shift(0.25 * RIGHT)
+        half.move_to(angled_line_length)
+        half.shift(0.5 * UP)
+        half.shift(0.5 * LEFT)
         angled_line_length.add(half)
 
         self.play(
@@ -259,11 +298,12 @@ class HalfAngleIdentity(MovingCameraScene):
         
         self.play(
             ReplacementTransform(unit_circle, radius_length),
+            GrowFromPoint(radius, circle.get_center()),
             Write(angled_line_length)
         )
         self.wait()
 
-        base = Line(center, projection, color = GREY_BROWN)
+        base = Line(center, projection, color = BLUE_B)
         label_base = BraceLabel(base, "{1 \\over 2}{\\mathrm{cos}(2\\theta)}", DOWN, label_scale = 0.85)
 
         self.play(
@@ -271,3 +311,34 @@ class HalfAngleIdentity(MovingCameraScene):
             Write(label_base)
         )
         self.wait()
+
+        self.play(
+            frame.animate.shift(1.8 * DOWN)
+        )
+        self.wait()
+
+        equation = MathTex(
+            "\\mathrm{cos}^{2}(\\theta)", "=", "{1 \\over 2}", "+", "{1 \\over 2}{\\mathrm{cos}(2\\theta)}"
+        )
+        equation.scale(1.5)
+        equation.next_to(theorem, 2 * DOWN)
+
+        self.play(
+            Write(equation)
+        )
+        self.wait()
+    
+
+    def get_geometry_wonder_land_word(self):
+        word = Tex(self.text)
+        word.rotate(-90 * DEGREES)
+        word.scale(0.25)
+        word.shift(3 * RIGHT)
+        word.apply_complex_function(np.exp)
+        word.rotate(90 * DEGREES)
+        word.set_width(9)
+        word.center()
+        word.to_edge(UP)
+        word.set_color_by_gradient(*self.colors)
+        word.set_background_stroke(width=0)
+        return word
