@@ -10,7 +10,6 @@ class HalfAngleIdentity(MovingCameraScene):
     def construct(self):
         frame = self.camera.frame
         logo_transformation(self)
-        
         word = self.get_geometry_wonder_land_word()
         word_outlines = word.copy()
         word_outlines.set_fill(opacity=0)
@@ -218,16 +217,16 @@ class HalfAngleIdentity(MovingCameraScene):
         length_L = BraceLabel(projection_line, "\\mathrm{cos}^{2}(\\theta)", DOWN)
         hypotenuse = BraceBetweenPoints(points[3], points[15])
         hyp = MathTex("\\mathrm{cos}(\\theta)")
-        hyp.add_background_rectangle()
+        #hyp.add_background_rectangle()
         hyp.next_to(hypotenuse, 0.25 * UP)
-        hyp.shift(0.35 * DOWN)
+        hyp.shift(0.38 * DOWN)
         circle.add(dot, theta, projection_line, perpendicular_line, projection_point, length_L, hypotenuse, hyp)
         theorem = circle.copy()
         circle.remove(diameter, chord, line, right_angle, half_angle, half_angle, dot, theta, projection_line, perpendicular_line, projection_point, length_L, hypotenuse, hyp)
 
         self.play(
-            Create(hypotenuse, run_time = 2, rate_func = smooth),
-            FadeIn(hyp)
+            Write(hypotenuse, run_time = 2, rate_func = smooth),
+            Write(hyp)
         )
         self.wait()
 
@@ -321,7 +320,8 @@ class HalfAngleIdentity(MovingCameraScene):
             "\\mathrm{cos}^{2}(\\theta)", "=", "{1 \\over 2}", "+", "{1 \\over 2}{\\mathrm{cos}(2\\theta)}"
         )
         equation.scale(1.5)
-        equation.next_to(theorem, 2 * DOWN)
+        equation.next_to(theorem, 3 * DOWN)
+        equation.shift(LEFT)
 
         self.play(
             Write(equation)
