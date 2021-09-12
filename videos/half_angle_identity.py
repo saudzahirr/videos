@@ -2,15 +2,50 @@ from manimce import *
 
 class HalfAngleIdentity(MovingCameraScene):
     colors = [
-        PINK, RED, YELLOW, GREEN, GREEN_A, BLUE,
-        MAROON_E, MAROON_B, YELLOW, BLUE,
+        BLUE_B, BLUE_C, BLUE_D, BLUE_D
     ]
-    text = "Geometry WonderLand"
+    text = "geometry_wonderland.svg"
 
     def construct(self):
-        frame = self.camera.frame
+        #self.add_sound("heartbeat.wav", time_offset = 6, gain = 1.5)
         logo_transformation(self)
-        word = self.get_geometry_wonder_land_word()
+        frame = self.camera.frame
+        geometry = Circle(radius = 2, color = GREY_BROWN)
+        points = geometry.get_all_points()
+        point = geometry.get_top()
+        diameter = Line(geometry.get_left(), geometry.get_right())
+        diameter.set_color(WHITE)
+
+        chords = VGroup()
+        for i in range(5):
+            chord = Line(start = point, end = points[- 4 * i])
+            chords.add(chord)
+        
+        for i in range(5):
+            chord = Line(start = geometry.get_bottom(), end = points[4 * i])
+            chords.add(chord)
+        
+        chords.add(
+            Line(start = points[3], end = points[15]),
+            Line(start = points[12], end = points[0]),
+            Line(start = points[15], end = points[-4]),
+            Line(start = points[0], end = points[-12]),
+            Line(start = points[0], end = points[3]),
+            Line(start = points[0], end = points[-4]),
+            Line(start = points[15], end = points[-12]),
+            Line(start = points[15], end = points[12]),
+            Line(start = points[3], end = points[12]),
+            Line(start = points[-4], end = points[-12])
+        )
+        
+        for chord, color in zip(chords, cycle([YELLOW_A, YELLOW_B, YELLOW_C, YELLOW, YELLOW_D, YELLOW_E])):
+            chord.set_color(color)
+
+        geometry.add(diameter, chords)
+        word = self.get_geometry_wonderland_word()
+        word.scale(1.3)
+        word.to_edge(1 * UP)
+        geometry.next_to(word, 4 * DOWN)
         word_outlines = word.copy()
         word_outlines.set_fill(opacity=0)
         word_outlines.set_stroke(WHITE, 1)
@@ -32,15 +67,22 @@ class HalfAngleIdentity(MovingCameraScene):
 
         self.play(
             LaggedStartMap(MoveToTarget, circles),
-            run_time=2
+            #GrowFromPoint(geometry, geometry.get_center()),
+            DrawBorderThenFill(geometry),
+            run_time = 3
         )
         self.add(word_outlines, circles)
         self.play(LaggedStartMap(
             FadeIn, word_outlines,
-            run_time=3,
-            rate_func=there_and_back,
+            run_time = 3,
+            rate_func = there_and_back,
         ), Animation(circles))
-        self.wait()
+        self.wait(2)
+        # self.play(
+        #     FadeOut(word, word_outlines, shift = UP),
+        #     FadeOut(geometry, circle),
+        #     rate_func = smooth,
+        # )
         self.clear()
 
         theorem = Tex(r"Inscribed Angle Theorem")
@@ -66,18 +108,19 @@ class HalfAngleIdentity(MovingCameraScene):
         self.play(
             Create(circle),
         )
-        self.play(
-            Write(theorem),
-            run_time = 3,
-            lag_ratio = 0.1
-        )
         self.wait()
+
         self.play(
             FadeIn(dot),
             GrowFromPoint(line_1, points[15]),
             GrowFromPoint(line_2, points[15]),
             GrowFromPoint(line_3, center),
             GrowFromPoint(line_4,center)
+        )
+        self.play(
+            Write(theorem),
+            run_time = 3,
+            lag_ratio = 0.1
         )
         self.wait()
 
@@ -88,19 +131,24 @@ class HalfAngleIdentity(MovingCameraScene):
             Create(half_angle),
             Create(angle)
         )
-        self.wait()
+        self.wait(2)
 
         theta = MathTex("\\theta").next_to(half_angle, 0.5 * RIGHT)
         double_theta = MathTex("2 \\cdot \\theta").next_to(angle, 0.5 * RIGHT)
 
         self.play(
-            Write(theta)
+            Write(theta),
+            run_time = 1.25,
+            rate_func = smooth
         )
-        self.wait(0.75)
+        self.wait(1.25)
         self.play(
-            Write(double_theta)
+            Write(double_theta),
+            run_time = 1.5,
+            rate_func = smooth
+            #GrowFromPoint(double_theta, geometry.get_left())
         )
-        self.wait(2)
+        self.wait(3)
 
         inscribed_angle_theorem = VGroup(
             circle.copy(),
@@ -116,7 +164,10 @@ class HalfAngleIdentity(MovingCameraScene):
         )
 
         self.play(
-            inscribed_angle_theorem.animate.to_edge(RIGHT)
+            # inscribed_angle_theorem.animate.to_edge(RIGHT),
+            inscribed_angle_theorem.animate.next_to(circle, RIGHT),
+            run_time = 2,
+            rate_func = smooth
         )
         self.play(
             inscribed_angle_theorem.animate.scale(0.75),
@@ -130,25 +181,29 @@ class HalfAngleIdentity(MovingCameraScene):
                 angle,
                 theta,
                 double_theta
-            )
+            ),
+            run_time = 2,
+            rate_func = smooth
         )
-        self.wait()
+        self.wait(1.5)
 
         self.play(GrowFromPoint(diameter, point = circle.get_right()))
         self.play(GrowFromPoint(chord, point = points[15]))
         self.play(GrowFromPoint(line, point = points[3]))
-        self.wait()
+        self.wait(2)
 
         self.play(
-            Write(unit_circle)
+            Write(unit_circle),
+            run_time = 1.25,
+            rate_func = smooth
         )
-        self.wait()
+        self.wait(2)
 
         right_angle = RightAngle(line, Line(start = points[3], end = points[15]), length = 0.2)
         self.play(
             Create(right_angle)
         )
-        self.wait()
+        self.wait(2)
 
         half_angle = half_angle = Angle(diameter, chord, radius = 0.65)
         theta = MathTex("\\theta").next_to(half_angle, 1.5 * RIGHT)
@@ -157,17 +212,27 @@ class HalfAngleIdentity(MovingCameraScene):
         self.play(
             Create(half_angle)
         )
-        self.wait(0.75)
+        self.wait(1)
         self.play(
             Write(theta)
         )
-        self.wait()
+        self.wait(3)
 
-        triangle = VGroup(diameter.copy(), chord.copy(), line.copy(), right_angle.copy(), half_angle.copy())
-        circle.add(diameter, chord, line, right_angle, half_angle, half_angle)
+        triangle = VGroup(
+            diameter.copy(), chord.copy(),
+            line.copy(), right_angle.copy(),
+            half_angle.copy()
+        )
+        circle.add(
+            diameter, chord, line,
+            right_angle, half_angle,
+            half_angle
+        )
 
         self.play(
-            triangle.animate.to_edge(LEFT)
+            triangle.animate.to_edge(LEFT),
+            run_time = 2,
+            rate_func = smooth
         )
         self.play(
             triangle.animate.rotate(- 203 * DEGREES),
@@ -175,32 +240,38 @@ class HalfAngleIdentity(MovingCameraScene):
             rate_func = smooth
         )
         self.play(
-            triangle.animate.shift(0.5 * DOWN)
+            triangle.animate.shift(0.55 * DOWN)
         )
-        self.wait()
+        self.wait(1.5)
 
-        self.play(
-            frame.animate.shift(4.25 * LEFT),
-            run_time = 2,
-            rate_func = smooth
-        )
+        # self.play(
+        #     # frame.animate.shift(4.25 * LEFT),
+        #     frame.animate.shift(1.20 * LEFT),
+        #     run_time = 2,
+        #     rate_func = smooth
+        # )
 
         angle_theta = theta.copy()
         angle_theta.next_to(triangle[4], 1.5 * LEFT)
         angle_theta.shift(0.1 * UP)
 
         self.play(
-            Write(angle_theta)
+            Write(angle_theta),
+            run_time = 1.25,
+            rate_func = smooth
         )
-        self.wait()
+        self.wait(1.5)
 
         cos = BraceLabel(triangle[1], "\\mathrm{cos}(\\theta)", DOWN)
         sin = BraceLabel(triangle[2], "\\mathrm{sin}(\\theta)", LEFT)
         self.play(
             Write(cos),
-            Write(sin)
+            Write(sin),
+            frame.animate.shift(1.20 * LEFT),
+            run_time = 2.5,
+            rate_func = smooth
         )
-        self.wait()
+        self.wait(2)
 
         projection = diameter.get_projection(points[3])
         projection_line = Line(points[15], projection, color = DARK_PINK)
@@ -212,7 +283,7 @@ class HalfAngleIdentity(MovingCameraScene):
             GrowFromPoint(projection_line, projection),
             GrowFromPoint(perpendicular_line, points[3])
         )
-        self.wait()
+        self.wait(3)
 
         length_L = BraceLabel(projection_line, "\\mathrm{cos}^{2}(\\theta)", DOWN)
         hypotenuse = BraceBetweenPoints(points[3], points[15])
@@ -220,33 +291,47 @@ class HalfAngleIdentity(MovingCameraScene):
         #hyp.add_background_rectangle()
         hyp.next_to(hypotenuse, 0.25 * UP)
         hyp.shift(0.38 * DOWN)
-        circle.add(dot, theta, projection_line, perpendicular_line, projection_point, length_L, hypotenuse, hyp)
+        circle.add(
+            dot, theta, projection_line,perpendicular_line,
+            projection_point, length_L, hypotenuse, hyp
+        )
         theorem = circle.copy()
-        circle.remove(diameter, chord, line, right_angle, half_angle, half_angle, dot, theta, projection_line, perpendicular_line, projection_point, length_L, hypotenuse, hyp)
+        circle.remove(
+            diameter, chord, line,
+            right_angle, half_angle,
+            half_angle, dot, theta,
+            projection_line, perpendicular_line,
+            projection_point, length_L, hypotenuse, hyp
+        )
 
         self.play(
             Write(hypotenuse, run_time = 2, rate_func = smooth),
             Write(hyp)
         )
-        self.wait()
+        self.wait(2)
 
         self.play(
             ReplacementTransform(unit_circle, length_L)
         )
-        self.wait()
+        self.wait(3.5)
 
 
         self.play(
-            frame.animate.shift(9 * RIGHT),
+            frame.animate.shift(5.85 * RIGHT),
+            # frame.animate.shift(9 * RIGHT),
             run_time = 2,
             rate_func = smooth
         )
         self.play(
-            inscribed_angle_theorem.animate.shift(5 * RIGHT)
+            inscribed_angle_theorem.animate.shift(5 * RIGHT),
+            run_time = 2,
+            rate_func = smooth
         )
         self.play(
             #theorem.animate,
-            theorem.animate.shift(5 * RIGHT)
+            theorem.animate.shift(5 * RIGHT),
+            run_time = 2,
+            rate_func = smooth
         )
         
         self.play(
@@ -257,7 +342,7 @@ class HalfAngleIdentity(MovingCameraScene):
             )
         )
         self.remove(length_L)
-        self.wait(0.5)
+        self.wait(2)
 
         perpendicular = Line(projection, points[3])
         angled_line = Line(circle.get_center(), points[3], color = MELON)
@@ -267,12 +352,15 @@ class HalfAngleIdentity(MovingCameraScene):
 
         self.play(
             Write(unit_circle),
+        )
+        self.wait(2)
+        self.play(
             #ReplacementTransform(length_L, unit_circle),
             GrowFromPoint(perpendicular, points[3]),
             Create(angled_line)
         )
         #self.add(circle_radius)
-        self.wait()
+        self.wait(2.25)
 
 
         double_angle = Angle(circle_radius, angled_line, radius = 0.5, color = WHITE)
@@ -291,30 +379,33 @@ class HalfAngleIdentity(MovingCameraScene):
 
         self.play(
             Create(double_angle),
-            Write(double_theta)
+            Write(double_theta),
+            Indicate(inscribed_angle_theorem, color = BLUE_A, run_time = 2.75)
         )
-        self.wait()
+        self.wait(2)
         
         self.play(
             ReplacementTransform(unit_circle, radius_length),
             GrowFromPoint(radius, circle.get_center()),
             Write(angled_line_length)
         )
-        self.wait()
+        self.wait(3.25)
 
         base = Line(center, projection, color = BLUE_B)
         label_base = BraceLabel(base, "{1 \\over 2}{\\mathrm{cos}(2\\theta)}", DOWN, label_scale = 0.85)
 
         self.play(
             GrowFromPoint(base, center),
-            Write(label_base)
+            Write(label_base, run_time = 3, lag_ratio = 0.1)
         )
-        self.wait()
+        self.wait(3)
 
         self.play(
-            frame.animate.shift(1.8 * DOWN)
+            frame.animate.shift(1.8 * DOWN),
+            run_time = 2,
+            rate_func = smooth
         )
-        self.wait()
+        self.wait(1.5)
 
         equation = MathTex(
             "\\mathrm{cos}^{2}(\\theta)", "=", "{1 \\over 2}", "+", "{1 \\over 2}{\\mathrm{cos}(2\\theta)}"
@@ -324,18 +415,36 @@ class HalfAngleIdentity(MovingCameraScene):
         equation.shift(LEFT)
 
         self.play(
-            Write(equation)
+            Write(equation),
+            run_time = 3,
+            rate_func = smooth,
+            lag_ratio = 0.1
         )
-        self.wait()
+        self.wait(2)
+
+        # self.play(
+        #     ApplyWave(equation, amplitude = 0.35, run_time = 2)
+        #     #Wiggle(equation)
+        # )
+        rect = SurroundingRectangle(equation, color = BLUE_C)
+        rect.scale(1.1)
+        self.play(
+            Create(rect),
+            run_time = 2,
+            rate_func = smooth
+        )
+        self.wait(0.1)
+        self.play(
+            FadeOut(rect)
+        )
+        self.wait(3)
+        self.clear()
     
 
-    def get_geometry_wonder_land_word(self):
-        word = Tex(self.text)
-        word.rotate(-90 * DEGREES)
-        word.scale(0.25)
+    def get_geometry_wonderland_word(self):
+        word = SVGMobject(self.text)
+        word.scale(2)
         word.shift(3 * RIGHT)
-        word.apply_complex_function(np.exp)
-        word.rotate(90 * DEGREES)
         word.set_width(9)
         word.center()
         word.to_edge(UP)
