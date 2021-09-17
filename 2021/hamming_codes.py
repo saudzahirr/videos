@@ -1,8 +1,11 @@
-"""Hello, world! = 01001000  01100101  01101100  01101100  01101111  00101100"""
-"""00100000  01110111  01101111  01110010  01101100  01100100  00100001"""
+"""
+Richard Hamming invented codes to investigate automatic error-correction.
+Hello, world! = 01001000  01100101  01101100  01101100  01101111  00101100
+00100000  01110111  01101111  01110010  01101100  01100100  00100001
+"""
+
 
 from manimce import *
-
 
 
 def get_bit_grid(n_rows, n_cols, bits=None, buff=MED_SMALL_BUFF, height=4):
@@ -39,7 +42,7 @@ def get_image_bits(image, bit_height=0.15/2, buff=MED_SMALL_BUFF):
 
 class Voyager2(Scene):
     def construct(self):
-        logo(self)
+        logo_transformation(self)
         bits = get_bit_grid(40, 33, height=6)
         bits.scale(0.1)
         bits.set_color(BLACK)
@@ -76,7 +79,7 @@ class Voyager2(Scene):
 
         bits_ = get_image_bits(image_out)
 
-        noise = Tex(r"Noise")
+        noise = Tex(r"Noise!")
         noise.set_color(YELLOW)
         noise.next_to(image_out, DOWN)
 
@@ -112,7 +115,7 @@ class Voyager2(Scene):
             FadeInFromLarge(satellite),
             run_time = 2
         )
-        self.wait()
+        self.wait(2)
 
         self.play(
             LaggedStart(
@@ -128,7 +131,7 @@ class Voyager2(Scene):
                 run_time = 12,
             )
         )
-        self.wait()
+        self.wait(2)
 
         self.play(
             LaggedStart(
@@ -159,93 +162,198 @@ class Voyager2(Scene):
             lag_ratio=3 / len(bits_)
             )
         )
+        self.wait(2)
         self.play(
-            FadeIn(noise),
+            Write(noise),
+            run_time = 1,
+            rate_func = smooth,
+            lag_ratio = 0.5
         )
-        self.wait(3)
+        self.wait(8)
+        self.play(
+            FadeOut(image_out, year, satellite, voyager, noise)       
+        )
+        self.play(
+            image_in.animate.to_edge(UP + RIGHT),
+            run_time = 1.5,
+            rate_func = smooth
+        )
+
+
+class ImageGreyScale(ZoomedScene):
+    def __init__(self, **kwargs):
+        super().__init__(
+            zoom_factor=0.1,
+            zoomed_display_height=4,
+            zoomed_display_width=4,
+            image_frame_stroke_width=2,
+            zoomed_camera_config={
+                "default_frame_stroke_width": 1,
+                },
+            **kwargs
+        )
+
+    def construct(self):
+        image = ImageMobject("neptune")
+        image.add(SurroundingRectangle(image, color = GREY_E))
+        image.scale(0.7)
+        image.to_edge(UP + RIGHT)
+
+        self.add(image)
+        self.wait()
+        zoomed_camera = self.zoomed_camera
+        zoomed_display = self.zoomed_display
+        frame = zoomed_camera.frame
+        zoomed_display_frame = zoomed_display.display_frame
+        zoomed_display.next_to(image, 10 * LEFT)
+        zoomed_display.to_edge(0.5 * UP + 4 * LEFT)
+        zd_rect = BackgroundRectangle(zoomed_display, fill_opacity=0, buff=MED_SMALL_BUFF)
+        self.add_foreground_mobject(zd_rect)
+        unfold_camera = UpdateFromFunc(zd_rect, lambda rect: rect.replace(zoomed_display))
+
+        frame.move_to(image)
+        self.play(Create(frame))
+        self.activate_zooming()
+        self.play(self.get_zoomed_display_pop_out_animation(), unfold_camera)
+        self.wait(2)
+
+        grey_scale_table = MathTable(
+            [[50, 168, 216, 64],
+            [198, 185, 140, 78],
+            [255, 205, 108, 75]],
+            include_outer_lines=True
+        )
+        grey_scale_table.scale(0.8)
+        grey_scale_table.to_edge(0.5 * DOWN + LEFT)
+
+        start = 0
+
+        black = Variable(start, '\\text{Black}', num_decimal_places=0).next_to(grey_scale_table, 5 * RIGHT)
+        white = Variable(start, '\\text{White}', num_decimal_places=0).next_to(black, DOWN)
+        
+        self.play(
+            FadeIn(grey_scale_table)
+        )
+        self.play(
+            FadeIn(black, white),
+        )
+        self.play(
+            white.tracker.animate.set_value(255),
+            rate_func=linear,
+            run_time = 2
+        )
+        self.wait(2)
         self.clear()
 
+        image.scale(5/7)
+        image_copy = image.copy()
+        noise = ImageMobject("noise.jpg")
+        noise.add(SurroundingRectangle(noise, color = GREY_E))
+        noise.scale(0.5)
 
+        image.to_edge(UP + 4 * LEFT),
+        image_copy.next_to(image, 4 * RIGHT)
+        noise.next_to(image_copy, 4 * RIGHT)
 
-
-
-class History(Scene):
-    def construct(self):
-        thumbnail(self)
-
-        dated_events = [
-            {
-                "date" : 1940, 
-                "text": "Richard Hamming invented \\\\ codes to investigate \\\\ automatic error-correction.",
-                "picture" : "Bell_Relay_Computer.png"
-            }
-        ]
-        speical_dates = [2021] + [
-            obj["date"] for obj in dated_events
-        ]
-        centuries = list(range(1850, 2050, 10))
-        timeline = NumberLine(
-            (centuries[0], centuries[-1], 2),
-            numbers_with_elongated_ticks=centuries,
+        self.play(
+            FadeIn(image, image_copy, noise)
         )
-        timeline.add_numbers(centuries)
-        centers = [
-            Point(timeline.number_to_point(year))
-            for year in speical_dates
-        ]
-        timeline.add(*centers)
-        timeline.shift(-centers[0].get_center())
-
-        self.add(timeline)
         self.wait()
-        run_times = iter([3, 1])
-        for point, event in zip(centers[1:], dated_events):
 
-            clock = Circle(radius = 2, color = WHITE)
-            clock.add(Dot(ORIGIN))
+        frame_1 = self.zoomed_camera.frame
+        frame_2 = frame_1.copy()
+        frame_3 = frame_1.copy()
 
-            for vect in compass_directions(12):
-                clock.add(Line(1.8*vect, 2*vect, color = WHITE))
+        frame_1.move_to(image)
+        frame_2.move_to(image_copy)
+        frame_3.move_to(noise)
 
-            hour_hand = Line(ORIGIN, UP)
-            minute_hand = Line(ORIGIN, 1.5*UP)
-            clock.add(hour_hand, minute_hand)
-            hour_hand.get_center = lambda : clock.get_center()
-            minute_hand.get_center = lambda : clock.get_center()
-            clock.scale(0.5)
-            clock.to_edge(2*RIGHT+DOWN)
-            self.add(clock)
+        table_1 = MathTable(
+            [[50, 168, 216],
+            [198, 185, 140],
+            [255, 205, 108]],
+            include_outer_lines=True
+        )
+        table_1.scale(0.6)
+        table_2 = table_1.copy()
+        table_3 = MathTable(
+            [[50, 168, 216],
+            [198, 189, 140],
+            [255, 205, 108]],
+            include_outer_lines=True
+        )
+        table_3.scale(0.6)
 
-            self.play(
-                Rotating(hour_hand, radians = 2*np.pi, about_point = clock.get_center(), run_time = 2),
-                Rotating(minute_hand, radians = 12*2*np.pi, about_point = clock.get_center(), run_time = 2),    
-                ApplyMethod(
-                timeline.shift, -point.get_center(),
-                run_time = 3,
-                rate_func = linear)
-            )
+        table_1.next_to(image, 3 * DOWN)
+        table_1.to_edge(2.5 * LEFT)
+        table_2.next_to(table_1, 2 * RIGHT)
+        table_3.next_to(table_2, 2 * RIGHT)
 
-            event_mob = Tex(event["text"])
-            event_mob.shift(2*LEFT+2*UP)
-            date_mob = Tex(str(event["date"]) + str('s'))
-            date_mob.scale(0.5)
-            date_mob.shift(1*DOWN)
-            picture = ImageMobject(event["picture"], invert = False)
-            picture.scale(0.45)
-            picture.add(Tex("Model V Relay Computers.").set_color(YELLOW).scale(0.5).next_to(picture, 0.5*DOWN))
-            picture.next_to(event_mob, RIGHT)
-            line = Arrow(event_mob.get_bottom(), 0.2*UP)
-            self.play(
-                FadeIn(event_mob),
-                FadeIn(line),
-                FadeIn(date_mob)
-            )
-            self.play(FadeIn(picture), run_time = 2)
-            self.wait(2)
-            self.play(*list(map(FadeOut, [event_mob, date_mob, line, picture])))
-        self.wait(1)
-        self.remove(clock)
-        self.remove(timeline)
+        self.play(
+            Create(frame_1),
+            FadeIn(table_1)
+        )
+        self.play(
+            Create(frame_2),
+            FadeIn(table_2)
+        )
+        self.play(
+            Create(frame_3),
+            FadeIn(table_3)
+        )
+        self.wait()
+
+
+class History(MovingCameraScene):
+    def construct(self):
+        timeline = NumberLine(
+            x_range = [1935, 1965],
+            numbers_with_elongated_ticks = list(range(1935, 1965, 5)),
+            color = BLUE_D,
+        )
+        timeline.stretch_to_fit_width((16*8)/9 - 5)
+        timeline.add_numbers(timeline.numbers_with_elongated_ticks, group_with_commas=False)
+
+        year = {
+            1940 : "Hamming Codes.",
+            1948 : "C.E. Shannon publishes a paper on \\\\ ``The Mathematical Theory of Communication.''",
+            1960 : "Reed-Solomon Codes."
+        }
+        arrow_1 = Vector(DOWN, color = WHITE)
+        arrow_1.next_to(timeline.number_to_point(1940), UP)
+        word_1 = Tex(year[1940])
+        word_1.next_to(arrow_1, UP)
+
+        arrow_2 = Vector(UP, color = WHITE)
+        arrow_2.next_to(timeline.number_to_point(1948), 2.25 * DOWN)
+        word_2 = Tex(year[1948])
+        word_2.scale(0.8)
+        word_2.next_to(arrow_2, DOWN)
+
+        arrow_3 = Vector(DOWN, color = WHITE)
+        arrow_3.next_to(timeline.number_to_point(1960), UP)
+        word_3 = Tex(year[1960])
+        word_3.next_to(arrow_3, UP)
+
+        timeline.scale(13/10)
+        
+        self.play(
+            FadeIn(timeline),
+        )
+        self.play(
+            timeline.animate.scale(10/13),
+            GrowArrow(arrow_1),
+            Write(word_1),
+            GrowArrow(arrow_2),
+            Write(word_2),
+            GrowArrow(arrow_3),
+            Write(word_3),
+            run_time = 4
+        )
+        self.wait(4)
+        self.play(
+            FadeOut(timeline, arrow_1, word_1, arrow_2, word_2, arrow_3, word_3)
+        )
         self.clear()
 
 
@@ -267,12 +375,10 @@ class History(Scene):
             paper.animate.shift(12 * UP),
             run_time = 8
         )
-        self.wait(1)
+        self.wait(2)
         self.play(
             FadeOut(paper)
         )
-
-        thumbnail(self)
         self.wait(0.1)
 
         hamming_image = ImageMobject("Richard_Hamming.jpg")
@@ -306,23 +412,52 @@ class History(Scene):
         )
         self.wait()
         self.play(
-            FadeIn(punchcard[0]),
-            Write(punchcard[1:], lag_ratio=0.5, run_time=10)
+            FadeIn(punchcard),
+            run_time = 2
+            #Write(punchcard[1:], lag_ratio=0.5, run_time=10)
         )
         self.wait(3)
         self.play(
             FadeOut(hamming, bell_logo, punchcard),
             run_time = 0.5
         )
+        self.clear()
+        
+        picture = "Bell_Relay_Computer.png"
+        bell_labs = ImageMobject(picture)
+        bell_labs.add(Tex("Archive: Model V Relay Computers.").scale(0.7).set_color(YELLOW).next_to(bell_labs, 0.5*DOWN).shift(2 * RIGHT))
+        bell_labs.scale(0.9)
+
+        script = Tex(
+            "Richard Hamming invented\\\\",
+            "codes to investigate\\\\",
+            "automatic error-correction.",
+        )
+        # script.set_color(BLACK)
+        # script.set_stroke(WHITE, 2, background=True)
+        script.to_edge(UP + LEFT)
+
+        self.play(
+            FadeIn(bell_labs)
+        )
+        self.wait()
+        self.add(BackgroundRectangle(script).scale(1.5))
+        self.add_foreground_mobject(script)
+        self.play(
+            Write(script),
+            run_time = 6,
+            #lag_ratio = 0.1
+        )
+        self.wait(2)
 
 
 
+class HammingCode(Scene):
+    pass
 
 
 class BenEater(Scene):
     def construct(self): 
-        thumbnail(self)
-
         self.camera.background_color = GREY_E
         data = Tex(r"\large{Data Transmission.}")
         data.set_color(BLUE)
@@ -392,8 +527,6 @@ def disk():
 
 class ReedSolomonCodes(Scene):
     def construct(self):
-        thumbnail(self)
-
         title = Tex("Reed-Solomon Codes.")
         title.scale(1.5)
         title.to_edge(UP)
