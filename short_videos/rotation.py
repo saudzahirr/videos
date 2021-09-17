@@ -55,11 +55,14 @@ class RotationScene(Scene):
         labels.arrange(RIGHT, buff = 2*LARGE_BUFF)
         labels.move_to(ORIGIN, LEFT)
         labels.to_edge(UP)
+        self.add(labels)
+        self.wait(2)
         self.play(
             labels.animate.shift((labels.get_width() - 5) * LEFT),
             run_time=20,
             rate_func = smooth
         )
+        self.wait(3)
         
 
         
