@@ -12,8 +12,3 @@ The animantions are based on manim.py, MAthematical aNIMation engine created by 
 [<img align="left" alt="codeSTACKr | Reddit" width="22px" src="https://cdn.jsdelivr.net/npm/simple-icons@v3/icons/reddit.svg" />](https://www.reddit.com/user/aljabrak)
 [<img align="left" alt="codeSTACKr | Facebook" width="22px" src="https://cdn.jsdelivr.net/npm/simple-icons@v3/icons/facebook.svg" />](https://web.facebook.com/aljabrak)
 <br/>
-
-
-![Screenshot (743)](https://user-images.githubusercontent.com/76210541/116897642-ef785780-ac4e-11eb-84fb-22cf144e085d.png)
-
-![Screenshot (803)](https://user-images.githubusercontent.com/76210541/128622990-294e2ab9-948c-42b2-b9cf-106524891670.png)
