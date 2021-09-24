@@ -17,5 +17,3 @@ The animantions are based on manim.py, MAthematical aNIMation engine created by 
 ![Screenshot (743)](https://user-images.githubusercontent.com/76210541/116897642-ef785780-ac4e-11eb-84fb-22cf144e085d.png)
 
 ![Screenshot (803)](https://user-images.githubusercontent.com/76210541/128622990-294e2ab9-948c-42b2-b9cf-106524891670.png)
-
-[aljabrak](https://www.youtube.com/channel/UCN0ssVJD0ANFjmggc1vkcww/featured)
