@@ -58,7 +58,7 @@ def logo_transformation(self):
     )
 
     
-def thumbnail(self):
+def watermark(self):
     circle = Circle(radius=0.25,fill_color=BLUE_A,stroke_color=WHITE,stroke_width=1.3,fill_opacity=0.2)
     title = MathTex("\\alpha")
     thumbnail = VGroup(circle, title)
