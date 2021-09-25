@@ -114,3 +114,17 @@ class BitCoin(SVGMobject):
         SVGMobject.__init__(self, **kwargs)
         self.set_color_by_gradient(YELLOW_B, YELLOW_A, YELLOW_A)
         self.set_stroke(GREY_BROWN, 3.5)
+
+
+        
+class Robot(SVGMobject):
+    file_name = "robot.svg"
+    def __init__(self, **kwargs):
+        SVGMobject.__init__(self, **kwargs)
+        self.scale(2)
+    
+class Spybot(SVGMobject):
+    file_name = "spybot.svg"
+    def __init__(self, **kwargs):
+        SVGMobject.__init__(self, **kwargs)
+        self.scale(2)
