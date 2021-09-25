@@ -9,6 +9,29 @@ from logo import *
 from constants import *
 
 
+class SpeechBubble(SVGMobject):
+    file_name = "Bubbles_speech.svg"
+    def __init__(self, **kwargs):
+        SVGMobject.__init__(self, **kwargs)
+        self.set_fill(BLACK, 0.8)
+        self.set_stroke(WHITE, 3.5)
+        self.set_height(5)
+        self.set_width(8)
+
+class ThoughtBubble(SVGMobject):
+    file_name = "Bubbles_thought.svg"
+    def __init__(self, **kwargs):
+        SVGMobject.__init__(self, **kwargs)
+        self.set_fill(BLACK, 0.8)
+        self.set_stroke(WHITE, 3.5)
+        self.set_height(5)
+        self.set_width(8)
+        
+
+class ExternallyAnimatedScene(Scene):
+    pass
+
+
 class ConvexLens(Arc):
     def generate_points(self):
         arc_1 = Arc(radius = 2, angle = np.pi/2)
@@ -83,4 +106,11 @@ class Clover(SVGMobject):
         SVGMobject.__init__(self, **kwargs)
         self.set_color(WHITE)
         self.scale(0.5)
+    
 
+class BitCoin(SVGMobject):
+    file_name = "bitcoin.svg"
+    def __init__(self, **kwargs):
+        SVGMobject.__init__(self, **kwargs)
+        self.set_color_by_gradient(YELLOW_B, YELLOW_A, YELLOW_A)
+        self.set_stroke(GREY_BROWN, 3.5)
