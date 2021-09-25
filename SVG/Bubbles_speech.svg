@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg viewBox="0 0 1050.6 716.32" xmlns="http://www.w3.org/2000/svg">
+<path d="m525.3 5.3c-287 0-520 116-520 260 0 121 166 223 390.97 251.9-69.4 105-193 162-330.97 193.82 188-22.1 389-86.3 509.88-186.94 264-12.6 470-124 470.12-258.78 0-144-233-260-520-260z" fill="none" stroke="#000" stroke-width="10.6"/>
+<flowRoot transform="matrix(1.2034 0 0 1.0872 274.67 -45.72)" text-anchor="middle">
+<flowRegion>
+<path d="m-145.71 129.51h702.86v308.57h-702.86z"/>
+</flowRegion>
+<flowPara font-size="40">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</flowPara>
+</flowRoot>
+</svg>
