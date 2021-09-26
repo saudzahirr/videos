@@ -469,3 +469,8 @@ class EulerFormula(Scene):
         self.wait(2)
 
         self.circle_group = VGroup(circle, radius, one, decimal)
+
+        
+        
+        
+        
