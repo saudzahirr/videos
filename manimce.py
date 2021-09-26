@@ -4,10 +4,12 @@ from scipy import *
 from random import *
 from itertools import *
 from functools import *
-from math import *
 from os import *
+from math import *
 from logo import *
 from constants import *
+
+
 
 
 class SpeechBubble(SVGMobject):
@@ -19,6 +21,8 @@ class SpeechBubble(SVGMobject):
         self.set_height(5)
         self.set_width(8)
 
+
+
 class ThoughtBubble(SVGMobject):
     file_name = "Bubbles_thought.svg"
     def __init__(self, **kwargs):
@@ -29,9 +33,7 @@ class ThoughtBubble(SVGMobject):
         self.set_width(8)
         
 
-class ExternallyAnimatedScene(Scene):
-    pass
-
+# Optical Mobjects.
 
 class ConvexLens(Arc):
     def generate_points(self):
@@ -45,6 +47,7 @@ class ConvexLens(Arc):
         self.append_points(arc_2.points)
         self.move_to(ORIGIN)
         self.set_color(BLUE_B)
+
 
 
 class ConcaveLens(VMobject):
@@ -70,11 +73,14 @@ class ConcaveLens(VMobject):
         self.set_color(BLUE_B)
 
 
+# Probability Mobjects.
+
 class ChessBoard(SVGMobject):
     file_name = "chess.svg"
     def __init__(self, **kwargs):
         SVGMobject.__init__(self, **kwargs)
         self.scale(3)
+
 
 
 class Heart(SVGMobject):
@@ -85,12 +91,14 @@ class Heart(SVGMobject):
         self.scale(0.5)
 
 
+
 class Diamond(SVGMobject):
     file_name = "diamond.svg"
     def __init__(self, **kwargs):
         SVGMobject.__init__(self, **kwargs)
         self.set_color(RED)
         self.scale(0.5)
+
 
 
 class Spade(SVGMobject):
@@ -101,6 +109,7 @@ class Spade(SVGMobject):
         self.scale(0.5)
 
 
+
 class Clover(SVGMobject):
     file_name = "clover.svg"
     def __init__(self, **kwargs):
@@ -108,6 +117,8 @@ class Clover(SVGMobject):
         self.set_color(WHITE)
         self.scale(0.5)
     
+
+
 
 class BitCoin(SVGMobject):
     file_name = "bitcoin.svg"
@@ -117,22 +128,41 @@ class BitCoin(SVGMobject):
         self.set_stroke(GREY_BROWN, 3.5)
 
 
-        
+# Robot Mobjects.
+
 class Robot(SVGMobject):
     file_name = "robot.svg"
     def __init__(self, **kwargs):
         SVGMobject.__init__(self, **kwargs)
         self.scale(2)
-    
+
+
+
 class Spybot(SVGMobject):
     file_name = "spybot.svg"
     def __init__(self, **kwargs):
         SVGMobject.__init__(self, **kwargs)
         self.scale(2)
 
-        
-        
-class Resister(SVGMobject):
+
+# Circuit Mobjects.
+
+class Resistor(Line):
+    def __init__(self, **kwargs):
+        Line.__init__(self, **kwargs)
+        midpoints = [
+            interpolate(self.start, self.end, alpha)
+            for alpha in [0.25]+list(np.arange(0.3, 0.71, 0.1))+[0.75]
+        ]
+        perp = rotate_vector(self.end-self.start, np.pi/2)
+        for midpoint, n in zip(midpoints[1:-1], count()):
+            midpoint += 0.1*((-1)**n)*perp
+        points = [self.start]+midpoints+[self.end]
+        self.set_points_as_corners(points)
+
+
+
+class LongResistor(SVGMobject):
     file_name = "resister.svg"
     def __init__(self, **kwargs):
         SVGMobject.__init__(self, **kwargs)
@@ -155,3 +185,21 @@ class Capacitor(SVGMobject):
     def __init__(self, **kwargs):
         SVGMobject.__init__(self, **kwargs)
         self.set_stroke(WHITE, 4)
+
+
+
+class Source(VMobject):
+   def __init__(self, **kwargs):
+        VMobject.__init__(self, **kwargs)
+        self.add(Circle(color = self.color))
+        self.add(Tex("$+$").scale(1.5).set_color(GREEN).shift(0.5*UP))
+        self.add(Tex("$-$").scale(1.5).set_color(RED).shift(0.5*DOWN))
+        self.set_height(1)        
+        self.add(Line(self.get_top(), self.get_top()+UP))
+        self.add(Line(self.get_bottom(), self.get_bottom()+DOWN))
+
+
+
+
+class ExternallyAnimatedScene(Scene):
+    pass
