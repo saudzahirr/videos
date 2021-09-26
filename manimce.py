@@ -8,7 +8,7 @@ from os import *
 from math import *
 from logo import *
 from constants import *
-from circuits import *
+from circuits import Resistor
 
 
 
