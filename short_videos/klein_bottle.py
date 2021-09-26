@@ -36,13 +36,7 @@ class Topology(ThreeDScene):
 
 class Frame(Scene):
     def construct(self):
-        circle = Circle(radius=0.25,fill_color=BLUE_A,stroke_color=WHITE,stroke_width=1.3,fill_opacity=0.2)
-        title = MathTex("\\alpha")
-        thumbnail = VGroup(circle, title)
-        thumbnail.scale(1.1)
-        thumbnail.to_edge(0.5*DOWN+0.5*RIGHT)
-        self.add(thumbnail)
-
+        watermark(self)
         self.camera.background_color = GREY_E
         screen = ScreenRectangle(stroke_width=4,stroke_color=WHITE,fill_opacity=1,fill_color=BLACK)
         screen.scale(1.2)
