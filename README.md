@@ -15,3 +15,6 @@ This project contains code for animated mathematics, physics, engineering and co
 All the work is generated using community maintained version at [Manim Community](https://github.com/ManimCommunity).
 Some of the animantions are based on [manim](https://github.com/3b1b/manim), an open source scrappy python library for mathematical animation
 created by Grant Sanderson. Also see his work [3blue1brown](https://www.3blue1brown.com/).
+
+# Copyright ©
+The source code in this repository is only for reference, and not for usage without permission.
