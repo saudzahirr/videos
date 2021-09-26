@@ -2,8 +2,9 @@
 
 "If you can't explain it simply, you don't understand it well enough!"
 
-A project for animating mathematics, physics, engineering and computer science for better understanding. 
-The animantions are based on manim, an open source scrappy python library for mathematical animation
+This project contains code for animated mathematics, physics, engineering and computer science for better understanding.
+All the work is generated using community maintained version at [Manim Community](https://github.com/ManimCommunity).
+Some of the animantions are based on [manim](https://github.com/3b1b/manim), an open source scrappy python library for mathematical animation
 created by Grant Sanderson. Also see his work [3blue1brown](https://www.3blue1brown.com/).
 
 [<img align="left" alt="codeSTACKr.com" width="22px" src="https://raw.githubusercontent.com/iconic/open-iconic/master/svg/globe.svg" />]()
