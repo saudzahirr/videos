@@ -27,7 +27,7 @@ pip install manimgl
 ```
 Manim runs on Python 3.6 or higher (Python 3.8 is recommended).
 
-System requirements are [FFmpeg](https://ffmpeg.org/), [OpenGL](https://www.opengl.org/) and [LaTeX](https://www.latex-project.org) (optional, if you want to use LaTeX).
+System requirements are [FFmpeg](https://ffmpeg.org/), [OpenGL](https://www.opengl.org/) and [LaTeX](https://www.latex-project.org).
 
 # Copyright ©
 The source code in this repository is only for reference, and not for usage without permission.
