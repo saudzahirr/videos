@@ -128,3 +128,29 @@ class Spybot(SVGMobject):
     def __init__(self, **kwargs):
         SVGMobject.__init__(self, **kwargs)
         self.scale(2)
+
+        
+        
+class Resister(SVGMobject):
+    file_name = "resister.svg"
+    def __init__(self, **kwargs):
+        SVGMobject.__init__(self, **kwargs)
+        self.scale(0.25)
+        self.set_stroke(WHITE, 4)
+
+
+
+class Inductor(SVGMobject):
+    file_name = "inductor.svg"
+    def __init__(self, **kwargs):
+        SVGMobject.__init__(self, **kwargs)
+        self.scale(0.25)
+        self.set_stroke(WHITE, 4)
+
+    
+
+class Capacitor(SVGMobject):
+    file_name = "capacitor.svg"
+    def __init__(self, **kwargs):
+        SVGMobject.__init__(self, **kwargs)
+        self.set_stroke(WHITE, 4)
