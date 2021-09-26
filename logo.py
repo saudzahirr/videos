@@ -22,10 +22,10 @@ def logo(self):
 
     circle_2 = Circle(radius=0.25,fill_color=BLUE_A,stroke_color=WHITE,stroke_width=1.3,fill_opacity=0.2)
     title_2 = MathTex("\\alpha")
-    thumbnail = VGroup(circle_2, title_2)
-    thumbnail.scale(1.1)
-    thumbnail.to_edge(0.5*DOWN+0.5*RIGHT)
-    self.play(Transform(logo, thumbnail), FadeOut(logo_name), run_time = 1)
+    watermark = VGroup(circle_2, title_2)
+    watermark.scale(1.1)
+    watermark.to_edge(0.5*DOWN+0.5*RIGHT)
+    self.play(Transform(logo, watermark), FadeOut(logo_name), run_time = 1)
 
 
 def logo_transformation(self):
@@ -61,7 +61,7 @@ def logo_transformation(self):
 def watermark(self):
     circle = Circle(radius=0.25,fill_color=BLUE_A,stroke_color=WHITE,stroke_width=1.3,fill_opacity=0.2)
     title = MathTex("\\alpha")
-    thumbnail = VGroup(circle, title)
-    thumbnail.scale(1.2)
-    thumbnail.to_edge(0.5*DOWN+0.5*RIGHT)
-    self.add(thumbnail)
+    logo = VGroup(circle, title)
+    logo.scale(1.2)
+    logo.to_edge(0.5*DOWN+0.5*RIGHT)
+    self.add(logo)
