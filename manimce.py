@@ -8,6 +8,7 @@ from os import *
 from math import *
 from logo import *
 from constants import *
+from circuits import *
 
 
 
@@ -145,61 +146,26 @@ class Spybot(SVGMobject):
         self.scale(2)
 
 
-# Circuit Mobjects.
-
-class Resistor(Line):
-    def __init__(self, **kwargs):
-        Line.__init__(self, **kwargs)
-        midpoints = [
-            interpolate(self.start, self.end, alpha)
-            for alpha in [0.25]+list(np.arange(0.3, 0.71, 0.1))+[0.75]
-        ]
-        perp = rotate_vector(self.end-self.start, np.pi/2)
-        for midpoint, n in zip(midpoints[1:-1], count()):
-            midpoint += 0.1*((-1)**n)*perp
-        points = [self.start]+midpoints+[self.end]
-        self.set_points_as_corners(points)
-
-
-
-class LongResistor(SVGMobject):
-    file_name = "resister.svg"
-    def __init__(self, **kwargs):
-        SVGMobject.__init__(self, **kwargs)
-        self.scale(0.25)
-        self.set_stroke(WHITE, 4)
-
-
-
-class Inductor(SVGMobject):
-    file_name = "inductor.svg"
-    def __init__(self, **kwargs):
-        SVGMobject.__init__(self, **kwargs)
-        self.scale(0.25)
-        self.set_stroke(WHITE, 4)
-
-    
-
-class Capacitor(SVGMobject):
-    file_name = "capacitor.svg"
-    def __init__(self, **kwargs):
-        SVGMobject.__init__(self, **kwargs)
-        self.set_stroke(WHITE, 4)
-
-
-
-class Source(VMobject):
-   def __init__(self, **kwargs):
-        VMobject.__init__(self, **kwargs)
-        self.add(Circle(color = self.color))
-        self.add(Tex("$+$").scale(1.5).set_color(GREEN).shift(0.5*UP))
-        self.add(Tex("$-$").scale(1.5).set_color(RED).shift(0.5*DOWN))
-        self.set_height(1)        
-        self.add(Line(self.get_top(), self.get_top()+UP))
-        self.add(Line(self.get_bottom(), self.get_bottom()+DOWN))
-
-
 
 
 class ExternallyAnimatedScene(Scene):
     pass
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
