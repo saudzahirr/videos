@@ -107,6 +107,82 @@ class NPN(SVGMobject):
         SVGMobject.__init__(self, **kwargs)
         self.scale(0.5)
         self.set_stroke(WHITE, 4)
+
+
+
+class Buffer(SVGMobject):
+    file_name = "buffer.svg"
+    def __init__(self, **kwargs):
+        SVGMobject.__init__(self, **kwargs)
+        self.scale(0.5)
+        self.set_stroke(WHITE, 4)
+
+
+
+class NotGate(SVGMobject):
+    file_name = "not.svg"
+    def __init__(self, **kwargs):
+        SVGMobject.__init__(self, **kwargs)
+        self.scale(0.5)
+        self.set_stroke(WHITE, 4)
+
+
+
+class OrGate(SVGMobject):
+    file_name = "or.svg"
+    def __init__(self, **kwargs):
+        SVGMobject.__init__(self, **kwargs)
+        self.scale(0.5)
+        self.set_stroke(WHITE, 4)
+        
+
+
+class AndGate(SVGMobject):
+    file_name = "and.svg"
+    def __init__(self, **kwargs):
+        SVGMobject.__init__(self, **kwargs)
+        self.scale(0.5)
+        self.set_stroke(WHITE, 4)
+
+
+
+class NorGate(SVGMobject):
+    file_name = "nor.svg"
+    def __init__(self, **kwargs):
+        SVGMobject.__init__(self, **kwargs)
+        self.scale(0.5)
+        self.set_stroke(WHITE, 4)
+
+
+
+class NandGate(SVGMobject):
+    file_name = "nand.svg"
+    def __init__(self, **kwargs):
+        SVGMobject.__init__(self, **kwargs)
+        self.scale(0.5)
+        self.set_stroke(WHITE, 4)
+
+
+
+class XorGate(SVGMobject):
+    file_name = "xor.svg"
+    def __init__(self, **kwargs):
+        SVGMobject.__init__(self, **kwargs)
+        self.scale(0.5)
+        self.set_stroke(WHITE, 4)
+
+
+
+class XnorGate(SVGMobject):
+    file_name = "xnor.svg"
+    def __init__(self, **kwargs):
+        SVGMobject.__init__(self, **kwargs)
+        self.scale(0.5)
+        self.set_stroke(WHITE, 4)
+
+
+
+        
         
         
         
