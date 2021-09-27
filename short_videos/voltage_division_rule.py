@@ -1,5 +1,5 @@
 from manimce import *
-from circuits import LongResistor, Source, EarthGround
+from circuits import LongResistor
 
 class Circuits(Scene):
     def construct(self):
