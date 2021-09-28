@@ -1,5 +1,5 @@
 from manimce import *
-from circuits import LongResistor
+from custom.circuits import LongResistor
 
 class Circuits(Scene):
     def construct(self):
