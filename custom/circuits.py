@@ -44,6 +44,21 @@ class Capacitor(SVGMobject):
 
 
 
+class Transformer(Inductor):
+    def __init__(self, **kwargs):
+        Inductor.__init__(self, **kwargs)
+        self.rotate(90*DEGREES)
+        self.flip(UP)
+        self.add(Line().scale(2).rotate(90*DEGREES).shift(0.75*RIGHT))
+        self.add(Dot(self.get_top()).shift(0.5*DOWN))
+        self.shift(1.5*LEFT)
+        copy = self.copy()
+        copy.flip(UP)
+        copy.shift(1.5*RIGHT)
+        self.add(copy)
+
+
+
 class Source(VMobject):
    def __init__(self, **kwargs):
         VMobject.__init__(self, **kwargs)
