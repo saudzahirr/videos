@@ -9,6 +9,7 @@ from math import *
 from custom.logo import *
 from custom.constants import *
 from custom.circuits import Resistor, Source, EarthGround
+from custom.circuits import SpeechBubble, ThoughtBubble
 
 
 
