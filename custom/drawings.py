@@ -133,5 +133,10 @@ class Spybot(SVGMobject):
 
 
 
-class ExternallyAnimatedScene(Scene):
-    pass
+        
+        
+        
+        
+        
+        
+        
