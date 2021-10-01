@@ -19,3 +19,7 @@ from custom.drawings import SpeechBubble, ThoughtBubble
 
 
 
+class ExternallyAnimatedScene(Scene):
+    pass
+
+  
