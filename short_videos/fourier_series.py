@@ -1,10 +1,27 @@
 from manimce import *
 
+
+class SawToothWave(Scene):
+    def construct(self):
+        waves = FunctionGraph( 
+            lambda x : fourier_series(x, 100, 0, [0 for k in range(0, 100)], [(2/pi * (-1)**(i+2)/(i+1)) for i in range(0, 100)]),
+            x_range = [-100, 100]
+        )
+        waves.scale(0.25)
+
+        self.play(
+            Create(waves)
+        )
+        self.wait()
+
+
+
 def square_wave(x, n):
     y = 0
     for i in range(1, n):
         y += sin((2*i - 1)*x)/(2*i - 1)
     return y
+
 
 class FourierSeries(Scene):
     def construct(self):
