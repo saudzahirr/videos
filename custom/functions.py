@@ -2,6 +2,17 @@ from numpy import *
 from math import *
 
 
+def fourier_series(x, n, a0, a, b):
+    y = a0/2
+    for i in range(0, n):
+        if i < n:
+            y += a[i]*cos((i+1)*x) + b[i]*sin((i+1)*x)
+        else:
+            break
+    return y
+
+
+
 def quaternion_multiplication(q1, q2):
     w1, x1, y1, z1 = q1
     w2, x2, y2, z2 = q2
@@ -13,14 +24,6 @@ def quaternion_multiplication(q1, q2):
 
 
 
-def fourier_series(x, n, a0, a, b):
-    y = a0/2
-    for i in range(0, n):
-        if i < n:
-            y += a[i]*cos((i+1)*x) + b[i]*sin((i+1)*x)
-        else:
-            break
-    return y
 
 
 
