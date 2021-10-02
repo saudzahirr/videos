@@ -1,3 +1,8 @@
+from manim import *
+
+
+
+
 class SpeechBubble(SVGMobject):
     file_name = "Bubbles_speech.svg"
     def __init__(self, **kwargs):
@@ -133,6 +138,7 @@ class Spybot(SVGMobject):
 
 
 
+        
         
         
         
