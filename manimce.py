@@ -10,6 +10,7 @@ from custom.logo import *
 from custom.constants import *
 from custom.circuits import Resistor, Source, EarthGround
 from custom.drawings import SpeechBubble, ThoughtBubble
+from custom.functions import fourier_series, quaternion_multiplication
 
 
 
