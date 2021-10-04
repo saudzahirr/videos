@@ -18,7 +18,7 @@ created by Grant Sanderson. Also see his work [3blue1brown](https://www.3blue1br
 
 
 
-# Manim Installation
+## Manim Installation
 ```sh
 pip install manim
 # Manim Community Version.
