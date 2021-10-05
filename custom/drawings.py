@@ -22,8 +22,19 @@ class ThoughtBubble(SVGMobject):
         self.set_stroke(WHITE, 3.5)
         self.set_height(5)
         self.set_width(8)
-        
+       
+    
+    
+class Speaker(SVGMobject):
+    file_name = "speaker.svg"
+    def __init__(self, **kwargs):
+        SVGMobject.__init__(self, **kwargs)
+        self.scale(1.25)
+        self.set_color(WHITE)
+        self.set_stroke(WHITE, 2)
 
+        
+        
 # Optical Mobjects.
 
 class ConvexLens(Arc):
