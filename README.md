@@ -35,5 +35,5 @@ System requirements are [FFmpeg](https://ffmpeg.org/), [OpenGL](https://www.open
 ## LICENSE
 The project falls under [MIT LICENSE](https://github.com/aljabrak/videos/blob/main/LICENSE.md).
 The source code in this repository <br/>
-is only for reference, and not for usage without permission. <br/> <br/>
-Copyright © 2021 aljabrak
+is only for reference, and not for usage without permission. <br/>
+## Copyright © 2021 aljabrak
