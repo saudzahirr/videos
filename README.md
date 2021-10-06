@@ -32,6 +32,7 @@ Manim runs on Python 3.6 or higher (Python 3.8 is recommended).
 System requirements are [FFmpeg](https://ffmpeg.org/), [OpenGL](https://www.opengl.org/) and [LaTeX](https://www.latex-project.org) ([MiKTeX](https://miktex.org/howto/install-miktex)).
 
 
-## Copyright ©
+## LICENSE
 The project falls under [MIT LICENSE](https://github.com/aljabrak/videos/blob/main/LICENSE.md).
 The source code in this repository is only for reference, and not for usage without permission.
+Copyright © 2021 aljabrak
