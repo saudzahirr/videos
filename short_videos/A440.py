@@ -1,6 +1,5 @@
 from manimce import *
 
-
 class A440(Scene):
     def construct(self):
         watermark(self)
@@ -20,7 +19,7 @@ class A440(Scene):
         axes.stretch_to_fit_height(2)
         axes.shift(2*DOWN)
 
-        self.add_sound('A440.wav', time_offset = 1)
+        self.add_sound('A440.wav', time_offset = 1.05)
         self.add(speaker)
         frequency = 2.1
         graph = self.get_wave_graph(frequency, axes)
@@ -31,10 +30,9 @@ class A440(Scene):
 
         self.play(
             Write(title, lag_ratio = 0.1 , run_time = 3.25, rate_func = smooth),
-            Create(graph, run_time = 5, rate_func = smooth),
-            Broadcast(waves, focal_point = speaker[4].get_center(), n_mobs = 10, run_time = 5, rate_func = smooth)
+            Create(graph, run_time = 5, rate_func = linear),
+            Broadcast(waves, focal_point = speaker[4].get_center(), n_mobs = 10, run_time = 6, rate_func = smooth)
         )
-
 
 
     def get_wave_graph(self, frequency, axes):
@@ -49,6 +47,9 @@ class A440(Scene):
             return value
         graph = axes.get_graph(func)
         return graph
-        
-        
-        
+    
+    
+    
+    
+    
+    
