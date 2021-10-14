@@ -1,5 +1,121 @@
 from manimce import *
+from custom.function import fourier_series
 
+
+
+def square_wave(x, n):
+    y = 0
+    for i in range(1, n):
+        y += sin((2*i - 1)*x)/(2*i - 1)
+    return y
+
+
+def discrete_function(x, y):
+    f = []
+    for m, n in zip(x, y):
+        q = [m, n, 0]
+        f.append(q)
+    
+    print(f)
+    return f
+
+
+def function(x):
+    return 1/2 + sin(x) + sin(2*x) + sin(3*x)
+
+
+        
+class Sampling(MovingCameraScene):
+    def construct(self):
+        #watermark(self)
+        frame = self.camera.frame
+        x = [i for i in range(-100, 100)]
+        y = [function(i) for i in range(-100, 100)]
+        f = discrete_function(x, y)
+        graph = FunctionGraph( 
+            lambda x : function(x),
+            x_range = [-100, 100],
+            color = BLUE
+        )
+
+        axis = Line(LEFT, RIGHT, color = GREY_B).scale(40)
+
+        points = VGroup()
+
+        for coord in f:
+            points.add(Dot(coord))
+
+        stem = VGroup()
+        stem.add(points)
+
+        x_coords = []
+        for i in x:
+            x = [i, 0, 0]
+            print(x)
+            x_coords.append(x)
+
+        for x_coord, y_coord in zip(x_coords, f):
+            line = Line(x_coord, y_coord)
+            stem.add(line)
+
+        self.play(
+            GrowFromCenter(axis),
+            rate_func = smooth,
+            run_time = 2.5
+        )
+        self.wait()
+        self.play(
+            Create(graph),
+            rate_func = smooth,
+            run_time = 5
+        )
+        self.wait(2)
+        self.play(
+            Write(stem),
+            rate_func = smooth,
+            run_time = 3
+        )
+        self.wait(3)
+
+
+        x = [i for i in arange(-100, 100, 0.2)]
+        y = [function(i) for i in arange(-100, 100, 0.2)]
+        f = discrete_function(x, y)
+
+        points = VGroup()
+
+        for coord in f:
+            points.add(Dot(coord))
+
+        stem_graph = VGroup()
+        stem_graph.add(points)
+
+        x_coords = []
+        for i in x:
+            x = [i, 0, 0]
+            print(x)
+            x_coords.append(x)
+
+        for x_coord, y_coord in zip(x_coords, f):
+            line = Line(x_coord, y_coord)
+            stem_graph.add(line)
+
+        
+        self.play(
+            stem.animate.become(stem_graph),
+            rate_func = smooth,
+            run_time = 1.5
+        )
+        self.wait(3)
+
+        self.play(
+            frame.animate.scale(2.5),
+            rate_func = smooth,
+            run_time = 5
+        )
+        self.wait(2)
+
+        
 
 class SawToothWave(Scene):
     def construct(self):
@@ -13,16 +129,9 @@ class SawToothWave(Scene):
             Create(waves)
         )
         self.wait()
-
-
-
-def square_wave(x, n):
-    y = 0
-    for i in range(1, n):
-        y += sin((2*i - 1)*x)/(2*i - 1)
-    return y
-
-
+        
+        
+        
 class FourierSeries(Scene):
     def construct(self):
         waves = VGroup()
@@ -52,3 +161,7 @@ class FourierSeries(Scene):
                 break
             self.wait()
         self.wait()
+
+        
+        
+        
