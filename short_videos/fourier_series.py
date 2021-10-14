@@ -1,5 +1,5 @@
 from manimce import *
-from custom.function import fourier_series
+from custom.functions import fourier_series
 
 
 
