@@ -21,7 +21,7 @@ def discrete_function(x, y):
 
 
 def function(x):
-    return 1/2 + sin(x) + sin(2*x) + sin(3*x)
+    return  sin(x) + sin(2*x) + sin(3*x)
 
 
         
@@ -29,16 +29,31 @@ class Sampling(MovingCameraScene):
     def construct(self):
         #watermark(self)
         frame = self.camera.frame
-        x = [i for i in range(-100, 100)]
-        y = [function(i) for i in range(-100, 100)]
+        title = Tex("Sampling")
+        title.scale(1.5)
+        title.to_edge(UP + LEFT)
+        sampling_equation = MathTex(
+            "x[n] = x_{c}(nT)",
+            color = YELLOW,
+        )
+        sampling_equation.scale(1.7)
+        sampling_equation.to_edge(LEFT + 3*UP)
+        sampling_equation.add_background_rectangle()
+        up_sample = Tex("Up Sampling")
+        up_sample.to_edge(DOWN + 3*RIGHT)
+        down_sample = Tex("Down Sampling")
+        down_sample.move_to(up_sample)
+
+        x = [i for i in range(-25, 25)]
+        y = [function(i) for i in range(-25, 25)]
         f = discrete_function(x, y)
         graph = FunctionGraph( 
             lambda x : function(x),
-            x_range = [-100, 100],
+            x_range = [-25, 25],
             color = BLUE
         )
 
-        axis = Line(LEFT, RIGHT, color = GREY_B).scale(40)
+        axis = Line(LEFT, RIGHT, color = GREY_B).scale(15)
 
         points = VGroup()
 
@@ -61,25 +76,26 @@ class Sampling(MovingCameraScene):
         self.play(
             GrowFromCenter(axis),
             rate_func = smooth,
-            run_time = 2.5
+            run_time = 0.5
         )
-        self.wait()
+        #self.wait()
         self.play(
             Create(graph),
+            rate_func = slow_into,
+            run_time = 6
+        )
+        #self.wait()
+        self.play(
+            Write(title, run_time = 3),
+            Write(stem),
             rate_func = smooth,
             run_time = 5
         )
         self.wait(2)
-        self.play(
-            Write(stem),
-            rate_func = smooth,
-            run_time = 3
-        )
-        self.wait(3)
 
 
-        x = [i for i in arange(-100, 100, 0.2)]
-        y = [function(i) for i in arange(-100, 100, 0.2)]
+        x = [i for i in arange(-25, 25, 0.2)]
+        y = [function(i) for i in arange(-25, 25, 0.2)]
         f = discrete_function(x, y)
 
         points = VGroup()
@@ -100,20 +116,66 @@ class Sampling(MovingCameraScene):
             line = Line(x_coord, y_coord)
             stem_graph.add(line)
 
-        
-        self.play(
-            stem.animate.become(stem_graph),
-            rate_func = smooth,
-            run_time = 1.5
-        )
-        self.wait(3)
 
+        frame.save_state()
+        self.play(FadeOut(title))
         self.play(
-            frame.animate.scale(2.5),
+            frame.animate.scale(1.75),
             rate_func = smooth,
             run_time = 5
         )
         self.wait(2)
+
+        self.play(
+            Restore(frame),
+            rate_func = smooth,
+            run_time = 5
+        )
+        self.play(
+            FadeIn(sampling_equation, shift = RIGHT),
+            rate_func = smooth,
+            run_time = 1.5
+        )
+        self.add_foreground_mobject(sampling_equation)
+        self.wait(2)
+
+        self.play(
+            Write(up_sample),
+            ReplacementTransform(stem, stem_graph),
+            rate_func = smooth,
+            run_time = 1.5
+        )
+        self.wait(2)
+
+        x = [i for i in arange(-25, 25, 0.5)]
+        y = [function(i) for i in arange(-25, 25, 0.5)]
+        f = discrete_function(x, y)
+
+        points = VGroup()
+
+        for coord in f:
+            points.add(Dot(coord))
+
+        stem_plot = VGroup()
+        stem_plot.add(points)
+
+        x_coords = []
+        for i in x:
+            x = [i, 0, 0]
+            print(x)
+            x_coords.append(x)
+
+        for x_coord, y_coord in zip(x_coords, f):
+            line = Line(x_coord, y_coord)
+            stem_plot.add(line)
+        
+        self.play(
+            TransformMatchingTex(up_sample, down_sample),
+            ReplacementTransform(stem_graph, stem_plot),
+            rate_func = smooth,
+            run_time = 1.5
+        )
+        self.wait(4)
 
         
 
