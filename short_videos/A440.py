@@ -1,4 +1,5 @@
 from manimce import *
+from custom.drawings import Speaker
 
 class A440(Scene):
     def construct(self):
