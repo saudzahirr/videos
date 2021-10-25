@@ -37,6 +37,7 @@ class A440(Scene):
 
 
     def get_wave_graph(self, frequency, axes):
+        # 3B1B video source code.
         tail_len = 3.0
         x_min, x_max = 0, 10
         def func(x):
