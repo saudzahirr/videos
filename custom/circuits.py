@@ -4,6 +4,7 @@ from itertools import *
 # Circuit Mobjects.
 
 class Resistor(Line):
+    #CONFIG = {}
     def __init__(self, **kwargs):
         Line.__init__(self, **kwargs)
         midpoints = [
