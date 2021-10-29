@@ -3,14 +3,17 @@ from manimce import *
 
 class LawsOfProbability(Scene):
     def construct(self):
-        title = Tex('Laws of Probability')
-        title.scale(2)
-        title.to_edge(UP)
-        #self.add(title)
+        logo_transformation(self)
+
+        # title = Tex('Laws of Probability')
+        # title.scale(2)
+        # self.play(
+        #     Write(title)
+        # )
         venn_diagram = self.get_venn_diagram()
         venn_diagram.to_edge(2 * RIGHT)
         venn_diagram.shift(DOWN)
-        formula = Tex(
+        addition_law = Tex(
             'P','$($', 'A', '$\\cup$', 'B', '$) = \\ $', 'P',
             '$($', 'A', '$) \\ + \\ $', 'P', '$($', 'B', '$)$',
             '$ \\ - \\ $', 'P', '$($', 'A', '$\\cap$', 'B', '$)$',
@@ -19,10 +22,10 @@ class LawsOfProbability(Scene):
                 'B' : BLUE
             }
         )
-        formula.scale(1.5)
-        formula.to_edge(UP + LEFT)
+        addition_law.scale(1.5)
+        addition_law.to_edge(UP + LEFT)
         arrow = Arrow(
-            formula[14:].get_bottom(),
+            addition_law[14:].get_bottom(),
             venn_diagram.get_center(),
         )
         speech_bubble = SpeechBubble()
@@ -41,6 +44,7 @@ class LawsOfProbability(Scene):
         kolmogorov = ImageMobject('Andrej_Nikolajewitsch_Kolmogorov.jpg')
         kolmogorov.scale(2)
         kolmogorov.to_edge(LEFT + DOWN)
+
         venn_diagram.save_state()
 
         self.play(
@@ -59,7 +63,7 @@ class LawsOfProbability(Scene):
         self.wait(2)
 
         self.play(
-            Write(formula, run_time = 4),
+            Write(addition_law, run_time = 4),
             GrowArrow(arrow),
             run_time = 2,
             rate_func = smooth
@@ -69,7 +73,7 @@ class LawsOfProbability(Scene):
         self.play(
             Group(venn_diagram[0][0], venn_diagram[1][0]).animate.shift(0.75*LEFT),
             Group(venn_diagram[0][1], venn_diagram[1][1]).animate.shift(0.75*RIGHT),
-            formula[14:].animate.set_opacity(0.2),
+            addition_law[14:].animate.set_opacity(0.2),
             FadeOut(arrow),
             run_time = 2,
             rate_func = smooth
@@ -81,6 +85,7 @@ class LawsOfProbability(Scene):
             run_time = 4,
             rate_func = smooth
         )
+        #self.add_foreground_mobjects(venn_diagram[0][0], venn_diagram[1][0], venn_diagram[0][1], venn_diagram[1][1])
         self.wait(3)
 
         self.play(
@@ -89,12 +94,48 @@ class LawsOfProbability(Scene):
         )
         self.play(
             Restore(venn_diagram),
-            formula[14:].animate.set_opacity(1),
+            addition_law[14:].animate.set_opacity(1),
             FadeIn(arrow),
             run_time = 2,
             rate_func = smooth
         )
         self.wait(2)
+
+        self.play(
+            FadeOut(Group(venn_diagram[0][1], venn_diagram[1][1]), arrow, addition_law),
+            Group(venn_diagram[0][0], venn_diagram[1][0]).animate.shift(0.75*RIGHT),
+            run_time = 2,
+            rate_func = smooth
+        )
+        self.wait(2)
+
+        # complementation_law = Tex(
+        #     r'P', '$(\\overline{ \\textrm{A} })$', '$ = \\ $',
+        #     '1$ \\ - \\ $', 'P', '$($', 'A', '$)$',
+        #     tex_to_color_map = {
+        #         'A' : YELLOW,
+        #         '$\\overline{ \\textrm{A} }$' : PURPLE
+        #     }
+        # )
+
+        complementation_law = MathTex(
+            '\\textrm{P}', '(\\bar{ \\textrm{A} })', ' = \\',
+            '1-', '\\textrm{P}', '(', '\\textrm{A}', ')',
+            tex_to_color_map = {
+                '\\textrm{A}' : YELLOW,
+                '\\bar{ \\textrm{A} }' : PURPLE
+            }
+        )
+        complementation_law.scale(1.5)
+        complementation_law.to_edge(UP + LEFT)
+
+        self.play(
+            Write(complementation_law),
+            venn_diagram[0][2].animate.set_fill(PURPLE, 0.5),
+            run_time = 3,
+            rate_func = smooth
+        )
+        self.wait()
 
         
 
@@ -145,6 +186,5 @@ class LawsOfProbability(Scene):
 
 
 
-
-
-
+    
+    
