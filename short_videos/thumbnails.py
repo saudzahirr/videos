@@ -130,3 +130,5 @@ class AngleIdentity(Scene):
         equation.scale(2.65)
         equation.add_background_rectangle()
         self.add_foreground_mobjects(equation)s
+
+        
