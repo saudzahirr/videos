@@ -6,7 +6,6 @@ from constants import *
 
 
 def aljabrak(self):
-    #LOGO
     circle_1 = Circle(radius = 1, fill_color = CHARCOAL, stroke_color = WHITE, stroke_width = 5, fill_opacity = 0.3)
     title_1 = MathTex("\\alpha")
     title_1.scale(4.5)
