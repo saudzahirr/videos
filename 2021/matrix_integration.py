@@ -68,6 +68,7 @@ class MatrixIntegration(Scene):
     def construct(self):
         
         # matrix_ = Text("What is a Matrix Function?")
+        
         matrix_ = Tex(r"What is a Matrix Function?")
         matrix_.scale(0.8)
         
