@@ -1,4 +1,5 @@
-from manimce import *
+from manim import *
+from custom.drawings import SpeechBubble, ThoughtBubble
 
 class AlphaCreature(SVGMobject):
   file_name = 'alpha_creature.svg'
