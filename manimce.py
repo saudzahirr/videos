@@ -21,8 +21,5 @@ from custom.functions import fourier_series, quaternion_multiplication
 
 
 
-
 class ExternallyAnimatedScene(Scene):
     pass
-
-  
