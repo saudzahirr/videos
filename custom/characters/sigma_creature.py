@@ -3,6 +3,7 @@ from custom.drawings import SpeechBubble, ThoughtBubble
 
 
 
+
 def sigma_creature(self, mode, color):
     sigma_creature = SVGMobject('number_creature.svg')
     sigma = SVGMobject('sigma.svg')
