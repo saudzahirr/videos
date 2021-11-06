@@ -4,6 +4,8 @@ from manimce import *
 class RotationScene(Scene):
     def construct(self):
         self.camera.background_color = GREY_E
+        watermark(self)
+        
         screen = ScreenRectangle(stroke_width=4,stroke_color=WHITE,fill_opacity=1,fill_color=BLACK)
         screen.scale(1.3)
         screen.to_edge(DOWN)
