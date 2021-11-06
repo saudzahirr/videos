@@ -3,7 +3,8 @@ from manimce import *
 
 class GoldenRatio(Scene):
     def construct(self):
-        logo(self)
+        # logo(self)
+        aljabrak(self)
 
         circle = Circle(color = WHITE)
         pentagon = RegularPolygon(n = 5, color = GREY)
