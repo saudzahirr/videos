@@ -47,3 +47,29 @@ def sigma_creature(self, mode, color):
     
 
     
+    
+def blink_eye(self, mobject, times, delay):
+    eye_parts = self.eye_parts = mobject[0:4]
+    eye_parts.save_state()
+    eye_bottom_y = eye_parts.get_bottom()[1]
+
+            
+    for i in range(times):
+        self.play(
+            Animation(
+                eye_parts.apply_function(
+                    lambda p: [p[0], eye_bottom_y, p[2]]
+                )
+            ),
+            run_time = 0.3,
+            rate_func = smooth
+        )
+        self.play(
+            Restore(eye_parts),
+            run_time = 0.3,
+            rate_func = smooth
+        )
+        self.wait(delay)
+        
+        
+        
