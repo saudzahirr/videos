@@ -1,14 +1,18 @@
 from manimce import *
 
+
+
 class HalfAngleIdentity(MovingCameraScene):
+    
     colors = [
         BLUE_B, BLUE_C, BLUE_D, BLUE_D
     ]
     text = "geometry_wonderland.svg"
 
     def construct(self):
-        #self.add_sound("heartbeat.wav", time_offset = 6, gain = 1.5)
+        # self.add_sound("heartbeat.wav", time_offset = 6, gain = 1.5)
         logo_transformation(self)
+        
         frame = self.camera.frame
         geometry = Circle(radius = 2, color = GREY_BROWN)
         points = geometry.get_all_points()
@@ -67,7 +71,7 @@ class HalfAngleIdentity(MovingCameraScene):
 
         self.play(
             LaggedStartMap(MoveToTarget, circles),
-            #GrowFromPoint(geometry, geometry.get_center()),
+            # GrowFromPoint(geometry, geometry.get_center()),
             DrawBorderThenFill(geometry),
             run_time = 3
         )
@@ -146,7 +150,7 @@ class HalfAngleIdentity(MovingCameraScene):
             Write(double_theta),
             run_time = 1.5,
             rate_func = smooth
-            #GrowFromPoint(double_theta, geometry.get_left())
+            # GrowFromPoint(double_theta, geometry.get_left())
         )
         self.wait(3)
 
@@ -288,7 +292,7 @@ class HalfAngleIdentity(MovingCameraScene):
         length_L = BraceLabel(projection_line, "\\mathrm{cos}^{2}(\\theta)", DOWN)
         hypotenuse = BraceBetweenPoints(points[3], points[15])
         hyp = MathTex("\\mathrm{cos}(\\theta)")
-        #hyp.add_background_rectangle()
+        # hyp.add_background_rectangle()
         hyp.next_to(hypotenuse, 0.25 * UP)
         hyp.shift(0.38 * DOWN)
         circle.add(
@@ -328,7 +332,7 @@ class HalfAngleIdentity(MovingCameraScene):
             rate_func = smooth
         )
         self.play(
-            #theorem.animate,
+            # theorem.animate,
             theorem.animate.shift(5 * RIGHT),
             run_time = 2,
             rate_func = smooth
@@ -355,11 +359,11 @@ class HalfAngleIdentity(MovingCameraScene):
         )
         self.wait(2)
         self.play(
-            #ReplacementTransform(length_L, unit_circle),
+            # ReplacementTransform(length_L, unit_circle),
             GrowFromPoint(perpendicular, points[3]),
             Create(angled_line)
         )
-        #self.add(circle_radius)
+        # self.add(circle_radius)
         self.wait(2.25)
 
 
@@ -371,7 +375,7 @@ class HalfAngleIdentity(MovingCameraScene):
         angled_line_length = BraceBetweenPoints(points[3], center)
         half = MathTex("\\small{1 \\over 2}")
         half.scale(0.85)
-        #half.add_background_rectangle()
+        # half.add_background_rectangle()
         half.move_to(angled_line_length)
         half.shift(0.5 * UP)
         half.shift(0.5 * LEFT)
@@ -441,6 +445,7 @@ class HalfAngleIdentity(MovingCameraScene):
         self.clear()
     
 
+    
     def get_geometry_wonderland_word(self):
         word = SVGMobject(self.text)
         word.scale(2)
