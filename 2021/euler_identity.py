@@ -1,4 +1,8 @@
+#!/usr/bin/env python
+
+
 from manimce import *
+
 
 class EulerFormula(Scene):
     def construct(self):
