@@ -5,6 +5,7 @@ Poem on Moser's Circle Problem by 3blue1brown.
 https://www.3blue1brown.com/blog/poems#mosers-circle-problem
 """
 
+
 class CircleProblem(Scene):
     poem = VGroup(
     Tex(
@@ -44,7 +45,10 @@ class CircleProblem(Scene):
     )
     def construct(self):
         self.add_sound("youtube 2.wav", time_offset = 6)
-        logo_transformation(self)
+        # logo_transformation(self)
+        aljabrak(self)
+        
+        
         poem = self.poem
         poem.set_color(BLUE_B)
         title = Tex("Moser's Circle Problem")
