@@ -1,8 +1,8 @@
 from manimce import *
 
-class Introduction(ExternallyAnimatedScene):
+class Introduction(Scene):
   pass
  
 
-class NyquistShannonTheorem(ExternallyAnimatedScene):
+class NyquistShannonTheorem(Scene):
   pass
