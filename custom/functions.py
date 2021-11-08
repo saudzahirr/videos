@@ -24,9 +24,6 @@ def quaternion_multiplication(q1, q2):
 
 
 
-
-
-
 def square_wave(x, n):
     y = 0
     for i in range(1, n):
