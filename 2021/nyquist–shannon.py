@@ -48,6 +48,14 @@ def get_axis():
 
 
 
+def get_impulse_train(a, x_min, x_max, n):
+    impulse_train = VGroup()
+    for i in arange(x_min, x_max, n):
+        impulse_train.add(Arrow(Point([i, -0.25, 0]), Point([i, a, 0])))
+    return impulse_train
+
+
+
 def get_square_wave(square_wave, x_min, x_max, n):
     wave = FunctionGraph(
         lambda x : square_wave(x, n),
