@@ -12,7 +12,6 @@ from custom.constants import *
 from custom.circuits import Resistor, Source, EarthGround
 from custom.drawings import SpeechBubble, ThoughtBubble
 from custom.characters.sigma_creature import sigma_creature, blink_eye
-from custom.functions import fourier_series, quaternion_multiplication
 
 
 
