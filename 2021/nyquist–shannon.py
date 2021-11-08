@@ -45,6 +45,15 @@ def get_graph(function, x_min, x_max):
 def get_axis():
     axis = Line(LEFT, RIGHT, color = GREY_B).scale(15)
     return axis
+
+
+
+def get_square_wave(square_wave, x_min, x_max, n):
+    wave = FunctionGraph(
+        lambda x : square_wave(x, n),
+        x_range = [x_min, x_max]
+    )
+    return 
   
   
   
