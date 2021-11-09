@@ -42,9 +42,26 @@ def get_graph(function, x_min, x_max):
     )
     return graph
 
-def get_axis():
-    axis = Line(LEFT, RIGHT, color = GREY_B).scale(15)
+
+
+def get_axis(x_min, x_max):
+    axis = NumberLine(
+        (x_min, x_max, 0.1),
+        tick_size = 0.025,
+        longer_tick_multiple = 4,
+        numbers_with_elongated_ticks = range(x_min, x_max, 1),
+    )
+    axis.add_numbers(
+        range(x_min, x_max, 1),
+        group_with_commas = False,
+    )
+    # axis = Line(LEFT, RIGHT, color = GREY_B).scale(15)
     return axis
+
+
+
+def function(x):
+    return  sin(x)
 
 
 
