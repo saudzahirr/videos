@@ -61,7 +61,7 @@ def get_square_wave(square_wave, x_min, x_max, n):
         lambda x : square_wave(x, n),
         x_range = [x_min, x_max]
     )
-    return 
+    return wave
   
   
   
