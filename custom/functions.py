@@ -20,7 +20,7 @@ def quaternion_multiplication(q1, q2):
     x = w1 * x2 + x1 * w2 + y1 * z2 - z1 * y2
     y = w1 * y2 + y1 * w2 + z1 * x2 - x1 * z2
     z = w1 * z2 + z1 * w2 + x1 * y2 - y1 * x2
-    return np.array([w, x, y, z])
+    return array([w, x, y, z])
 
 
 
