@@ -80,6 +80,29 @@ def get_impulse_train(a, x_min, x_max, n):
     for i in arange(x_min, x_max, n):
         impulse_train.add(Arrow(Point([i, -0.25, 0]), Point([i, a, 0])))
     return impulse_train
+
+
+
+def get_frequency_domain(frequency):
+    f = frequency
+    axes = Axes(
+        y_range = [-2, 2],
+        x_range = [-5, 5],
+        axis_config = {"include_tip" : False},
+    )
+    axes.stretch_to_fit_height(2)
+    audio_signal = MathTex("F(j\\omega)")
+    freq = MathTex("\\omega")
+    for label in audio_signal, freq:
+        label.scale(0.8)
+    audio_signal.next_to(axes.y_axis, UP)
+    audio_signal.shift(LEFT)
+    freq.next_to(axes.x_axis.get_right(), DOWN + LEFT)
+    labels = VGroup(audio_signal, freq)
+    for i, j in zip([-3, 3], [-f, f]):
+        axes.add(Arrow(Point(array([i, - 0.25, 0])), Point(array([i, 1.5, 0])), color = YELLOW))
+        axes.add(MathTex(str(j)).scale(0.75).next_to(Point(array([i, - 0.25, 0])), 0.5 * DOWN))
+    return axes, labels
   
   
   
