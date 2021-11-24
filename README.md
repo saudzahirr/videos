@@ -1,23 +1,9 @@
 # aljabrak
-
-"If you can't explain it simply, you don't understand it well enough."
-<br/>
-<br/>
-<p align="left">
-<a href="www.aljabrak.com" target="blank"><img align="center" src="https://raw.githubusercontent.com/iconic/open-iconic/master/svg/globe.svg" alt="aljabrak" height="30" width="40" /></a>
-<a href="https://www.youtube.com/channel/UCN0ssVJD0ANFjmggc1vkcww/featured" target="blank"><img align="center" src="https://raw.githubusercontent.com/rahuldkjain/github-profile-readme-generator/master/src/images/icons/Social/youtube.svg" alt="aljabrak" height="30" width="40" /></a>
-<a href="https://twitter.com/aljabrak" target="blank"><img align="center" src="https://raw.githubusercontent.com/rahuldkjain/github-profile-readme-generator/master/src/images/icons/Social/twitter.svg" alt="aljabrak" height="30" width="40" /></a>
-<a href="https://www.instagram.com/aljabrak/" target="blank"><img align="center" src="https://raw.githubusercontent.com/rahuldkjain/github-profile-readme-generator/master/src/images/icons/Social/instagram.svg" alt="aljabrak" height="30" width="40" /></a>
-<a href="https://www.reddit.com/user/aljabrak" target="blank"><img align="center" src="https://raw.githubusercontent.com/rahuldkjain/github-profile-readme-generator/master/src/images/icons/Social/reddit.svg" alt="aljabrak" height="30" width="40" /></a>
-<a href="https://web.facebook.com/aljabrak" target="blank"><img align="center" src="https://raw.githubusercontent.com/rahuldkjain/github-profile-readme-generator/master/src/images/icons/Social/facebook.svg" alt="aljabrak" height="30" width="40" /></a>
-</p>
-<br/>
-
 This project contains code for animated mathematics, physics, engineering and computer science for better understanding.
 All the work here is generated using community maintained version at [Manim Community](https://github.com/ManimCommunity).
 Some of the animantions are based on [manim](https://github.com/3b1b/manim), an open source scrappy python library for mathematical animation
-created by Grant Sanderson. Also see his work [3blue1brown](https://www.3blue1brown.com/).
-
+created by Grant Sanderson. Also see his work [3blue1brown](https://www.3blue1brown.com/). <br/> <br/>
+The Manim Community Developers. (2021). Manim – Mathematical Animation Framework (Version v0.12.0) [Computer software]. https://www.manim.community/
 
 
 ## Manim Installation
