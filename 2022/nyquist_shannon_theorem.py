@@ -4,10 +4,12 @@ from custom.drawings import Speaker
 from 2021.sampling import get_sampling
 
 
-
 class Introduction(Scene):
   pass
  
 
 class NyquistShannonTheorem(Scene):
   pass
+
+
+
