@@ -11,5 +11,3 @@ class Introduction(Scene):
 class NyquistShannonTheorem(Scene):
   pass
 
-
-
