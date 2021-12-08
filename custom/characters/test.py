@@ -13,10 +13,10 @@ class SigmaCreature(Scene):
           "it may be necessary to have\\\\",
           "a deeper understanding of\\\\",
           "mathematical relationships.''").scale(3)
-      speech.position_mobject_inside(words)
+      speech_bubble.position_mobject_inside(words)
 
       self.play(
-        Create(speech),
+        Create(speech_bubble),
         Write(words),
       )
       self.wait()
