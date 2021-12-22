@@ -5,7 +5,7 @@ directories:
   vector_images: "C:/Manim/SVG"
   # sounds: "C:\Manim\Music"
   # temporary_storage: "C:/"
-universal_import_line: "from manimlib import *"
+universal_import_line: "from manim_ext import *"
 # tex:
 #   executable: "xelatex -no-pdf"
 #   template_file: "ctex_template.tex"
