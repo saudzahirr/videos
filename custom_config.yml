@@ -1,0 +1,20 @@
+directories:
+  mirror_module_path: True
+  output: "C:/Manim/videos"
+  raster_images: "C:/Manim/Images"
+  vector_images: "C:/Manim/SVG"
+  # sounds: "C:\Manim\Music"
+  # temporary_storage: "C:/"
+universal_import_line: "from manimlib import *"
+# tex:
+#   executable: "xelatex -no-pdf"
+#   template_file: "ctex_template.tex"
+#   intermediate_filetype: "xdv"
+style:
+  font: "CMU Serif"
+  background_color: "#000000"
+camera_qualities:
+  default_quality: "high"
+window_position: UR
+window_monitor: 0
+full_screen: False
