@@ -3,7 +3,7 @@ directories:
   output: "C:/Manim/videos"
   raster_images: "C:/Manim/Images"
   vector_images: "C:/Manim/SVG"
-  # sounds: "C:\Manim\Music"
+  sounds: "C:/Manim/Music"
   temporary_storage: "C:\LaTeX"
 universal_import_line: "from manim_ext import *"
 # tex:
