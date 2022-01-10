@@ -1,7 +1,7 @@
 from manimce import *
 
 
-class Rotation(Scene):
+class ComplexPlaneRotation(Scene):
     def construct(self):
         self.add_title()
         self.add_plane()
@@ -12,7 +12,7 @@ class Rotation(Scene):
         title.scale(1.5)
         title.to_edge(UP)
         title.add_background_rectangle()
-        self.add(title)
+        self.add_foreground_mobjects(title)
 
     def add_plane(self):
         plane = ComplexPlane(
