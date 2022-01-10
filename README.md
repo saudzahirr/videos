@@ -3,7 +3,7 @@ This project contains code for animated mathematics, physics, engineering and co
 All the work here is generated using community maintained version at [Manim Community](https://github.com/ManimCommunity).
 Some of the animantions are based on [manim](https://github.com/3b1b/manim), an open source scrappy python library for mathematical animation
 created by Grant Sanderson. Also see his work [3blue1brown](https://www.3blue1brown.com/). <br/> <br/>
-The Manim Community Developers. (2021). Manim – Mathematical Animation Framework (Version v0.12.0) [Computer software]. https://www.manim.community/
+The Manim Community Developers. (2022). Manim – Mathematical Animation Framework (Version v0.14.0) [Computer software]. https://www.manim.community/
 
 
 ## Manim Installation
@@ -24,4 +24,4 @@ System requirements are [FFmpeg](https://ffmpeg.org/), [OpenGL](https://www.open
 The project falls under [MIT LICENSE](https://github.com/aljabrak/videos/blob/main/LICENSE.md).
 The source code in this repository <br/>
 is only for reference, and not for usage without permission. <br/>
-## Copyright © 2021 aljabrak
+## Copyright © 2022 aljabrak
