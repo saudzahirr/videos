@@ -9,8 +9,9 @@ class Rotation(Scene):
     def add_title(self):
         title = Tex("Complex Rotation")
         title.set_stroke(BLACK, 5, background=True)
-        title.scale(1.2)
+        title.scale(1.5)
         title.to_edge(UP)
+        title.add_background_rectangle()
         self.add(title)
 
     def add_plane(self):
