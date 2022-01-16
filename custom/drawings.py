@@ -1,10 +1,11 @@
 from manim import *
+from custom.functions import *
 
 
 
 
 class SpeechBubble(SVGMobject):
-    file_name = "bubble-speech.svg"
+    file_name = get_svg("bubble-speech.svg")  # "Bubbles_speech.svg"
     direction = LEFT
     center_point = ORIGIN
     content_scale_factor = 0.75
@@ -87,7 +88,7 @@ class SpeechBubble(SVGMobject):
 
 
 class ThoughtBubble(SVGMobject):
-    file_name = "bubble-thought.svg"
+    file_name = get_svg("bubble-thought.svg")
     direction = LEFT
     center_point = ORIGIN
     content_scale_factor = 0.75
@@ -170,7 +171,7 @@ class ThoughtBubble(SVGMobject):
     
     
 class Speaker(SVGMobject):
-    file_name = "speaker.svg"
+    file_name = get_svg("speaker.svg")
     def __init__(self, **kwargs):
         SVGMobject.__init__(self, **kwargs)
         self.scale(1.25)
@@ -219,10 +220,78 @@ class ConcaveLens(VMobject):
         self.set_color(BLUE_B)
 
 
+
+class Speedometer(VMobject):
+    CONFIG = {
+        "arc_angle": 4 * np.pi / 3,
+        "num_ticks": 8,
+        "tick_length": 0.2,
+        "needle_width": 0.1,
+        "needle_height": 0.8,
+        "needle_color": YELLOW,
+    }
+
+    def init_points(self):
+        start_angle = np.pi / 2 + self.arc_angle / 2
+        end_angle = np.pi / 2 - self.arc_angle / 2
+        self.add(Arc(
+            start_angle=start_angle,
+            angle=-self.arc_angle
+        ))
+        tick_angle_range = np.linspace(start_angle, end_angle, self.num_ticks)
+        for index, angle in enumerate(tick_angle_range):
+            vect = rotate_vector(RIGHT, angle)
+            tick = Line((1 - self.tick_length) * vect, vect)
+            label = Tex(str(10 * index))
+            label.set_height(self.tick_length)
+            label.shift((1 + self.tick_length) * vect)
+            self.add(tick, label)
+
+        needle = Polygon(
+            LEFT, UP, RIGHT,
+            stroke_width=0,
+            fill_opacity=1,
+            fill_color=self.needle_color
+        )
+        needle.stretch_to_fit_width(self.needle_width)
+        needle.stretch_to_fit_height(self.needle_height)
+        needle.rotate(start_angle - np.pi / 2, about_point=ORIGIN)
+        self.add(needle)
+        self.needle = needle
+
+        self.center_offset = self.get_center()
+
+    def get_center(self):
+        result = VMobject.get_center(self)
+        if hasattr(self, "center_offset"):
+            result -= self.center_offset
+        return result
+
+    def get_needle_tip(self):
+        return self.needle.get_anchors()[1]
+
+    def get_needle_angle(self):
+        return angle_of_vector(
+            self.get_needle_tip() - self.get_center()
+        )
+
+    def rotate_needle(self, angle):
+        self.needle.rotate(angle, about_point=self.get_center())
+        return self
+
+    def move_needle_to_velocity(self, velocity):
+        max_velocity = 10 * (self.num_ticks - 1)
+        proportion = float(velocity) / max_velocity
+        start_angle = np.pi / 2 + self.arc_angle / 2
+        target_angle = start_angle - self.arc_angle * proportion
+        self.rotate_needle(target_angle - self.get_needle_angle())
+        return self
+
+
 # Probability Mobjects.
 
 class ChessBoard(SVGMobject):
-    file_name = "chess.svg"
+    file_name = get_svg("chess.svg")
     def __init__(self, **kwargs):
         SVGMobject.__init__(self, **kwargs)
         self.scale(3)
@@ -230,7 +299,7 @@ class ChessBoard(SVGMobject):
 
 
 class Heart(SVGMobject):
-    file_name = "heart.svg"
+    file_name = get_svg("heart.svg")
     def __init__(self, **kwargs):
         SVGMobject.__init__(self, **kwargs)
         self.set_color(RED)
@@ -239,7 +308,7 @@ class Heart(SVGMobject):
 
 
 class Diamond(SVGMobject):
-    file_name = "diamond.svg"
+    file_name = get_svg("diamond.svg")
     def __init__(self, **kwargs):
         SVGMobject.__init__(self, **kwargs)
         self.set_color(RED)
@@ -248,7 +317,7 @@ class Diamond(SVGMobject):
 
 
 class Spade(SVGMobject):
-    file_name = "spade.svg"
+    file_name = get_svg("spade.svg")
     def __init__(self, **kwargs):
         SVGMobject.__init__(self, **kwargs)
         self.set_color(WHITE)
@@ -257,7 +326,7 @@ class Spade(SVGMobject):
 
 
 class Clover(SVGMobject):
-    file_name = "clover.svg"
+    file_name = get_svg("clover.svg")
     def __init__(self, **kwargs):
         SVGMobject.__init__(self, **kwargs)
         self.set_color(WHITE)
@@ -267,7 +336,7 @@ class Clover(SVGMobject):
 
 
 class BitCoin(SVGMobject):
-    file_name = "bitcoin.svg"
+    file_name = get_svg("bitcoin.svg")
     def __init__(self, **kwargs):
         SVGMobject.__init__(self, **kwargs)
         self.set_color_by_gradient(YELLOW_B, YELLOW_A, YELLOW_A)
@@ -277,7 +346,7 @@ class BitCoin(SVGMobject):
 # Robot Mobjects.
 
 class Robot(SVGMobject):
-    file_name = "robot.svg"
+    file_name = get_svg("robot.svg")
     def __init__(self, **kwargs):
         SVGMobject.__init__(self, **kwargs)
         self.scale(2)
@@ -285,7 +354,7 @@ class Robot(SVGMobject):
 
 
 class Spybot(SVGMobject):
-    file_name = "spybot.svg"
+    file_name = get_svg("spybot.svg")
     def __init__(self, **kwargs):
         SVGMobject.__init__(self, **kwargs)
         self.scale(2)
