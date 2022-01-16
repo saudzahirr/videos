@@ -1,5 +1,6 @@
 from manim import *
 from itertools import *
+from custom.functions import get_svg
 
 
 # Circuit Mobjects.
@@ -20,7 +21,7 @@ class Resistor(Line):
 
 
 class LongResistor(SVGMobject):
-    file_name = "resister.svg"
+    file_name = get_svg("resister.svg")
     def __init__(self, **kwargs):
         SVGMobject.__init__(self, **kwargs)
         self.scale(0.25)
@@ -29,7 +30,7 @@ class LongResistor(SVGMobject):
 
 
 class Inductor(SVGMobject):
-    file_name = "inductor.svg"
+    file_name = get_svg("inductor.svg")
     def __init__(self, **kwargs):
         SVGMobject.__init__(self, **kwargs)
         self.scale(0.25)
@@ -38,7 +39,7 @@ class Inductor(SVGMobject):
     
 
 class Capacitor(SVGMobject):
-    file_name = "capacitor.svg"
+    file_name = get_svg("capacitor.svg")
     def __init__(self, **kwargs):
         SVGMobject.__init__(self, **kwargs)
         self.set_stroke(WHITE, 4)
@@ -73,7 +74,7 @@ class Source(VMobject):
 
 
 class EarthGround(SVGMobject):
-    file_name = "earth_ground.svg"
+    file_name = get_svg("earth_ground.svg")
     def __init__(self, **kwargs):
         SVGMobject.__init__(self, **kwargs)
         self.scale(0.5)
@@ -82,7 +83,7 @@ class EarthGround(SVGMobject):
 
 
 class SignalGround(SVGMobject):
-    file_name = "signal_ground.svg"
+    file_name = get_svg("signal_ground.svg")
     def __init__(self, **kwargs):
         SVGMobject.__init__(self, **kwargs)
         self.scale(0.5)
@@ -91,7 +92,7 @@ class SignalGround(SVGMobject):
 
 
 class ChassisGround(SVGMobject):
-    file_name = "chassis_ground.svg"
+    file_name = get_svg("chassis_ground.svg")
     def __init__(self, **kwargs):
         SVGMobject.__init__(self, **kwargs)
         self.scale(0.5)
@@ -100,7 +101,7 @@ class ChassisGround(SVGMobject):
 
 
 class Diode(SVGMobject):
-    file_name = "diode.svg"
+    file_name = get_svg("diode.svg")
     def __init__(self, **kwargs):
         SVGMobject.__init__(self, **kwargs)
         self.scale(0.5)
@@ -109,7 +110,7 @@ class Diode(SVGMobject):
 
 
 class ZenerDiode(SVGMobject):
-    file_name = "zener_diode.svg"
+    file_name = get_svg("zener_diode.svg")
     def __init__(self, **kwargs):
         SVGMobject.__init__(self, **kwargs)
         self.scale(0.5)
@@ -118,7 +119,7 @@ class ZenerDiode(SVGMobject):
 
 
 class NPN(SVGMobject):
-    file_name = "NPN.svg"
+    file_name = get_svg("NPN.svg")
     def __init__(self, **kwargs):
         SVGMobject.__init__(self, **kwargs)
         self.scale(0.5)
@@ -127,7 +128,7 @@ class NPN(SVGMobject):
 
 
 class Buffer(SVGMobject):
-    file_name = "buffer.svg"
+    file_name = get_svg("buffer.svg")
     def __init__(self, **kwargs):
         SVGMobject.__init__(self, **kwargs)
         self.scale(0.5)
@@ -136,7 +137,7 @@ class Buffer(SVGMobject):
 
 
 class NotGate(SVGMobject):
-    file_name = "not.svg"
+    file_name = get_svg("not.svg")
     def __init__(self, **kwargs):
         SVGMobject.__init__(self, **kwargs)
         self.scale(0.5)
@@ -145,7 +146,7 @@ class NotGate(SVGMobject):
 
 
 class OrGate(SVGMobject):
-    file_name = "or.svg"
+    file_name = get_svg("or.svg")
     def __init__(self, **kwargs):
         SVGMobject.__init__(self, **kwargs)
         self.scale(0.5)
@@ -154,7 +155,7 @@ class OrGate(SVGMobject):
 
 
 class AndGate(SVGMobject):
-    file_name = "and.svg"
+    file_name = get_svg("and.svg")
     def __init__(self, **kwargs):
         SVGMobject.__init__(self, **kwargs)
         self.scale(0.5)
@@ -163,7 +164,7 @@ class AndGate(SVGMobject):
 
 
 class NorGate(SVGMobject):
-    file_name = "nor.svg"
+    file_name = get_svg("nor.svg")
     def __init__(self, **kwargs):
         SVGMobject.__init__(self, **kwargs)
         self.scale(0.5)
@@ -172,7 +173,7 @@ class NorGate(SVGMobject):
 
 
 class NandGate(SVGMobject):
-    file_name = "nand.svg"
+    file_name = get_svg("nand.svg")
     def __init__(self, **kwargs):
         SVGMobject.__init__(self, **kwargs)
         self.scale(0.5)
@@ -181,7 +182,7 @@ class NandGate(SVGMobject):
 
 
 class XorGate(SVGMobject):
-    file_name = "xor.svg"
+    file_name = get_svg("xor.svg")
     def __init__(self, **kwargs):
         SVGMobject.__init__(self, **kwargs)
         self.scale(0.5)
@@ -190,7 +191,7 @@ class XorGate(SVGMobject):
 
 
 class XnorGate(SVGMobject):
-    file_name = "xnor.svg"
+    file_name = get_svg("xnor.svg")
     def __init__(self, **kwargs):
         SVGMobject.__init__(self, **kwargs)
         self.scale(0.5)
