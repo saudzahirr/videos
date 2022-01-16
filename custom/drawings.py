@@ -1,5 +1,5 @@
 from manim import *
-from custom.functions import *
+from custom.functions import get_svg
 
 
 
