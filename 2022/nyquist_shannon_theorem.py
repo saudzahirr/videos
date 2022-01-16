@@ -79,3 +79,32 @@ def get_graph(function, x_min, x_max):
   
 class NyquistShannonTheorem(Scene):
   pass
+
+
+
+class ImpulseTrainScene(Scene):
+    def construct(self):
+        impulse_train = get_impulse_train(1.25, -10, 10, 0.5)
+        axis = get_axis(-10, 10)
+        self.add(axis)
+        self.wait()
+        for impulse in impulse_train:
+            self.play(
+                GrowArrow(impulse),
+                run_time = 0.05,
+                rate_func = smooth
+            )
+        self.wait()
+        stem = get_sampling(function, -10, 10, 0.25)
+        graph = get_graph(function, -10, 10)
+
+        self.play(
+            Create(graph),
+            Write(stem),
+            impulse_train.animate.set_opacity(0.5),
+            run_time = 2,
+            rate_func = smooth
+        )
+        self.wait()
+        self.play(FadeOut(graph, impulse_train))
+        self.wait()
