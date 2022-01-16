@@ -11,6 +11,13 @@ def get_image(filename):
 
 
 
+def get_portrait(filename):
+    dir = "Images/Portraits"
+    file = os.path.join(dir, filename)
+    return file
+
+
+
 def get_svg(filename):
     dir = "SVG"
     file = os.path.join(dir, filename)
