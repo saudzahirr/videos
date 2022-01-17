@@ -18,7 +18,7 @@ Minus of minus by minus of minus makes minus"
 """
 events = [
     "Ferro solves compressed \\\\ cubic equations.",
-    "Tartaglia claims the \\\\ solution of cubic \\\\ polynomial.",
+    "Tartaglia claims cubic \\\\ polynomial solutions.",
     "Cardano publishes \\\\ Tartaglia's work.",
     "Bombelli invents \\\\ complex numbers.",
     "Leibniz works on \\\\ cubic equations.",
@@ -32,11 +32,11 @@ portraits = [
     "Gottfried_Wilhelm_Leibniz.jpg",
     "Leonhard_Euler.png"
 ]
-dates = [1510, 1530, 1545, 1572, 1702, 1770]
+dates = [1520, 1530, 1545, 1572, 1702, 1770]
 
 height = ImageMobject(get_portrait(portraits[2])).get_height()
 width = ImageMobject(get_portrait(portraits[2])).get_width()
-kwargs = {"run_time" : 3, "rate_func" : bezier([0, 0, 1, 1])}
+kwargs = {"run_time" : 20, "rate_func" : bezier([0, 0, 1, 1])}
 
 def argand_plane(x, y):
     plane = ComplexPlane(
@@ -66,7 +66,7 @@ class History(MovingCameraScene):
     def construct(self):
         frame = self.camera.frame
         frame.save_state()
-        time_range = (1480, 1800)
+        time_range = (1480, 2000)
         timeline = NumberLine(
             (*time_range, 1),
             tick_size = 0.025,
@@ -85,11 +85,10 @@ class History(MovingCameraScene):
             self.get_event(portrait, date, event, timeline)
         self.wait()
         self.play(
-            Restore(frame),
+            frame.animate.shift(5 * FRAME_WIDTH * RIGHT),
             **kwargs
         )
         self.play(
-            frame.animate.shift(5 * LEFT),
             FadeOut(timeline),
             run_time = 2
         )
@@ -105,9 +104,9 @@ class History(MovingCameraScene):
         image.next_to(timeline.n2p(date), UP, buff = 2.0)
         event.next_to(image, DOWN)
         image.add(event)
-        if date == 1510:
-            arrow = CurvedArrow(event.get_left(), timeline.n2p(date))
+        if date == 1520:
             date = 1526
+            arrow = Arrow(event.get_right(), timeline.n2p(date))
             self.add(arrow)
         date = Tex("(" + str(date) + ")")
         date.next_to(event, DOWN)
