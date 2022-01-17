@@ -251,3 +251,13 @@ class CasusIrreducibilis(Scene):
             run_time = 3
         )
         self.wait()
+
+        
+        
+class EulersManuscript(ExternallyAnimatedScene):
+    pass
+
+
+
+
+
