@@ -74,11 +74,7 @@ def get_graph(function, x_min, x_max):
         color = BLUE
     )
     return graph
-  
-  
-  
-class NyquistShannonTheorem(Scene):
-  pass
+
 
 
 
