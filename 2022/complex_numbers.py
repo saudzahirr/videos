@@ -259,16 +259,16 @@ class EulersManuscript(ExternallyAnimatedScene):
 
 class ArgandPlane(Scene):
     def construct(self):
-        x_err=0.25
-        y_err=0.05
-        plane=argand_plane(5.5,4.5).add_coordinates()
+        x_err = 0.25
+        y_err = 0.05
+        plane = argand_plane(5.5, 4.5).add_coordinates()
         plane.set_height(7.0)
-        d1=Dot(plane.n2p(0),color=YELLOW)
-        p1=Arrow(start=plane.n2p(-0.25-0.05j),end=plane.n2p(4.25+1.05j),color=YELLOW,stroke_width=3)
-        lblp1=MathTex("4+i").scale(0.5).next_to(p1,UR,0.1)
+        d1 = Dot(plane.n2p(0), color = YELLOW)
+        p1 = Arrow(start = plane.n2p(-0.25-0.05j), end = plane.n2p(4.25+1.05j), color = YELLOW, stroke_width = 3)
+        lblp1 = MathTex("4+i").scale(0.5).next_to(p1, UR, 0.1)
 
-        p2 = Arrow(start=plane.n2p(0.25-0.1j), end=plane.n2p(-4.2 + 2.1j), color=YELLOW, stroke_width=3)
-        lblp2=MathTex("-4+2i").scale(0.5).next_to(p2,UL,0.1)
+        p2 = Arrow(start = plane.n2p(0.25-0.1j), end = plane.n2p(-4.2 + 2.1j), color = YELLOW, stroke_width = 3)
+        lblp2 = MathTex("-4+2i").scale(0.5).next_to(p2, UL, 0.1)
 
         self.play(Create(plane))
         self.play(Create(d1))
