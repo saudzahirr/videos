@@ -42,8 +42,8 @@ def argand_plane(x, y):
     plane = ComplexPlane(
         x_range = [-x, x],
         y_range = [-y, y],
-        x_length = 2*x,
-        y_length = 2*y,
+        x_length = 2*x+1,
+        y_length = 2*y+1,
         background_line_style = {
             "stroke_width": 1,
         },
@@ -261,7 +261,7 @@ class ArgandPlane(Scene):
     def construct(self):
         x_err=0.25
         y_err=0.05
-        plane=argand_plane(5.5,4.5).add_coordinates()
+        plane=argand_plane(6,3).add_coordinates()
         plane.set_height(7.0)
         d1=Dot(plane.n2p(0),color=YELLOW)
         p1=Arrow(start=plane.n2p(-0.25-0.05j),end=plane.n2p(4.25+1.05j),color=YELLOW,stroke_width=3)
