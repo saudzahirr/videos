@@ -257,6 +257,63 @@ class CasusIrreducibilis(Scene):
 class EulersManuscript(ExternallyAnimatedScene):
     pass
 
+def list_add(l1,l2):
+    return [l1[x]+l2[x] for x,_ in enumerate(l1)]
+class Introduction(Scene):
+
+    def construct(self):
+        def_cn = MathTex(r""" \begin{array}{l}
+\textcolor[rgb]{0,0,0}{A\ complex\ number\ is\ any\ number\ of\ the\ form\ z\ =\ a\ +\ ib\ }\\
+\textcolor[rgb]{0,0,0}{where\ a\ and\ b\ are\ real\ numbers\ and\ i} \ is\ the\ imaginary\ unit
+\end{array}""").scale(0.9)
+        def_im=MathTex("i=\sqrt{-1}").set_color(RED).move_to([0 ,-1 ,0])
+        head_prp=Tex(r"""\begin{center}
+{\Large \textbf{Arithmetic Operations}}
+\end{center}
+""")
+        head_addsub=Tex(r"""\textbf{Addition/Subtraction}""").align_on_border(LEFT).shift(UP).scale(0.85)
+        text_asm=MathTex(r"""z_{1} =a_{1} +ib_{1} \ \ \ \ \ \ \ \ \ \ \ \ 
+        \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ 
+        \ \ \ \ \ \ \ \ z_{2} =a_{2} +ib_{2}""").set_color(RED).scale(0.7).move_to(([0,2.1,0]))
+        text_addsub1=MathTex(r"""z_{1} \pm z_{2}""")
+        text_addsub2 = MathTex(r"""( a_{1} +ib_{1}) \pm ( a_{2} +ib_{2})""")
+        text_addsub3 = MathTex(r"""( a_{1} \pm a_{2}) +i( b_{1} \pm b_{2})""").set_color(YELLOW)
+
+        head_mul=Tex(r"""\textbf{Multiplication}""").align_on_border(LEFT).shift(UP).scale(0.85)
+        text_mul1=MathTex("( a_{1} +ib_{1})( a_{2} +ib_{2})")
+        text_mul2 = MathTex("a_{1} a_{2} +a_{1} ib_{2} +a_{2} ib_{1} +i^{2} b_{1} b_{2}")
+        text_mul3 = MathTex("a_{1} a_{2} +a_{1} ib_{2} +a_{2} ib_{1} -b_{1} b_{2}")
+        text_mul4 = MathTex("a_{1} a_{2} -b_{1} b_{2} +i( a_{1} b_{2} +a_{2} b_{1})").set_color(YELLOW)
+
+        self.play(Write(def_cn))
+        self.wait(3)
+        self.play(MoveAlongPath(def_cn,Line([0,0,0],[0, 1, 0])))
+        self.play(Create(def_im))
+        self.wait(1)
+        self.play(FadeOut(def_im))
+        self.play(ReplacementTransform(def_cn,head_prp))
+        self.play(ScaleInPlace(head_prp,0.8))
+        self.play(MoveAlongPath(head_prp,Line([0, 0, 0], [0, 3, 0])))
+        self.play(Write(head_addsub))
+        self.play(Write(text_asm))
+        self.play(Write(text_addsub1))
+        self.wait(2)
+        self.play(ReplacementTransform(text_addsub1,text_addsub2))
+        self.wait(2)
+        self.play(ReplacementTransform(text_addsub2, text_addsub3))
+        self.wait(2)
+        self.play(FadeOut(text_addsub3))
+        self.play(ReplacementTransform(head_addsub,head_mul))
+        self.play(Write(text_mul1))
+        self.wait(2)
+        self.play(ReplacementTransform(text_mul1,text_mul2))
+        self.wait(2)
+        self.play(ReplacementTransform(text_mul2, text_mul3))
+        self.wait(2)
+        self.play(ReplacementTransform(text_mul3, text_mul4))
+        self.wait(2)
+        
+
 class ArgandPlane(Scene):
     def construct(self):
         x_err=0.25
