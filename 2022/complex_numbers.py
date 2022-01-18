@@ -42,8 +42,8 @@ def argand_plane(x, y):
     plane = ComplexPlane(
         x_range = [-x, x],
         y_range = [-y, y],
-        x_length = 2*x,
-        y_length = 2*y,
+        x_length = 2*x+1,
+        y_length = 2*y+1,
         background_line_style = {
             "stroke_width": 1,
         },
