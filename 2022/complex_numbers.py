@@ -279,12 +279,8 @@ class EulersManuscript(ExternallyAnimatedScene):
 
 class EulersIdentity(Scene):
     def construct(self):
-        plane = argand_plane(4.5, 4.5)
+        plane = argand_plane(3.5, 3.5)
         plane.add_coordinates()
-        plane.set_height(5.0)
-        # plane.to_corner(DR)
-        # plane.shift(0.5 * UP)
-        plane.add(SurroundingRectangle(plane, WHITE, buff = 0.0, stroke_width = 2))
 
         self.play(
             Create(plane)
@@ -294,13 +290,14 @@ class EulersIdentity(Scene):
 
         
     def draw_circle(self, center):
-        circle = Arc(angle = 2*np.pi, radius = 2)
+        circle = Arc(angle = 2*np.pi, radius = 1)
         radius = Line(ORIGIN, circle.get_points()[0])
         radius.set_color(BLUE)
         circle.set_color(YELLOW)
         VGroup(radius, circle).move_to(center)
         modulus = MathTex("|z| = 1")
-        # modulus.scale(0.5)
+        modulus.scale(0.8)
+        modulus.add_background_rectangle()
         modulus.next_to(radius, UP)
 
         self.play(Create(radius), FadeIn(modulus))
@@ -395,6 +392,9 @@ class ArgandPlane(Scene):
         self.play(ReplacementTransform(p1,p2))
         self.play(FadeIn(lblp2))
         self.wait(2)
+        
+        
+        
         
         
         
