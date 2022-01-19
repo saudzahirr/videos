@@ -65,7 +65,6 @@ def argand_plane(x, y):
         },
         faded_line_ratio = 2,
     )
-    plane.add_coordinates()
     plane.add(SurroundingRectangle(plane, WHITE, buff = 0.0, stroke_width = 2))
     return plane
 
@@ -80,6 +79,7 @@ def get_figure(name, filename):
     name.next_to(image, DOWN)
     image.add(name)
     return image
+
 
 
 class History(Scene):
@@ -113,53 +113,40 @@ class History(Scene):
 
 class CardanFormula(Scene):
     def construct(self):
-        cardan = get_figure(names[6], portraits[6])
+        cardan = get_figure(names[2], portraits[2])
         cardan.to_corner(UL)
         history = Tex(
-            "Gerolamo Cardano, the first mathematician" "\\\\",
-            "to use 'negative numbers'." "\\\\",
-            "He published the solution of" "\\\\",
-            "a cubic equation of form:"
+            "Gerolamo Cardano" ", the first mathematician" "\\\\",
+            "to use " "`negative numbers'" ". He published" "\\\\",
+            "the solution of a cubic equation of form:"
         )
+        history.set_color_by_tex("Gerolamo Cardano", BLUE)
+        history.set_color_by_tex("`negative numbers'", YELLOW)
+        history.to_edge(RIGHT)
+        history.shift(UP)
         quadratic_equation = MathTex("ax^{2} + bx + c = 0")
         quadratic_formula = MathTex("x = \\frac{ -b \\pm \\sqrt{ b^{2} - 4ac } }{2a}")
-        cubic_equation = MathTex("x^{3} + px + q = 0")
+        cubic_equation = MathTex("x^{3} + px + q = 0").next_to(history, DOWN, buff = 1.0)
         cardan_formula = MathTex(
             "x = \\sqrt[3]{ -\\frac{ q }{ 2 } + \\sqrt{ {\\frac{ q }{ 4 } }^{2} + {\\frac{ p }{ 27 } }^{3} } } + \\sqrt[3]{ -\\frac{ q }{ 2 } - \\sqrt{ {\\frac{ q }{ 4 } }^{2} + {\\frac{ p }{ 27 } }^{3} } }"
         )
-
-        plane = argand_plane(4, 4)
-        plane.set_height(5.0)
-        plane.to_corner(DR)
-        plane.shift(0.5 * UP)
-        plane.add(SurroundingRectangle(plane, WHITE, buff = 0.0, stroke_width = 2))
-
+        cardan_formula.shift(2 * DOWN)
         self.play(
-            FadeIn(cardan, plane)
+            FadeIn(cardan),
+            Write(
+                history,
+                run_time = 4,
+                rate_func = smooth
+            )
         )
-        self.draw_circle(plane.get_center())
-        self.wait(2)
-
-        
-    def draw_circle(self, center):
-        circle = Arc(angle = 2*np.pi, radius = 1)
-        radius = Line(ORIGIN, circle.get_points()[0])
-        radius.set_color(BLUE)
-        circle.set_color(YELLOW)
-        VGroup(radius, circle).move_to(center)
-        modulus = MathTex("|z| = 1")
-        modulus.scale(0.5)
-        modulus.next_to(radius, UP)
-
-        self.play(Create(radius), FadeIn(modulus))
+        self.play(Write(cubic_equation))
+        self.wait()
         self.play(
-            Rotate(radius, 2*np.pi, about_point = radius.get_start()),
-            Create(circle),
-            MaintainPositionRelativeTo(modulus, radius),
+            Write(cardan_formula),
             run_time = 3,
+            rate_func = smooth
         )
         self.wait(2)
-        self.circle_group = VGroup(circle, radius, modulus)
 
 
 
@@ -204,7 +191,6 @@ class CasusIrreducibilis(Scene):
             roots[1].animate.next_to(ORIGIN, 0.25 * RIGHT)
         )
         self.wait()
-
 
         casus_irreducibilis = Tex(r"Casus Irreducibilis")
         casus_irreducibilis.scale(1.2)
@@ -272,8 +258,8 @@ class CasusIrreducibilis(Scene):
         )
         self.wait()
 
-        
 
+        
 class EulersPortrait(Scene):
     def construct(self):
         euler = get_figure(names[6], portraits[6])
@@ -284,10 +270,48 @@ class EulersPortrait(Scene):
         )
         self.wait(3)
 
-        
-        
+
+
 class EulersManuscript(ExternallyAnimatedScene):
     pass
+
+
+
+class EulersIdentity(Scene):
+    def construct(self):
+        plane = argand_plane(4.5, 4.5)
+        plane.add_coordinates()
+        plane.set_height(5.0)
+        # plane.to_corner(DR)
+        # plane.shift(0.5 * UP)
+        plane.add(SurroundingRectangle(plane, WHITE, buff = 0.0, stroke_width = 2))
+
+        self.play(
+            Create(plane)
+        )
+        self.draw_circle(plane.get_center())
+        self.wait(2)
+
+        
+    def draw_circle(self, center):
+        circle = Arc(angle = 2*np.pi, radius = 2)
+        radius = Line(ORIGIN, circle.get_points()[0])
+        radius.set_color(BLUE)
+        circle.set_color(YELLOW)
+        VGroup(radius, circle).move_to(center)
+        modulus = MathTex("|z| = 1")
+        # modulus.scale(0.5)
+        modulus.next_to(radius, UP)
+
+        self.play(Create(radius), FadeIn(modulus))
+        self.play(
+            Rotate(radius, 2*np.pi, about_point = radius.get_start()),
+            Create(circle),
+            MaintainPositionRelativeTo(modulus, radius),
+            run_time = 3,
+        )
+        self.wait(2)
+        self.circle_group = VGroup(circle, radius, modulus)
 
 
 
