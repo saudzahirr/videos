@@ -116,8 +116,8 @@ class CardanFormula(Scene):
         cardan = get_figure(names[2], portraits[2])
         cardan.to_corner(UL)
         history = Tex(
-            "Gerolamo Cardano" ", the first mathematician" "\\\\",
-            "to use " "`negative numbers'" ". He published" "\\\\",
+            "Gerolamo Cardano", ", the first mathematician" "\\\\",
+            "to use ", "`negative numbers'", ". He published" "\\\\",
             "the solution of a cubic equation of form:"
         )
         history.set_color_by_tex("Gerolamo Cardano", BLUE)
@@ -126,7 +126,7 @@ class CardanFormula(Scene):
         history.shift(UP)
         quadratic_equation = MathTex("ax^{2} + bx + c = 0")
         quadratic_formula = MathTex("x = \\frac{ -b \\pm \\sqrt{ b^{2} - 4ac } }{2a}")
-        cubic_equation = MathTex("x^{3} + px + q = 0").next_to(history, DOWN, buff = 1.0)
+        cubic_equation = MathTex("x^{3} + px + q = 0").next_to(history, DOWN)
         cardan_formula = MathTex(
             "x = \\sqrt[3]{ -\\frac{ q }{ 2 } + \\sqrt{ {\\frac{ q }{ 4 } }^{2} + {\\frac{ p }{ 27 } }^{3} } } + \\sqrt[3]{ -\\frac{ q }{ 2 } - \\sqrt{ {\\frac{ q }{ 4 } }^{2} + {\\frac{ p }{ 27 } }^{3} } }"
         )
@@ -395,6 +395,6 @@ class ArgandPlane(Scene):
         self.play(ReplacementTransform(p1,p2))
         self.play(FadeIn(lblp2))
         self.wait(2)
-
-
-
+        
+        
+        
