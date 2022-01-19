@@ -1,10 +1,13 @@
 from manimce import *
 
+
 # Manuscripts.
 ars_magna = ImageMobject(get_image("ArsMagna.jpg"))
 bombelli_algebra = ImageMobject(get_image("Bombelli_Algebra.jpg"))
 infinitorum = ImageMobject(get_image("Introductio_in_analysin_infinitorum.png"))
 quaternion_bridge = ImageMobject(get_image("Quaternion_Bridge.jpg"))
+internet_archives_logo = SVGMobject(get_svg("Internet_Archive.svg"))
+
 
 bombelli_poem = """
 Plus by plus of minus, makes plus of minus."
@@ -16,13 +19,14 @@ Plus of minus by minus of minus, makes plus."
 Minus of minus by plus of minus, makes plus."
 Minus of minus by minus of minus makes minus"
 """
-events = [
-    "Ferro solves compressed \\\\ cubic equations.",
-    "Tartaglia claims cubic \\\\ polynomial solutions.",
-    "Cardano publishes \\\\ Tartaglia's work.",
-    "Bombelli invents \\\\ complex numbers.",
-    "Leibniz works on \\\\ cubic equations.",
-    "Euler defines \\\\ $i = \\sqrt{-1}$"
+names = [
+    "Scipione del Ferro",
+    "Niccolo Tartaglia",
+    "Gerolamo Cardano",
+    "Rafael Bombelli",
+    "Gottfried Wilhelm Leibniz",
+    "Isaac Newton",
+    "Leonhard Euler"
 ]
 portraits = [
     "Scipione_del_Ferro.png",
@@ -30,93 +34,87 @@ portraits = [
     "Cardan.jpg",
     "Rafael_Bombelli.jpeg",
     "Gottfried_Wilhelm_Leibniz.jpg",
+    "Isaac_Newton.png",
     "Leonhard_Euler.png"
 ]
-dates = [1520, 1530, 1545, 1572, 1702, 1770]
+dates = [1526, 1530, 1545, 1572, 1702, 1707, 1770]
+events = [
+    "Scipione del Ferro solves \\\\ compressed cubic equations.",
+    "Niccolo Tartaglia claims \\\\ cubic polynomial solutions.",
+    "Gerolamo Cardano publishes \\\\ Tartaglia's work.",
+    "Rafael Bombelli publishes complex \\\\ numbers in the form of poem.",
+    "Gottfried Wilhelm Leibniz \\\\ works on cubic equations.",
+    "Isaac Newton works on the \\\\ numerical method for calculating roots.",
+    "Leonhard Euler uses $i = \\sqrt{-1}$ \\\\ for complex numbers."
+]
 
-height = ImageMobject(get_portrait(portraits[2])).get_height()
-width = ImageMobject(get_portrait(portraits[2])).get_width()
-kwargs = {"run_time" : 20, "rate_func" : bezier([0, 0, 1, 1])}
+
+height = 1.3 * ImageMobject(get_portrait(portraits[2])).get_height()
+width = 1.5 * ImageMobject(get_portrait(portraits[2])).get_width()
+kwargs = {"run_time" : 3, "rate_func" : bezier([0, 0, 1, 1])}
+
 
 def argand_plane(x, y):
     plane = ComplexPlane(
         x_range = [-x, x],
         y_range = [-y, y],
-        x_length = 2*x+1,
-        y_length = 2*y+1,
+        x_length = 2*x,
+        y_length = 2*y,
         background_line_style = {
             "stroke_width": 1,
         },
         faded_line_ratio = 2,
     )
+    plane.add_coordinates()
     plane.add(SurroundingRectangle(plane, WHITE, buff = 0.0, stroke_width = 2))
     return plane
 
 
 def get_figure(name, filename):
+    name = Tex(name)
+    name.set_width(width)
     image = ImageMobject(get_portrait(filename))
-    image.add(SurroundingRectangle(image, WHITE, buff = 0.0, stroke_width = 1))
+    image.set_height(height)
+    image.set_width(width)
+    image.add(SurroundingRectangle(image, WHITE, buff = 0.0, stroke_width = 2))
     name.next_to(image, DOWN)
     image.add(name)
     return image
 
 
-
-class History(MovingCameraScene):
+class History(Scene):
     def construct(self):
-        frame = self.camera.frame
-        frame.save_state()
-        time_range = (1480, 2000)
-        timeline = NumberLine(
-            (*time_range, 1),
-            tick_size = 0.025,
-            longer_tick_multiple = 4,
-            numbers_with_elongated_ticks = range(*time_range, 10),
-        )
-        timeline.stretch(0.25, 0)
-        timeline.add_numbers(
-            range(*time_range, 10),
-            group_with_commas = False,
-        )
-        frame.move_to(timeline.n2p(1526))
-        timeline.set_y(-3)
-        self.add(timeline)
+        images = Group()
         for portrait, date, event in zip(portraits, dates, events):
-            self.get_event(portrait, date, event, timeline)
+            images.add(self.get_event(portrait, date, event))
+        images.arrange(RIGHT, buff = 2*LARGE_BUFF)
+        images.move_to(ORIGIN, LEFT)
+        self.play(
+            images.animate.shift((images.get_width() - 5) * LEFT),
+            run_time = 0.25,
+            rate_func = smooth
+        )
         self.wait()
-        self.play(
-            frame.animate.shift(5 * FRAME_WIDTH * RIGHT),
-            **kwargs
-        )
-        self.play(
-            FadeOut(timeline),
-            run_time = 2
-        )
         self.clear()
 
-    def get_event(self, image, date, event, timeline):
-        event = Tex(event)
-        event.scale(0.7)
+        
+    def get_event(self, image, date, event):
+        event = Tex(event + " (" + str(date) + ")")
+        event.set_width(width)
         image = ImageMobject(get_portrait(image))
         image.set_height(height)
         image.set_width(width)
-        image.add(SurroundingRectangle(image, WHITE, buff = 0.0, stroke_width = 1))
-        image.next_to(timeline.n2p(date), UP, buff = 2.0)
+        image.add(SurroundingRectangle(image, WHITE, buff = 0.0, stroke_width = 2))
         event.next_to(image, DOWN)
         image.add(event)
-        if date == 1520:
-            date = 1526
-            arrow = Arrow(event.get_right(), timeline.n2p(date))
-            self.add(arrow)
-        date = Tex("(" + str(date) + ")")
-        date.next_to(event, DOWN)
-        image.add(date)
-        self.add(image)
+        return image
 
 
 
 class CardanFormula(Scene):
     def construct(self):
+        cardan = get_figure(names[6], portraits[6])
+        cardan.to_corner(UL)
         history = Tex(
             "Gerolamo Cardano, the first mathematician" "\\\\",
             "to use 'negative numbers'." "\\\\",
@@ -130,16 +128,38 @@ class CardanFormula(Scene):
             "x = \\sqrt[3]{ -\\frac{ q }{ 2 } + \\sqrt{ {\\frac{ q }{ 4 } }^{2} + {\\frac{ p }{ 27 } }^{3} } } + \\sqrt[3]{ -\\frac{ q }{ 2 } - \\sqrt{ {\\frac{ q }{ 4 } }^{2} + {\\frac{ p }{ 27 } }^{3} } }"
         )
 
-        plane = argand_plane(3, 4)
+        plane = argand_plane(4, 4)
         plane.set_height(5.0)
         plane.to_corner(DR)
         plane.shift(0.5 * UP)
         plane.add(SurroundingRectangle(plane, WHITE, buff = 0.0, stroke_width = 2))
 
         self.play(
-            FadeIn(plane)
+            FadeIn(cardan, plane)
+        )
+        self.draw_circle(plane.get_center())
+        self.wait(2)
+
+        
+    def draw_circle(self, center):
+        circle = Arc(angle = 2*np.pi, radius = 1)
+        radius = Line(ORIGIN, circle.get_points()[0])
+        radius.set_color(BLUE)
+        circle.set_color(YELLOW)
+        VGroup(radius, circle).move_to(center)
+        modulus = MathTex("|z| = 1")
+        modulus.scale(0.5)
+        modulus.next_to(radius, UP)
+
+        self.play(Create(radius), FadeIn(modulus))
+        self.play(
+            Rotate(radius, 2*np.pi, about_point = radius.get_start()),
+            Create(circle),
+            MaintainPositionRelativeTo(modulus, radius),
+            run_time = 3,
         )
         self.wait(2)
+        self.circle_group = VGroup(circle, radius, modulus)
 
 
 
@@ -253,14 +273,29 @@ class CasusIrreducibilis(Scene):
         self.wait()
 
         
+
+class EulersPortrait(Scene):
+    def construct(self):
+        euler = get_figure(names[6], portraits[6])
+        euler.scale(1.3)
+        euler.to_edge(4 * LEFT)
+        self.play(
+            FadeIn(euler)
+        )
+        self.wait(3)
+
+        
         
 class EulersManuscript(ExternallyAnimatedScene):
     pass
 
+
+
 def list_add(l1,l2):
     return [l1[x]+l2[x] for x,_ in enumerate(l1)]
-class Introduction(Scene):
 
+
+class Introduction(Scene):
     def construct(self):
         def_cn = MathTex(r""" \begin{array}{l}
 \textcolor[rgb]{0,0,0}{A\ complex\ number\ is\ any\ number\ of\ the\ form\ z\ =\ a\ +\ ib\ }\\
