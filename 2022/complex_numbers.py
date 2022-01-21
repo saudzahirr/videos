@@ -3,8 +3,11 @@ from manimce import *
 # Colors.
 X_AXIS_COLOR = ORANGE
 Y_AXIS_COLOR = GREEN
-VECTOR_COLOR = YELLOW
+VECTOR_COLOR = [BLUE_A,BLUE_B,BLUE_C,BLUE_D,BLUE_D]
+CURVE_COLOR = YELLOW
 DOT_COLOR = MAROON_B
+TEX_HCOLOR = BLUE
+MATH_HCOLOR = YELLOW
 
 
 # Manuscripts.
@@ -352,26 +355,26 @@ class Introduction(Scene):
     def basic_defs(self):
         def_cn = Tex(r"""A complex number is any number of the form \\""", r""" $\displaystyle
                 z=a+ib$""", r"""\\ where $\displaystyle a$ and $\displaystyle b$ are real numbers and""",
-                     r"""$\displaystyle \ i$ """, r"""is the imaginary unit""").scale(0.75)
-        def_cn[1::2].set_color(BLUE)
-        def_im = MathTex("i=\sqrt{-1}").set_color(YELLOW).move_to([0, -1, 0])
+                     r"""$\displaystyle \ i$ """, r"""is the imaginary unit""")
+        def_cn[1::2].set_color(TEX_HCOLOR)
+        def_im = MathTex("i=\sqrt{-1}").set_color(MATH_HCOLOR).next_to(def_cn.get_center(),2*DOWN)
 
         def_alt = Tex(r"""Complex Numbers can also be represented as a vector """, r"""$\displaystyle z=re^{j\theta }$"""
                       , r"\\ where ", "$\displaystyle r=\sqrt{a^{2} +b^{2}}$", r" is the magnitude of the vector and \\",
                       r"""$\displaystyle \theta =\arctan\left(\frac{b}{a}\right)$""", r""" is the angle with 
-                      respect to $x$-axis""").scale(0.75) 
-        def_alt[1::2].set_color(BLUE)
+                      respect to $x$-axis""")
+        def_alt[1::2].set_color(TEX_HCOLOR)
 
         #Argand Plane
-        plane=argand_plane(6.5,3.5).add_coordinates().scale(0.5).align_on_border(DOWN)
-        vect=Arrow(plane.n2p(0),plane.n2p(4+2j),buff=0,stroke_width=3,tip_length=0.2).set_color(YELLOW)
+        plane=argand_plane(6.5,3.5).add_coordinates().scale(0.6).align_on_border(DOWN)
+        vect=Arrow(plane.n2p(0),plane.n2p(4+2j),buff=0,stroke_width=3,tip_length=0.2).set_color(VECTOR_COLOR[2])
         lbl_mag=MathTex("r").scale(0.5).next_to(vect.get_center(),UP)
-        ang=Angle(Line(plane.n2p(0),plane.n2p(5)),Line(plane.n2p(0),plane.n2p(4+2j)),radius=0.5)
-        lbl_ang=MathTex(r"\theta ").next_to(ang.get_end(),RIGHT).scale(0.5)
-        x_proj = DashedLine(start=plane.n2p(0),end=plane.n2p(4)).set_color(ORANGE)
-        y_proj = DashedLine(start=plane.n2p(4), end=plane.n2p(4 + 2j)).set_color(GREEN)
-        x_lbl = MathTex("a").next_to(x_proj.get_center(),DOWN).scale(0.4)
-        y_lbl = MathTex("b").next_to(y_proj.get_center(), RIGHT).scale(0.4)
+        ang=Angle(Line(plane.n2p(0),plane.n2p(5)),Line(plane.n2p(0),plane.n2p(4+2j)),radius=0.5,stroke_width=2)
+        lbl_ang=MathTex(r"\theta ").scale(0.5).next_to(ang.get_center(),0.5*RIGHT)
+        x_proj = DashedLine(start=plane.n2p(0),end=plane.n2p(4)).set_color(X_AXIS_COLOR)
+        y_proj = DashedLine(start=plane.n2p(4), end=plane.n2p(4 + 2j)).set_color(Y_AXIS_COLOR)
+        x_lbl = MathTex("a").scale(0.5).next_to(x_proj.get_center(),0.7*DOWN)
+        y_lbl = MathTex("b").scale(0.5).next_to(y_proj.get_center(), 0.7*RIGHT)
 
         self.play(Write(def_cn,rate_func=smooth,run_time=3))
         self.play(MoveAlongPath(def_cn, Line([0, 0, 0], [0, 1, 0])))
@@ -379,6 +382,7 @@ class Introduction(Scene):
         self.wait()
         self.play(FadeOut(def_im,def_cn))
         self.play(Write(def_alt,rate_func=smooth,run_time=3))
+        self.play(ScaleInPlace(def_alt,0.75))
         self.play(MoveAlongPath(def_alt,Line([0,0,0],[0,2,0])))
         self.wait()
         self.play(Create(plane))
@@ -393,14 +397,15 @@ class Introduction(Scene):
         text_asm = MathTex(r""" \begin{array}{l}
         z_{1} =a_{1} +ib_{1} =r_{1} e^{j\theta _{1}}\\
         z_{2} =a_{2} +ib_{2} =r_{2} e^{j\theta _{2}}
-        \end{array}""").set_color(BLUE).scale(0.75).move_to(([-4.5, 2.1, 0]))
-        head_addsub = Tex(r"""Addition""").next_to(text_asm,DOWN)
-        plane=argand_plane(6.5,3.5).add_coordinates().scale(0.75).next_to(text_asm,DR)
-        vec1=Arrow(plane.n2p(0),plane.n2p(1+2j),tip_length=0.15,stroke_width=3,buff=0).set_color(RED)
-        vec2 = Arrow(plane.n2p(0),plane.n2p(1-1j), tip_length=0.15, stroke_width=3,buff=0).set_color(RED)
-        vec22 = Arrow(plane.n2p(1 + 2j), plane.n2p(2 + 1j), tip_length=0.15, stroke_width=3, buff=0).set_color(RED)
-        vec3 = Arrow(plane.n2p(0),plane.n2p(2+1j), tip_length=0.15, stroke_width=3,buff=0).set_color(YELLOW)
-        vec4 = Arrow(plane.n2p(0), plane.n2p(3+1j), tip_length=0.15, stroke_width=3,buff=0).set_color(YELLOW)
+        \end{array}""").set_color(MATH_HCOLOR).scale(0.75).move_to(([-4.5, 2.1, 0]))
+        head_addsub = Tex(r"""Addition""").next_to(text_asm,1.5*DOWN)
+        plane=argand_plane(6.5,3.5).add_coordinates().scale(0.7).next_to(text_asm,DR)
+        vec1=Arrow(plane.n2p(0),plane.n2p(1+2j),tip_length=0.15,stroke_width=3,buff=0).set_color(VECTOR_COLOR[4])
+        vec11 = Arrow(plane.n2p(1-1j), plane.n2p(2 + 1j), tip_length=0.15, stroke_width=3, buff=0).set_color(VECTOR_COLOR[4])
+        vec2 = Arrow(plane.n2p(0),plane.n2p(1-1j), tip_length=0.15, stroke_width=3,buff=0).set_color(VECTOR_COLOR[2])
+        vec22 = Arrow(plane.n2p(1 + 2j), plane.n2p(2 + 1j), tip_length=0.15, stroke_width=3, buff=0).set_color(VECTOR_COLOR[2])
+        vec3 = Arrow(plane.n2p(0),plane.n2p(2+1j), tip_length=0.15, stroke_width=3,buff=0).set_color(VECTOR_COLOR[1])
+        vec4 = Arrow(plane.n2p(0), plane.n2p(3+1j), tip_length=0.15, stroke_width=3,buff=0).set_color(VECTOR_COLOR[1])
 
         lblv1 = MathTex("( a_{1} ,b_{1})").scale(0.5).next_to(vec1.get_end(), RIGHT)
         lblv2 = MathTex("( a_{2} ,b_{2})").scale(0.5).next_to(vec2.get_end(), RIGHT)
@@ -409,23 +414,23 @@ class Introduction(Scene):
         magv1 = MathTex("r_{1}").scale(0.5).next_to(vec1.get_end(), 0.1*UR)
         magv2 = MathTex("r_{2}").scale(0.5).next_to(vec2.get_end(), 0.1*UR)
         magv4 = MathTex("r_{1}r_{2}") .scale(0.5).next_to(vec4.get_end(), 0.1*UR)
-        angv1= Angle(Line(plane.n2p(0),plane.n2p(1)),Line(plane.n2p(0),plane.n2p(1+2j)),radius=0.4)
-        angv2 = Angle(Line(plane.n2p(0), plane.n2p(1 - 1j)),Line(plane.n2p(0),plane.n2p(1)), radius=0.5)
-        angv4 = Angle(Line(plane.n2p(0), plane.n2p(1)), Line(plane.n2p(0), plane.n2p(3 + 1j)), radius=1)
+        angv1= Angle(Line(plane.n2p(0),plane.n2p(1)),Line(plane.n2p(0),plane.n2p(1+2j)),radius=0.4,stroke_width=2)
+        angv2 = Angle(Line(plane.n2p(0), plane.n2p(1 - 1j)),Line(plane.n2p(0),plane.n2p(1)), radius=0.5,stroke_width=2)
+        angv4 = Angle(Line(plane.n2p(0), plane.n2p(1)), Line(plane.n2p(0), plane.n2p(3 + 1j)), radius=1,stroke_width=2)
         valv1 = MathTex(r"\theta_{1}").scale(0.5).next_to(angv1.get_top(),0.5*RIGHT)
         valv2 = MathTex(r"\theta_{2}").scale(0.5).next_to(angv2.get_bottom(),0.5*RIGHT)
         valv4 = MathTex(r"\theta_{1}+\theta_{2}").scale(0.5).next_to(angv4, 0.5 * RIGHT)
         mul_grp=VGroup(magv1,magv2,angv1,angv2,valv1,valv2)
         mul2_grp=VGroup(magv4,angv4,valv4)
 
-        text_addsub1 = MathTex(r"""z_{1} + z_{2}""").next_to(head_addsub,DOWN).scale(0.75)
-        text_addsub2 = MathTex(r"""( a_{1} +ib_{1}) + ( a_{2} +ib_{2})""").next_to(head_addsub,DOWN).scale(0.75)
-        text_addsub3 = MathTex(r"""( a_{1} + a_{2}) +i( b_{1} + b_{2})""").set_color(YELLOW).next_to(head_addsub,DOWN).scale(0.75)
+        text_addsub1 = MathTex(r"""z_{1} + z_{2}""").scale(0.75).next_to(head_addsub,DOWN)
+        text_addsub2 = MathTex(r"""( a_{1} +ib_{1}) + ( a_{2} +ib_{2})""").scale(0.75).next_to(head_addsub,DOWN)
+        text_addsub3 = MathTex(r"""( a_{1} + a_{2}) +i( b_{1} + b_{2})""").scale(0.75).next_to(head_addsub,DOWN)
 
-        head_mul = Tex(r"""Multiplication""").next_to(text_addsub3,DOWN)
+        head_mul = Tex(r"""Multiplication""").next_to(text_addsub3,1.5*DOWN)
         text_mul1 = MathTex("z_{1} \cdotp z_{2}").next_to(head_mul,DOWN).scale(0.75)
         text_mul2 = MathTex(r"r_{1}e^{j\theta_{1}} \cdotp r_{2}e^{j\theta_{2}}").scale(0.75).next_to(head_mul,DOWN)
-        text_mul3 = MathTex(r"r_{1}r_{2}e^{j(\theta_{1}+\theta_{2})}").scale(0.75).set_color(YELLOW).next_to(head_mul,DOWN)
+        text_mul3 = MathTex(r"r_{1}r_{2}e^{j(\theta_{1}+\theta_{2})}").scale(0.75).next_to(head_mul,DOWN)
 
         head_comm=Tex("Commutativity").move_to([0 ,3 ,0])
         text_addsub4=MathTex("z_{1}+z_{2}=z_{2}+z_{1}").scale(0.75).move_to(text_addsub3)
@@ -445,12 +450,13 @@ class Introduction(Scene):
         self.play(TransformMatchingShapes(vec2, vec22,True))
         self.wait(2)
         self.play(TransformMatchingShapes(text_addsub2, text_addsub3))
+        self.play(Indicate(text_addsub3, color=MATH_HCOLOR))
         self.wait()
         self.play(GrowArrow(vec3))
         self.play(Write(lblv3))
         self.wait()
         self.play(FadeOut(VGroup(vec3,lblv3,lblv1)))
-        self.play(ReplacementTransform(vec22,vec2))
+        self.play(TransformMatchingShapes(vec22,vec2,True))
 
         self.play(Create(mul_grp))
         self.play(Write(head_mul,rate_func=smooth,run_time=2))
@@ -459,18 +465,27 @@ class Introduction(Scene):
         self.play(FadeTransform(text_mul1, text_mul2,run_time=2))
         self.wait()
         self.play(TransformMatchingShapes(text_mul2, text_mul3))
+        self.play(Indicate(text_mul3,color=MATH_HCOLOR))
         self.play(GrowArrow(vec4))
         self.play(Write(mul2_grp,rate_func=smooth,run_time=2))
         self.wait()
-        self.play(FadeTransform(head_prp,head_comm))
+        self.play(FadeOut(mul2_grp), FadeOut(mul_grp),FadeOut(vec4))
+        #Commutativity
+
+        self.play(FadeTransform(head_prp, head_comm))
         self.play(FadeTransform(text_addsub3, text_addsub4))
         self.play(FadeTransform(text_mul3, text_mul4))
+        self.play(Indicate(text_addsub4,color=MATH_HCOLOR))
+        self.play(Create(vec22),Create(vec11))
+        self.play(FadeIn(VGroup(lblv2,lblv1)))
+        self.play(GrowArrow(vec3),FadeIn(lblv3))
+        self.play(Indicate(text_mul4,color=MATH_HCOLOR))
+
 
 
     def construct(self):
         self.basic_defs()
         self.operations()
-
 
 
 class ArgandPlane(Scene):
