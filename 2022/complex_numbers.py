@@ -321,9 +321,8 @@ class Introduction(Scene):
         def_cn = Tex(r"""A complex number is any number of the form""", r""" $\displaystyle
                 z=a+ib$""", r""" where $\displaystyle a$ and $\displaystyle b$ are real numbers and""",
                      r"""$\displaystyle \ i$ """, r"""is the imaginary unit""").scale(0.7)
-        def_cn[1].set_color(BLUE)
-        def_cn[3].set_color(BLUE)
-        def_im = MathTex("i=\sqrt{-1}").set_color(BLUE).move_to([0, -1, 0])
+        def_cn[1::2].set_color(BLUE)
+        def_im = MathTex("i=\sqrt{-1}").set_color(YELLOW).move_to([0, -1, 0])
 
         def_alt = Tex(r"""Complex Numbers can also be represented as a vector """, r"""$\displaystyle z=re^{j\theta }$"""
                       , "where ", "$\displaystyle r=\sqrt{a^{2} +b^{2}}$", " is the magnitude of the vector and ",
@@ -341,29 +340,28 @@ class Introduction(Scene):
         y_proj = DashedLine(start=plane.n2p(4), end=plane.n2p(4 + 2j)).set_color(YELLOW)
         x_lbl = MathTex("a").next_to(x_proj.get_center(),DOWN).scale(0.4)
         y_lbl = MathTex("b").next_to(y_proj.get_center(), RIGHT).scale(0.4)
-        self.play(Write(def_cn))
-        self.wait(3)
+
+        self.play(Write(def_cn,rate_func=smooth,run_time=3))
         self.play(MoveAlongPath(def_cn, Line([0, 0, 0], [0, 1, 0])))
-        self.play(Write(def_im))
-        self.wait(1)
-        self.play(FadeOut(def_im))
-        self.play(ReplacementTransform(def_cn, def_alt))
-        self.wait(3)
+        self.play(Write(def_im,rate_func=smooth,run_time=2))
+        self.wait()
+        self.play(FadeOut(def_im,def_cn))
+        self.play(Write(def_alt,rate_func=smooth,run_time=3))
         self.play(MoveAlongPath(def_alt,Line([0,0,0],[0,2,0])))
+        self.wait()
         self.play(Create(plane))
-        self.play(Create(VGroup(vect,lbl_mag,ang,lbl_ang)))
+        self.play(GrowArrow(vect),FadeIn(VGroup(lbl_mag,ang,lbl_ang)))
         self.play(Create(VGroup(x_lbl,x_proj,y_lbl,y_proj)))
-        self.wait(4)
-        self.play(FadeOut(VGroup(def_alt,vect,lbl_mag,ang,lbl_ang,x_lbl,x_proj,y_lbl,y_proj)))
-        self.play(ShrinkToCenter(plane))
-        self.wait(1)
+        self.wait(2)
+        self.play(FadeOut(VGroup(def_alt,vect,lbl_mag,ang,lbl_ang,x_lbl,x_proj,y_lbl,y_proj,plane)))
+        self.wait()
 
     def operations(self):
         head_prp = Tex(r"Arithmetic Operations")
         text_asm = MathTex(r""" \begin{array}{l}
 z_{1} =a_{1} +ib_{1} =r_{1} e^{j\theta _{1}}\\
 z_{2} =a_{2} +ib_{2} =r_{2} e^{j\theta _{2}}
-\end{array}""").set_color(RED).scale(0.7).move_to(([-4.5, 2.1, 0]))
+\end{array}""").set_color(BLUE).scale(0.7).move_to(([-4.5, 2.1, 0]))
         head_addsub = Tex(r"""Addition""").next_to(text_asm,DOWN).scale(0.7)
         plane=argand_plane(6.5,3.5).add_coordinates().scale(0.6).next_to(text_asm,DR)
         vec1=Arrow(plane.n2p(0),plane.n2p(1+2j),tip_length=0.15,stroke_width=3,buff=0).set_color(RED)
@@ -397,44 +395,49 @@ z_{2} =a_{2} +ib_{2} =r_{2} e^{j\theta _{2}}
         text_mul2 = MathTex(r"r_{1}e^{j\theta_{1}} \cdotp r_{2}e^{j\theta_{2}}").next_to(head_mul,DOWN).scale(0.6)
         text_mul3 = MathTex(r"r_{1}r_{2}e^{j(\theta_{1}+\theta_{2})}").next_to(head_mul,DOWN).scale(0.6).set_color(YELLOW)
 
+        head_comm=Tex("Commutativity").scale(0.8).move_to([0 ,3 ,0])
+        text_addsub4=MathTex("z_{1}+z_{2}=z_{2}+z_{1}").scale(0.6).move_to(text_addsub3)
+        text_mul4 = MathTex("z_{1} \cdotp z_{2}=z_{2}\cdotp z_{1}").scale(0.6).move_to(text_mul3)
 
-
-        self.play(Write(head_prp))
+        self.play(Write(head_prp,rate_func=smooth,run_time=2))
         self.play(ScaleInPlace(head_prp, 0.8))
         self.play(MoveAlongPath(head_prp, Line([0, 0, 0], [0, 3, 0])))
-        self.play(Write(text_asm))
-        self.play(Write(head_addsub))
+        self.play(Write(text_asm,rate_func=smooth,run_time=2))
+        self.play(Write(head_addsub,rate_func=smooth,run_time=2))
         self.play(Create(VGroup(plane,vec1,vec2,lblv1,lblv2)))
-        self.play(Write(text_addsub1))
-        self.play(FadeOut(lblv2))
-        self.play(TransformMatchingShapes(vec2,vec22))
+        self.play(Write(text_addsub1,rate_func=smooth,run_time=2))
+        self.wait()
+        self.play(FadeTransform(text_addsub1, text_addsub2))
         self.wait(2)
-        self.play(ReplacementTransform(text_addsub1, text_addsub2))
+        self.play(FadeOut(lblv2))
+        self.play(TransformMatchingShapes(vec2, vec22,True))
         self.wait(2)
         self.play(TransformMatchingShapes(text_addsub2, text_addsub3))
+        self.wait()
         self.play(GrowArrow(vec3))
         self.play(Write(lblv3))
-        self.wait(2)
+        self.wait()
         self.play(FadeOut(VGroup(vec3,lblv3,lblv1)))
         self.play(ReplacementTransform(vec22,vec2))
-        self.play(Create(mul_grp))
 
-        self.play(Write(head_mul))
-        self.play(Write(text_mul1))
-        self.wait(2)
-        self.play(ReplacementTransform(text_mul1, text_mul2))
-        self.wait(2)
+        self.play(Create(mul_grp))
+        self.play(Write(head_mul,rate_func=smooth,run_time=2))
+        self.play(Write(text_mul1,rate_func=smooth,run_time=2))
+        self.wait()
+        self.play(FadeTransform(text_mul1, text_mul2,run_time=2))
+        self.wait()
         self.play(TransformMatchingShapes(text_mul2, text_mul3))
         self.play(GrowArrow(vec4))
-        self.play(Write(mul2_grp))
-        self.wait(2)
+        self.play(Write(mul2_grp,rate_func=smooth,run_time=2))
+        self.wait()
+        self.play(FadeTransform(head_prp,head_comm))
+        self.play(FadeTransform(text_addsub3, text_addsub4))
+        self.play(FadeTransform(text_mul3, text_mul4))
 
 
     def construct(self):
         self.basic_defs()
         self.operations()
-
-
 
 class ArgandPlane(Scene):
     def construct(self):
