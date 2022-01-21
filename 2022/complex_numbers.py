@@ -3,7 +3,8 @@ from manimce import *
 # Colors.
 X_AXIS_COLOR = ORANGE
 Y_AXIS_COLOR = GREEN
-VECTOR_COLOR = [BLUE_A,BLUE_B,BLUE_C,BLUE_D,BLUE_D]
+# VECTOR_COLOR = BLUE
+VECTOR_COLOR = [BLUE_A, BLUE_B, BLUE_C, BLUE_D, BLUE_E]
 CURVE_COLOR = YELLOW
 DOT_COLOR = MAROON_B
 TEX_HCOLOR = BLUE
@@ -46,7 +47,7 @@ portraits = [
     "Isaac_Newton.png",
     "Leonhard_Euler.png"
 ]
-dates = [1526, 1530, 1545, 1572, 1702, 1707, 1770]
+dates = [1526, 1530, 1545, 1572, 1702, 1711, 1770]
 events = [
     "Scipione del Ferro solves \\\\ compressed cubic equations.",
     "Niccolo Tartaglia claims \\\\ cubic polynomial solutions.",
@@ -518,11 +519,3 @@ class ArgandPlane(Scene):
         )
         self.play(FadeOut(d2))
         self.wait(2)
-        
-        
-        
-        
-        
-        
-        
-        
