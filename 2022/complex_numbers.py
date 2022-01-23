@@ -1,10 +1,12 @@
 from manimce import *
 
+
+
 # Colors.
-X_AXIS_COLOR = GREEN
-Y_AXIS_COLOR = ORANGE
+X_COORD_COLOR = GREEN
+Y_COORD_COLOR = ORANGE
 # VECTOR_COLOR = BLUE
-VECTOR_COLOR = [BLUE_A, YELLOW, MAROON_B, PINK, PURPLE]
+VECTOR_COLOR = [BLUE_A, YELLOW, GREEN, ORANGE, MAROON_B, PINK, PURPLE]
 CURVE_COLOR = YELLOW
 DOT_COLOR = YELLOW
 TEX_HCOLOR = BLUE
@@ -41,7 +43,7 @@ names = [
 portraits = [
     "Scipione_del_Ferro.png",
     "Niccolo_Tartaglia.jpg",
-    "Cardan.jpg",
+    "Gerolamo_Cardano.jpg",
     "Rafael_Bombelli.jpeg",
     "Gottfried_Wilhelm_Leibniz.jpg",
     "Isaac_Newton.png",
@@ -85,9 +87,6 @@ def argand_plane(x, y):
     )
     plane.add(SurroundingRectangle(plane, WHITE, buff = 0.0, stroke_width = 2))
     return plane
-
-def get_numbersystem():
-    return 0
 
 
 def glow_dot(point, r_min = 0.05, r_max = 0.15, color = YELLOW, n = 20, opacity_mult = 1.0):
@@ -185,6 +184,16 @@ class CardanFormula(Scene):
             rate_func = smooth
         )
         self.wait(2)
+
+
+
+class NumberSystem(Scene):
+    def construct(self):
+        title = Tex("Number System")
+        title.scale(1.5)
+        title.to_edge(UP)
+        self.add(title)
+        self.wait()
 
 
 
@@ -300,11 +309,11 @@ class EulersPortrait(Scene):
     def construct(self):
         euler = get_figure(names[6], portraits[6])
         euler.scale(1.3)
-        euler.to_edge(4 * LEFT)
+        euler.to_edge(3.0 * RIGHT)
         self.play(
-            FadeIn(euler)
+            FadeIn(euler, shift = UP)
         )
-        self.wait(3)
+        self.wait()
 
 
 
@@ -356,17 +365,17 @@ class Introduction(Scene):
     def basic_defs(self):
         def_cn = Tex(r"""A complex number is any number of the form \\""", r""" $\displaystyle
                 z=a+ib$""", r"""\\ where $\displaystyle a$ and $\displaystyle b$ are real numbers and""",
-                     r"""$\displaystyle \ i$ """, r"""is the imaginary unit""")
+                     r"""$\displaystyle \ i$ """, r"""is the imaginary unit.""")
         def_cn[1::2].set_color(TEX_HCOLOR)
         def_im = MathTex("i=\sqrt{-1}").set_color(MATH_HCOLOR).next_to(def_cn.get_center(),2*DOWN)
 
         def_alt = Tex(r"""Complex Numbers can also be represented as a vector """, r"""$\displaystyle z=re^{i\theta }$"""
                       , r"\\ where ", "$\displaystyle r=\sqrt{a^{2} +b^{2}}$", r" is the magnitude of the vector and \\",
                       r"""$\displaystyle \theta =\arctan\left(\frac{b}{a}\right)$""", r""" is the angle with 
-                      respect to $x$-axis""")
+                      respect to $x$-axis.""")
         def_alt[1::2].set_color(TEX_HCOLOR)
 
-        #Argand Plane
+        # Argand Plane.
         plane=argand_plane(6.5,3.5).add_coordinates().scale(0.6).align_on_border(DOWN)
         vect=Arrow(plane.n2p(0),plane.n2p(4+2j),buff=0,stroke_width=3,tip_length=0.2).set_color(VECTOR_COLOR[2])
         lbl_mag=MathTex("r").scale(0.5).next_to(vect.get_center(),UP)
@@ -471,7 +480,7 @@ class Introduction(Scene):
         self.play(Write(mul2_grp,rate_func=smooth,run_time=2))
         self.wait()
         self.play(FadeOut(mul2_grp), FadeOut(mul_grp),FadeOut(vec4))
-        #Commutativity
+        # Commutativity.
 
         self.play(FadeTransform(head_prp, head_comm))
         self.play(FadeTransform(text_addsub3, text_addsub4))
@@ -505,7 +514,7 @@ class ArgandPlane(Scene):
         lblp1 = MathTex("4+i").scale(0.75).next_to(p1, UR, 0.1)
         lblp1.add_background_rectangle()
 
-        p2 = Arrow(plane.n2p(0.25 - 0.10j), plane.n2p(-4.25 + 2.14j), color = VECTOR_COLOR[0], stroke_width = 3)
+        p2 = Arrow(plane.n2p(0.25 - 0.10j), plane.n2p(-4.25 + 2.14j), color = VECTOR_COLOR[1], stroke_width = 3)
         lblp2 = MathTex("-4+2i").scale(0.75).next_to(p2, UL, 0.1)
         lblp2.add_background_rectangle()
 
@@ -529,7 +538,43 @@ class ArgandPlane(Scene):
         )
         self.play(FadeOut(d2))
         self.wait(2)
-        self.clear()
+        self.play(
+            FadeOut(title, c, p2, lblp2),
+            rate_func = smooth
+        )
+        self.play(
+            ShrinkToCenter(plane),
+            rate_func = smooth
+        )
+        self.wait()
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
         
         
         
