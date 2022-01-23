@@ -1,12 +1,12 @@
 from manimce import *
 
 # Colors.
-X_AXIS_COLOR = ORANGE
-Y_AXIS_COLOR = GREEN
+X_AXIS_COLOR = GREEN
+Y_AXIS_COLOR = ORANGE
 # VECTOR_COLOR = BLUE
-VECTOR_COLOR = [BLUE_A, BLUE_B, BLUE_C, BLUE_D, BLUE_E]
+VECTOR_COLOR = [BLUE_A, YELLOW, MAROON_B, PINK, PURPLE]
 CURVE_COLOR = YELLOW
-DOT_COLOR = MAROON_B
+DOT_COLOR = YELLOW
 TEX_HCOLOR = BLUE
 MATH_HCOLOR = YELLOW
 
@@ -15,7 +15,7 @@ MATH_HCOLOR = YELLOW
 ars_magna = ImageMobject(get_image("ArsMagna.jpg"))
 bombelli_algebra = ImageMobject(get_image("Bombelli_Algebra.jpg"))
 infinitorum = ImageMobject(get_image("Introductio_in_analysin_infinitorum.png"))
-quaternion_bridge = ImageMobject(get_image("Quaternion_Bridge.jpg"))
+plaque = ImageMobject(get_image("Broom_Bridge_Plaque.jpg"))
 internet_archives_logo = SVGMobject(get_svg("Internet_Archive.svg"))
 
 
@@ -360,7 +360,7 @@ class Introduction(Scene):
         def_cn[1::2].set_color(TEX_HCOLOR)
         def_im = MathTex("i=\sqrt{-1}").set_color(MATH_HCOLOR).next_to(def_cn.get_center(),2*DOWN)
 
-        def_alt = Tex(r"""Complex Numbers can also be represented as a vector """, r"""$\displaystyle z=re^{j\theta }$"""
+        def_alt = Tex(r"""Complex Numbers can also be represented as a vector """, r"""$\displaystyle z=re^{i\theta }$"""
                       , r"\\ where ", "$\displaystyle r=\sqrt{a^{2} +b^{2}}$", r" is the magnitude of the vector and \\",
                       r"""$\displaystyle \theta =\arctan\left(\frac{b}{a}\right)$""", r""" is the angle with 
                       respect to $x$-axis""")
@@ -396,8 +396,8 @@ class Introduction(Scene):
     def operations(self):
         head_prp = Tex(r"Arithmetic Operations").scale(1.5)
         text_asm = MathTex(r""" \begin{array}{l}
-        z_{1} =a_{1} +ib_{1} =r_{1} e^{j\theta _{1}}\\
-        z_{2} =a_{2} +ib_{2} =r_{2} e^{j\theta _{2}}
+        z_{1} =a_{1} +ib_{1} =r_{1} e^{i\theta _{1}}\\
+        z_{2} =a_{2} +ib_{2} =r_{2} e^{i\theta _{2}}
         \end{array}""").set_color(MATH_HCOLOR).scale(0.75).move_to(([-4.5, 2.1, 0]))
         head_addsub = Tex(r"""Addition""").next_to(text_asm,1.5*DOWN)
         plane=argand_plane(6.5,3.5).add_coordinates().scale(0.7).next_to(text_asm,DR)
@@ -430,8 +430,8 @@ class Introduction(Scene):
 
         head_mul = Tex(r"""Multiplication""").next_to(text_addsub3,1.5*DOWN)
         text_mul1 = MathTex("z_{1} \cdotp z_{2}").next_to(head_mul,DOWN).scale(0.75)
-        text_mul2 = MathTex(r"r_{1}e^{j\theta_{1}} \cdotp r_{2}e^{j\theta_{2}}").scale(0.75).next_to(head_mul,DOWN)
-        text_mul3 = MathTex(r"r_{1}r_{2}e^{j(\theta_{1}+\theta_{2})}").scale(0.75).next_to(head_mul,DOWN)
+        text_mul2 = MathTex(r"r_{1}e^{i\theta_{1}} \cdotp r_{2}e^{i\theta_{2}}").scale(0.75).next_to(head_mul,DOWN)
+        text_mul3 = MathTex(r"r_{1}r_{2}e^{i(\theta_{1}+\theta_{2})}").scale(0.75).next_to(head_mul,DOWN)
 
         head_comm=Tex("Commutativity").move_to([0 ,3 ,0])
         text_addsub4=MathTex("z_{1}+z_{2}=z_{2}+z_{1}").scale(0.75).move_to(text_addsub3)
@@ -491,20 +491,30 @@ class Introduction(Scene):
 
 class ArgandPlane(Scene):
     def construct(self):
-        x_err=0.25
-        y_err=0.05
-        plane=argand_plane(6.5,3.5).add_coordinates()
-        plane.set_height(7.0)
-        c=Dot(plane.n2p(0),color=YELLOW)
+        title = Tex(r"Complex Plane")
+        title.scale(1.5)
+        title.to_edge(UP)
+        plane = argand_plane(6.5, 3.5)
+        plane.add_coordinates()
+        plane.set_height(6)
+        plane.next_to(title, DOWN)
+        c = Dot(plane.n2p(0), color = DOT_COLOR)
         d1 = glow_dot(plane.n2p(4 + 1j))
         d2 = glow_dot(plane.n2p(-4 + 2j))
-        p1=Arrow(start=plane.n2p(-0.25-0.05j),end=plane.n2p(4.25+1.04j),color=YELLOW,stroke_width=3)
-        lblp1=MathTex("4+i").scale(0.75).next_to(p1,UR,0.1)
+        p1=Arrow(plane.n2p(-0.25 - 0.05j), plane.n2p(4.27 + 1.06j), color = VECTOR_COLOR[1], stroke_width = 3)
+        lblp1 = MathTex("4+i").scale(0.75).next_to(p1, UR, 0.1)
+        lblp1.add_background_rectangle()
 
-        p2 = Arrow(start=plane.n2p(0.25-0.1j), end=plane.n2p(-4.2 + 2.1j), color=YELLOW, stroke_width=3)
-        lblp2=MathTex("-4+2i").scale(0.75).next_to(p2,UL,0.1)
+        p2 = Arrow(plane.n2p(0.25 - 0.10j), plane.n2p(-4.25 + 2.14j), color = VECTOR_COLOR[0], stroke_width = 3)
+        lblp2 = MathTex("-4+2i").scale(0.75).next_to(p2, UL, 0.1)
+        lblp2.add_background_rectangle()
 
-        self.play(Create(plane))
+        self.play(
+            Write(title),
+            Create(plane),
+            run_time = 2,
+            rate_func = smooth
+        )
         self.play(Create(c))
         self.play(GrowArrow(p1))
         self.play(
@@ -513,9 +523,33 @@ class ArgandPlane(Scene):
         self.play(FadeOut(d1))
         self.wait(2)
         self.play(FadeOut(lblp1))
-        self.play(ReplacementTransform(p1,p2))
+        self.play(ReplacementTransform(p1, p2))
         self.play(
             FadeIn(lblp2, d2)
         )
         self.play(FadeOut(d2))
         self.wait(2)
+        self.clear()
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
