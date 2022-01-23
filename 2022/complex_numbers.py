@@ -59,14 +59,49 @@ events = [
     "Isaac Newton works on the \\\\ numerical method for calculating roots.",
     "Leonhard Euler uses $i = \\sqrt{-1}$ \\\\ for complex numbers."
 ]
-number_systems = [
-    ["\\mathds{N}", "1, 2, 3, 4, 5,..."],
-    ["\\mathds{W}", "0, 1, 2, 3, 4,..."],
-    ["\\mathds{Z}", "-2, -1, 0, 1, 2,..."],
-    ["\\mathds{Q}", "1, 1/2, 2/3, 3/4, 2"],
-    ["\\mathds{R}", "\\pi, e, \\sqrt{2}, \\sqrt{5}, \\phi"],
-    ["\\mathds{C}", "0 - 2i", "1 + i", "3 - 4i", "1 + 0i", "-1"],
-]
+number_systems = VGroup(
+    Tex(
+        "Zero: 0" "\\\\",
+        "One: 1" "\\\\",
+        "Prime numbers" "\\\\",
+        "Composite numbers" "\\\\",
+        tex_environment = "flushleft"
+    ),
+    Tex(
+        "Natural: $\\mathbb{N}$" "\\\\",
+        "Negative integers",
+        tex_environment = "flushleft"
+    ).arrange(DOWN, buff = 1.5),
+    Tex(
+        "Finite decimal" "\\\\",
+        "Dyadic (finite binary)" "\\\\",
+        "Repeating decimal",
+        tex_environment = "flushleft"
+    ),
+    Tex(
+        "Integer: $\\mathbb{Z}$" "\\\\",
+        "Fraction",
+        tex_environment = "flushleft"
+    ).arrange(DOWN, buff = 3.0),
+    Tex(
+        "Algebraic" "\\\\",
+        "Transcendental",
+        tex_environment = "flushleft"
+    ),
+    Tex(
+        "Rational: $\\mathbb{Q}$" "\\\\",
+        "Irrational",
+        tex_environment = "flushleft"
+    ).arrange(DOWN, buff = 4.5),
+    Tex(
+        "Real: $\\mathbb{R}$" "\\\\",
+        "Imaginary",
+        tex_environment = "flushleft"
+    ).arrange(DOWN, buff = 6.0),
+    Tex(
+        "Complex: $\\mathbb{C}$"
+    )
+)
 
 
 height = 1.3 * ImageMobject(get_portrait(portraits[2])).get_height()
@@ -189,10 +224,19 @@ class CardanFormula(Scene):
 
 class NumberSystem(Scene):
     def construct(self):
-        title = Tex("Number System")
+        title = Tex("Number Systems")
         title.scale(1.5)
         title.to_edge(UP)
         self.add(title)
+        number_systems.scale(0.75)
+        for number_system in number_systems:
+            if number_system != number_systems[7]:
+                line = Line(UP, DOWN, stroke_width = 8.0).set_height(number_system.get_height())
+                line.next_to(number_system, LEFT)
+                number_system.add(line)
+        number_systems.arrange(LEFT, buff = 1.0)
+        number_systems.to_edge(LEFT)
+        self.add(number_systems)
         self.wait()
 
 
@@ -553,48 +597,4 @@ class ArgandPlane(Scene):
         
         
         
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
+       
