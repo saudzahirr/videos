@@ -76,7 +76,7 @@ number_systems = VGroup(
         "Natural: $\\mathbb{N}$" "\\\\",
         "Negative integers",
         tex_environment = "flushleft"
-    ).arrange(DOWN, buff = 1.5),
+    ).arrange(DOWN, buff = 2),
     Tex(
         "Finite decimal" "\\\\",
         "Dyadic (finite binary)" "\\\\",
@@ -87,7 +87,7 @@ number_systems = VGroup(
         "Integer: $\\mathbb{Z}$" "\\\\",
         "Fraction",
         tex_environment = "flushleft"
-    ).arrange(DOWN, buff = 3.0),
+    ).arrange(DOWN, buff = 3.5),
     Tex(
         "Algebraic" "\\\\",
         "Transcendental",
@@ -97,12 +97,12 @@ number_systems = VGroup(
         "Rational: $\\mathbb{Q}$" "\\\\",
         "Irrational",
         tex_environment = "flushleft"
-    ).arrange(DOWN, buff = 4.5),
+    ).arrange(DOWN, buff = 5),
     Tex(
         "Real: $\\mathbb{R}$" "\\\\",
         "Imaginary",
         tex_environment = "flushleft"
-    ).arrange(DOWN, buff = 6.0),
+    ).arrange(DOWN, buff = 7.0),
     Tex(
         "Complex: $\\mathbb{C}$"
     )
@@ -233,14 +233,21 @@ class NumberSystem(Scene):
         title.scale(1.5)
         title.to_edge(UP)
         self.add(title)
-        number_systems.scale(0.75)
+        number_systems.scale(0.5)
+        number_systems.next_to(title, DOWN, buff = 0.5)
         for number_system in number_systems:
             if number_system != number_systems[7]:
                 line = Line(UP, DOWN, stroke_width = 8.0).set_height(number_system.get_height())
                 line.next_to(number_system, LEFT)
                 number_system.add(line)
-        number_systems.arrange(LEFT, buff = 1.0)
-        number_systems.to_edge(LEFT)
+        number_systems.arrange(LEFT, buff = 0.5)
+        number_systems[0].next_to(number_systems[1][0], DR, buff = 0.1)
+        number_systems[1].next_to(number_systems[3][0], DR, buff = 0.1)
+        number_systems[3].next_to(number_systems[5][0], DR, buff = 0.1)
+        number_systems[5].next_to(number_systems[6][0], DR, buff = 0.1)
+        number_systems[2].next_to(number_systems[3][1], RIGHT)
+        number_systems[4].next_to(number_systems[5][1], RIGHT)
+        # number_systems.to_edge(RIGHT)
         self.add(number_systems)
         self.wait()
 
