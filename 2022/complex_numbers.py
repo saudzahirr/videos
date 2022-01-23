@@ -31,6 +31,7 @@ Plus of minus by minus of minus, makes plus."
 Minus of minus by plus of minus, makes plus."
 Minus of minus by minus of minus makes minus"
 """
+
 names = [
     "Scipione del Ferro",
     "Niccolo Tartaglia",
@@ -40,6 +41,7 @@ names = [
     "Isaac Newton",
     "Leonhard Euler"
 ]
+
 portraits = [
     "Scipione_del_Ferro.png",
     "Niccolo_Tartaglia.jpg",
@@ -49,7 +51,9 @@ portraits = [
     "Isaac_Newton.png",
     "Leonhard_Euler.png"
 ]
+
 dates = [1526, 1530, 1545, 1572, 1702, 1711, 1770]
+
 events = [
     "Scipione del Ferro solves \\\\ compressed cubic equations.",
     "Niccolo Tartaglia claims \\\\ cubic polynomial solutions.",
@@ -59,6 +63,7 @@ events = [
     "Isaac Newton works on the \\\\ numerical method for calculating roots.",
     "Leonhard Euler uses $i = \\sqrt{-1}$ \\\\ for complex numbers."
 ]
+
 number_systems = VGroup(
     Tex(
         "Zero: 0" "\\\\",
