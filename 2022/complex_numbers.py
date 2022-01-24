@@ -231,7 +231,7 @@ class ManyNumberSystem(Scene):
         cnum=Ellipse(12,7,fill_color=TEAL_A,stroke_color=WHITE,stroke_width=6,fill_opacity=0.5)
         rnum=Circle(3.5,fill_color=TEAL_A,stroke_color=WHITE,stroke_width=6,fill_opacity=0.5).align_on_border(LEFT)
         inum = Circle(2, fill_color=PURPLE_A, stroke_color=WHITE, stroke_width=6, fill_opacity=0.5).align_on_border(RIGHT)
-        cnum_t=Tex("Complex: $\\mathbb{C}$").move_to(cnum.get_center())
+        cnum_t=Tex("Complex: ","$\\mathbb{C}$").move_to(cnum.get_center())
         rnum_t = Tex("Real: $\\mathbb{R}$").move_to(rnum.get_center())
         inum_t = Tex("Imaginary").move_to(inum.get_center())
         self.play(DrawBorderThenFill(cnum,rate_func=smooth))
@@ -241,13 +241,14 @@ class ManyNumberSystem(Scene):
         self.play(TransformMatchingShapes(cnum,VGroup(rnum,inum),transform_mismatches=True))
         self.play(Write(VGroup(rnum_t,inum_t),rate_func=smooth,run_time=2))
         self.wait()
-        self.add_foreground_mobjects(cnum, cnum_t)
+        self.add_foreground_mobjects(cnum, cnum_t[1])
+        #self.bring_to_front(VGroup(rnum, inum, rnum_t, inum_t))
         self.play(
             ScaleInPlace(VGroup(rnum, inum, rnum_t, inum_t), 0.75),
-            FadeIn(cnum, cnum_t),
-            rate_func = smooth
+            FadeIn(cnum, cnum_t[1]),
+            rate_func=smooth
         )
-        self.wait()        
+        self.wait()    
 
 
 class NumberSystem(Scene):
