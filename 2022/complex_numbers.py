@@ -226,7 +226,7 @@ class CardanFormula(Scene):
         self.wait(2)
 
 
-class NumberSystemVenn(Scene):
+class ManyNumberSystem(Scene):
     def construct(self):
         cnum=Ellipse(12,7,fill_color=TEAL_A,stroke_color=WHITE,stroke_width=6,fill_opacity=0.5)
         rnum=Circle(3.5,fill_color=TEAL_A,stroke_color=WHITE,stroke_width=6,fill_opacity=0.5).align_on_border(LEFT)
@@ -240,6 +240,13 @@ class NumberSystemVenn(Scene):
         self.play(FadeOut(cnum_t))
         self.play(TransformMatchingShapes(cnum,VGroup(rnum,inum),transform_mismatches=True))
         self.play(Write(VGroup(rnum_t,inum_t),rate_func=smooth,run_time=2))
+        self.wait()
+        self.add_foreground_mobjects(cnum, cnum_t)
+        self.play(
+            ScaleInPlace(VGroup(rnum, inum, rnum_t, inum_t), 0.75),
+            FadeIn(cnum, cnum_t),
+            rate_func = smooth
+        )
         self.wait()        
 
 
