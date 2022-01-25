@@ -225,6 +225,7 @@ class CardanFormula(Scene):
         )
         self.wait(2)
 
+        
 
 class ManyNumberSystem(Scene):
     def construct(self):
@@ -250,6 +251,7 @@ class ManyNumberSystem(Scene):
         )
         self.wait()    
 
+        
 
 class NumberSystem(Scene):
     def construct(self):
@@ -264,16 +266,28 @@ class NumberSystem(Scene):
                 line = Line(UP, DOWN, stroke_width = 8.0).set_height(number_system.get_height())
                 line.next_to(number_system, LEFT)
                 number_system.add(line)
-        number_systems.arrange(LEFT, buff = 0.5)
-        number_systems[0].next_to(number_systems[1][0], DR, buff = 0.1)
-        number_systems[1].next_to(number_systems[3][0], DR, buff = 0.1)
-        number_systems[3].next_to(number_systems[5][0], DR, buff = 0.1)
-        number_systems[5].next_to(number_systems[6][0], DR, buff = 0.1)
+        number_systems.arrange(LEFT, buff = 0.35)
+        number_systems[0].next_to(number_systems[1][0], DR, buff = 0.25).shift(5 * LEFT + 3 * UP)
+        number_systems[1].next_to(number_systems[3][0], DR, buff = 0.25).shift(2 * LEFT + 2 * UP)
+        number_systems[3].next_to(number_systems[5][0], DR, buff = 0.25).shift(1.5 * UP)
+        number_systems[5].next_to(number_systems[6][0], DR, buff = 0.25).shift(1 * UP)
         number_systems[2].next_to(number_systems[3][1], RIGHT)
         number_systems[4].next_to(number_systems[5][1], RIGHT)
-        # number_systems.to_edge(RIGHT)
-        self.add(number_systems)
+        number_systems.shift(3 * RIGHT + DOWN)
+        boundary = SurroundingRectangle(number_systems, color = BLUE_B, stroke_width = 5.0, buff = 0.20)
+        self.play(
+            number_systems.animate,
+            run_time = 1,
+            rate_func = smooth
+        )
         self.wait()
+
+        self.play(
+            Create(boundary),
+            run_time = 5,
+            rate_func = there_and_back_with_pause
+        )
+        self.wait(2)
 
 
 
