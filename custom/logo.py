@@ -4,28 +4,29 @@ from itertools import *
 from constants import *
 
 
-def aljabrak(self):
+
+def logo(self):
+    # Logo
     circle_1 = Circle(radius = 1, fill_color = CHARCOAL, stroke_color = WHITE, stroke_width = 5, fill_opacity = 0.3)
     title_1 = MathTex("\\alpha")
     title_1.scale(4.5)
     logo = VGroup(circle_1, title_1)
-    logo.scale(1.7)
-    logo.shift(0.5 * UP)
+    logo.scale(2.0)
+    logo.shift(UP)
     logo_name = Text("aljabrak")
     logo_name.scale(1.6)
-    logo_name.next_to(logo, 1.5*DOWN)
+    logo_name.next_to(logo, 2 * DOWN)
     self.play(
         LaggedStartMap(Write, logo),
         Write(logo_name),
         run_time = 5
+        rate_func = smooth
     )
     self.wait(2)
-    self.play(
-        FadeOut(logo_name, logo)
-    )
+    self.clear()
 
     
-def logo(self):
+def aljabrak(self):
     #LOGO
     circle_1 = Circle(radius=1,fill_color=BLUE_A,stroke_color=WHITE,stroke_width=1.3,fill_opacity=0.2)
     title_1 = MathTex("\\alpha")
