@@ -292,37 +292,67 @@ class NumberSystem(Scene):
 
 class CompletingSquareMethod(Scene):
     def construct(self):
-        square = Square(side_length = 2, color = BLUE, fill_color = BLUE, fill_opacity = 0.5)
+        add_sign_eq=MathTex('+')
+        add_sign_graphs=MathTex('+')
+
+        equal_sign_eq = MathTex('=')
+        equal_sign_graphs = MathTex('=')
+
+
+
+        square = Square(side_length=2, color=BLUE, fill_color=BLUE, fill_opacity=0.5)
         square.shift(2 * LEFT)
-        rectangle = Rectangle(height = 1.0, width = 2.0, color = GREY_BROWN, fill_color = GREY_BROWN, fill_opacity = 0.5)
-        rectangle.next_to(square, DOWN, buff = 0.5)
-        rect_1 = Rectangle(height = 0.5, width = 2.0, color = GREY_BROWN, fill_color = GREY_BROWN, fill_opacity = 0.5)
-        rect_1.next_to(square, DOWN, buff = 0.0)
-        rect_2 = Rectangle(height = 0.5, width = 2.0, color = GREY_BROWN, fill_color = GREY_BROWN, fill_opacity = 0.5)
-        rect_2.next_to(rect_1, DOWN, buff = 0.10)
-        small_square = Square(side_length = 0.5, color = YELLOW, fill_color = YELLOW, fill_opacity = 0.5)
-        small_square.next_to(rect_1, RIGHT, buff = 0.25)
-        small_square.shift(0.5 * DOWN)
+        brace_sq=Brace(square,UP)
+        square_tex=MathTex('x^{2}').next_to(brace_sq.get_center (),UP).set_color(BLUE)
+        square_lbl_h=MathTex('x').scale(0.75).next_to(square,RIGHT,buff=0.01).shift(0.35*LEFT).set_color(BLUE)
+        square_lbl_w = MathTex('x').scale(0.75).next_to(square, DOWN, buff=0.01).shift(0.35 * UP).set_color(BLUE)
+        add_sign_graphs.next_to(square,0.75*RIGHT,buff=0.5)
+        rectangle = Rectangle(height=2.0, width=1.0, color=GREY_BROWN, fill_color=GREY_BROWN, fill_opacity=0.5)
+        rectangle.next_to(square, 2 * RIGHT, buff=0.5)
+        brace_rectangle = Brace(rectangle, UP)
+        rectangle_tex = MathTex('bx').next_to(brace_rectangle.get_center(), UP).set_color(GREY_BROWN)
+        rect_lbl_h = MathTex('x').scale(0.75).next_to(rectangle, RIGHT, buff=0.01).shift(0.35 * LEFT).set_color(GREY_BROWN)
+        rect_lbl_w = MathTex('b').scale(0.75).next_to(rectangle, DOWN, buff=0.01).shift(0.35 * UP).set_color(GREY_BROWN)
+        add_sign_eq.next_to(brace_sq,UR*0.5)
+        rect_1 = Rectangle(height=2, width=0.5, color=GREY_BROWN, fill_color=GREY_BROWN, fill_opacity=0.5)
+        rect_1.next_to(square, RIGHT, buff=0.0)
+        rect_2 = Rectangle(height=2, width=0.5, color=GREY_BROWN, fill_color=GREY_BROWN, fill_opacity=0.5)
+        rect_2.next_to(rect_1, RIGHT, buff=0.10)
+        small_square = Square(side_length=0.5, color=YELLOW, fill_color=YELLOW, fill_opacity=0.5)
+        small_square.next_to(rectangle_tex, RIGHT, buff=0.25)
+        #small_square.shift(0.5 * DOWN)
+
+        cs_const = MathTex(r"\ \ \ +\ \ \ ",'k').next_to(rectangle_tex)
+        cs_const[1].set_color(YELLOW)
+        q_const = MathTex('C').set_color(OLIVE_GREEN)
 
         self.play(
-            DrawBorderThenFill(square)
+            DrawBorderThenFill(square),
+            Write(brace_sq),
+            Write(VGroup(square_tex,square_lbl_w,square_lbl_h))
         )
         self.wait()
         self.play(
-            DrawBorderThenFill(rectangle)
+            DrawBorderThenFill(rectangle),
+            Write(add_sign_graphs),
+            Write(brace_rectangle),
+            Write(VGroup(rectangle_tex,rect_lbl_w,rect_lbl_h)),
         )
+        self.wait()
+        self.play(FadeOut(VGroup(add_sign_graphs,brace_sq,brace_rectangle)),ReplacementTransform(add_sign_graphs,add_sign_eq))
         self.play(
-            rectangle.animate.next_to(square, DOWN, buff = 0.0),
-            rate_func = smooth
+            rectangle.animate.next_to(square, RIGHT, buff=0.0),
+            FadeOut(VGroup(rect_lbl_w,rect_lbl_h)),
+            rate_func=smooth
         )
         self.wait()
         self.play(
             TransformMatchingShapes(rectangle, VGroup(rect_1, rect_2)),
-            rate_func = smooth
+            rate_func=smooth
         )
         self.play(
-            rect_2.animate.rotate(PI/2).next_to(square, RIGHT, buff = 0.0),
-            rate_func = smooth
+            rect_2.animate.rotate(PI / 2).next_to(square, DOWN, buff=0.0),
+            rate_func=smooth
         )
         self.wait()
         self.play(
@@ -330,18 +360,20 @@ class CompletingSquareMethod(Scene):
         )
         self.wait()
         self.play(
-            small_square.animate.next_to(rect_1, RIGHT, buff = 0.0)
+            small_square.animate.next_to(rect_1, DOWN, buff=0.0),
+            Write(cs_const)
         )
         self.wait(2)
 
-        complete_square = SurroundingRectangle(VGroup(square, rect_1, rect_2, small_square), color = WHITE, buff = 0.0)
+        complete_square = SurroundingRectangle(VGroup(square, rect_1, rect_2, small_square), color=WHITE, buff=0.0)
 
         self.play(
             Create(complete_square),
-            rate_func = smooth
+            rate_func=smooth
         )
         self.wait(2)
-        
+
+
         
         
 class CasusIrreducibilis(Scene):
