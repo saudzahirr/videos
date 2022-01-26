@@ -5,8 +5,7 @@ from manimce import *
 # Colors.
 X_COORD_COLOR = GREEN
 Y_COORD_COLOR = ORANGE
-# VECTOR_COLOR = BLUE
-VECTOR_COLOR = [BLUE_A, YELLOW, GREEN, ORANGE, MAROON_B, PINK, PURPLE]
+VECTOR_COLOR = [BLUE_A, YELLOW, GREEN, ORANGE, MAROON_B, BLUE, PINK, PURPLE]
 CURVE_COLOR = YELLOW
 DOT_COLOR = YELLOW
 TEX_HCOLOR = BLUE
@@ -289,8 +288,62 @@ class NumberSystem(Scene):
         )
         self.wait(2)
 
+        
 
+class CompletingSquareMethod(Scene):
+    def construct(self):
+        square = Square(side_length = 2, color = BLUE, fill_color = BLUE, fill_opacity = 0.5)
+        square.shift(2 * LEFT)
+        rectangle = Rectangle(height = 1.0, width = 2.0, color = GREY_BROWN, fill_color = GREY_BROWN, fill_opacity = 0.5)
+        rectangle.next_to(square, DOWN, buff = 0.5)
+        rect_1 = Rectangle(height = 0.5, width = 2.0, color = GREY_BROWN, fill_color = GREY_BROWN, fill_opacity = 0.5)
+        rect_1.next_to(square, DOWN, buff = 0.0)
+        rect_2 = Rectangle(height = 0.5, width = 2.0, color = GREY_BROWN, fill_color = GREY_BROWN, fill_opacity = 0.5)
+        rect_2.next_to(rect_1, DOWN, buff = 0.10)
+        small_square = Square(side_length = 0.5, color = YELLOW, fill_color = YELLOW, fill_opacity = 0.5)
+        small_square.next_to(rect_1, RIGHT, buff = 0.25)
+        small_square.shift(0.5 * DOWN)
 
+        self.play(
+            DrawBorderThenFill(square)
+        )
+        self.wait()
+        self.play(
+            DrawBorderThenFill(rectangle)
+        )
+        self.play(
+            rectangle.animate.next_to(square, DOWN, buff = 0.0),
+            rate_func = smooth
+        )
+        self.wait()
+        self.play(
+            TransformMatchingShapes(rectangle, VGroup(rect_1, rect_2)),
+            rate_func = smooth
+        )
+        self.play(
+            rect_2.animate.rotate(PI/2).next_to(square, RIGHT, buff = 0.0),
+            rate_func = smooth
+        )
+        self.wait()
+        self.play(
+            DrawBorderThenFill(small_square)
+        )
+        self.wait()
+        self.play(
+            small_square.animate.next_to(rect_1, RIGHT, buff = 0.0)
+        )
+        self.wait(2)
+
+        complete_square = SurroundingRectangle(VGroup(square, rect_1, rect_2, small_square), color = WHITE, buff = 0.0)
+
+        self.play(
+            Create(complete_square),
+            rate_func = smooth
+        )
+        self.wait(2)
+        
+        
+        
 class CasusIrreducibilis(Scene):
     def construct(self):
         year = Tex("1545")
@@ -454,6 +507,7 @@ class EulersIdentity(Scene):
 def list_add(l1,l2):
     return [l1[x]+l2[x] for x,_ in enumerate(l1)]
 
+
 class BombelliPoem(Scene):
     def construct(self):
         plusominus=Tex('Plus of Minus ','$\displaystyle =\ i$' ).align_on_border(UP*2)
@@ -482,6 +536,7 @@ class BombelliPoem(Scene):
             self.play(ReplacementTransform(bombelli_poem[i],interpr[i]),rate_func=smooth,run_time=2)
         self.wait()
 
+        
 
 class Introduction(Scene):
     def basic_defs(self):
