@@ -454,6 +454,34 @@ class EulersIdentity(Scene):
 def list_add(l1,l2):
     return [l1[x]+l2[x] for x,_ in enumerate(l1)]
 
+class BombelliPoem(Scene):
+    def construct(self):
+        plusominus=Tex('Plus of Minus ','$\displaystyle =\ i$' ).align_on_border(UP*2)
+        minusominus = Tex('Minus of Minus ', '$\displaystyle =\ -i$').next_to(plusominus,DOWN)
+        bombelli_poem=Tex('Plus by plus of minus, makes plus of minus\\\\',
+                            'Minus by plus of minus, makes minus of minus\\\\',
+                            'Plus by minus of minus, makes minus of minus\\\\',
+                            'Minus by minus of minus, makes plus of minus\\\\',
+                            'Plus of minus by plus of minus, makes minus\\\\',
+                            'Plus of minus by minus of minus, makes plus\\\\',
+                            'Minus of minus by plus of minus, makes plus\\\\',
+                            'Minus of minus by minus of minus makes minus').scale(0.75).shift(DOWN)
+        interpr=MathTex(r'(+1) \cdotp  i   = +i\\',
+                        r'(-1) \cdotp  i   = -i\\',
+                        r'(+1) \cdotp(-i)  = -i\\',
+                        r'(-1) \cdotp(-i)  = +i\\',
+                        r'(+i) \cdotp(i)   = -1\\',
+                        r'(+i) \cdotp(-i)  =  1\\',
+                        r'(-i) \cdotp(+i)  =  1\\',
+                        r'(-i) \cdotp(-i)  = -1').scale(0.75).shift(DOWN)
+        defs=VGroup(plusominus,minusominus).set_color(TEX_HCOLOR)
+        self.play(Write(bombelli_poem),rate_func=smooth,run_time=6)
+        self.play(Write(defs), rate_func=smooth, run_time=2)
+        self.wait()
+        for i in range(0,len(bombelli_poem)):
+            self.play(ReplacementTransform(bombelli_poem[i],interpr[i]),rate_func=smooth,run_time=2)
+        self.wait()
+
 
 class Introduction(Scene):
     def basic_defs(self):
