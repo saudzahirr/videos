@@ -292,27 +292,74 @@ class NumberSystem(Scene):
 
 class CompletingSquareMethod(Scene):
     def construct(self):
+        quadratic_equation = Tex(
+            "$x^{2} + 2x + 2 = 0$" "\\\\",
+            "$x^{2} + 2x = -2$"
+        ).scale(1.5)
+        quadratic_equation[1].move_to(quadratic_equation[0])
+        quadratic_equation[0].to_edge(UP)
+        quadratic_equation[1].to_edge(UP)
+        equation = Tex(
+            "$x^{2}$", "$+$", "$2x$", "$x$", "$x$", "$1$", "$1$", "=", "$-2$", "$-1$", "+"
+        )
         square = Square(side_length = 2, color = BLUE, fill_color = BLUE, fill_opacity = 0.5)
         square.shift(2 * LEFT)
-        rectangle = Rectangle(height = 1.0, width = 2.0, color = GREY_BROWN, fill_color = GREY_BROWN, fill_opacity = 0.5)
-        rectangle.next_to(square, DOWN, buff = 0.5)
-        rect_1 = Rectangle(height = 0.5, width = 2.0, color = GREY_BROWN, fill_color = GREY_BROWN, fill_opacity = 0.5)
-        rect_1.next_to(square, DOWN, buff = 0.0)
-        rect_2 = Rectangle(height = 0.5, width = 2.0, color = GREY_BROWN, fill_color = GREY_BROWN, fill_opacity = 0.5)
-        rect_2.next_to(rect_1, DOWN, buff = 0.10)
+        rectangle = Rectangle(height = 2.0, width = 1.0, color = GREY_BROWN, fill_color = GREY_BROWN, fill_opacity = 0.5)
+        rectangle.next_to(square, RIGHT, buff = 0.75)
+        rect_1 = Rectangle(height = 2.0, width = 0.5, color = GREY_BROWN, fill_color = GREY_BROWN, fill_opacity = 0.5)
+        rect_1.next_to(square, RIGHT, buff = 0.0)
+        rect_2 = Rectangle(height = 2.0, width = 0.5, color = GREY_BROWN, fill_color = GREY_BROWN, fill_opacity = 0.5)
+        rect_2.next_to(rect_1, RIGHT, buff = 0.10)
         small_square = Square(side_length = 0.5, color = YELLOW, fill_color = YELLOW, fill_opacity = 0.5)
-        small_square.next_to(rect_1, RIGHT, buff = 0.25)
-        small_square.shift(0.5 * DOWN)
+        small_square.next_to(rect_1, RIGHT, buff = 0.75)
+        
+        equal_square = Square(side_length = 1, color = RED_A, fill_color = RED_A, fill_opacity = 0.5)
+        equal_square.next_to(square, RIGHT, buff = 3.5)
+        small_sq_copy = small_square.copy()
+        small_sq_copy.next_to(equal_square, RIGHT, buff = 0.75)
+        negative_area = Square(side_length = 1.25, color = RUBY, fill_color = RUBY, fill_opacity = 0.5).move_to(equal_square)
+        
+        equation[0].move_to(square)
+        equation[1].next_to(square, RIGHT)
+        equation[2].move_to(rectangle)
+        equation[3].move_to(rect_1)
+        equation[6].move_to(small_sq_copy)
+        equation[7].next_to(rectangle, RIGHT, buff = 0.35)
+        equation[8].move_to(equal_square)
+        equation[9].move_to(negative_area)
+        equation[10].next_to(equal_square, RIGHT)
 
+        self.play(
+            Write(quadratic_equation[0])
+        )
+        self.play(
+            quadratic_equation[0].animate.become(quadratic_equation[1]),
+            rate_func = smooth
+        )
+        self.wait()
         self.play(
             DrawBorderThenFill(square)
         )
         self.wait()
         self.play(
-            DrawBorderThenFill(rectangle)
+            Write(equation[0]),
+            rate_func = smooth
         )
         self.play(
-            rectangle.animate.next_to(square, DOWN, buff = 0.0),
+            Write(equation[1], rate_func = smooth),
+            Write(equation[7], rate_func = smooth),
+            DrawBorderThenFill(rectangle),
+            DrawBorderThenFill(equal_square)
+        )
+        self.play(
+            Write(equation[2]),
+            Write(equation[8]),
+            rate_func = smooth
+        )
+        rectangle.add(equation[2])
+        self.play(
+            FadeOut(equation[1]),
+            rectangle.animate.next_to(square, RIGHT, buff = 0.0),
             rate_func = smooth
         )
         self.wait()
@@ -321,23 +368,47 @@ class CompletingSquareMethod(Scene):
             rate_func = smooth
         )
         self.play(
-            rect_2.animate.rotate(PI/2).next_to(square, RIGHT, buff = 0.0),
+            rect_2.animate.rotate(PI/2).next_to(square, DOWN, buff = 0.0),
+            rate_func = smooth
+        )
+        equation[1].next_to(rect_1, RIGHT)
+        equation[4].move_to(rect_2)
+        self.play(
+            Write(equation[3:5]),
             rate_func = smooth
         )
         self.wait()
         self.play(
-            DrawBorderThenFill(small_square)
+            Write(equation[1], rate_func = smooth),
+            DrawBorderThenFill(small_square),
+            Write(equation[10], rate_func = smooth),
+            DrawBorderThenFill(small_sq_copy)
+        )
+        equation[5].move_to(small_square)
+        self.play(
+            Write(equation[5:7]),
+            rate_func = smooth
         )
         self.wait()
+        small_square.add(equation[5])
         self.play(
-            small_square.animate.next_to(rect_1, RIGHT, buff = 0.0)
+            FadeOut(equation[1], equation[6], equation[8]),
+            TransformMatchingShapes(VGroup(equal_square, small_sq_copy, equation[10]), negative_area),
+            small_square.animate.next_to(rect_1, DOWN, buff = 0.0)
+        )
+        self.play(
+            Write(equation[9]),
+            equation[7].animate.shift(0.25 * LEFT).scale(1.25),
+            rate_func = smooth
         )
         self.wait(2)
 
         complete_square = SurroundingRectangle(VGroup(square, rect_1, rect_2, small_square), color = WHITE, buff = 0.0)
+        negative_sq = SurroundingRectangle(negative_area, color = WHITE, buff = 0.0)
 
         self.play(
             Create(complete_square),
+            Create(negative_sq),
             rate_func = smooth
         )
         self.wait(2)
