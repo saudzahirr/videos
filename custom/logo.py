@@ -19,8 +19,8 @@ def logo(self):
     self.play(
         LaggedStartMap(Write, logo),
         Write(logo_name),
+        rate_func = smooth,
         run_time = 5
-        rate_func = smooth
     )
     self.wait(2)
     self.clear()
