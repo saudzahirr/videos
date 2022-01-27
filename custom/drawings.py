@@ -176,7 +176,7 @@ class Brain(SVGMobject):
         SVGMobject.__init__(self, **kwargs)
         self.scale(0.85)
         self.set_color(GREY_B)
-        self.set_stroke(GREY_B, 2)
+        self.set_stroke(GREY_D, 2)
 
 
 
