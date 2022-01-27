@@ -170,6 +170,16 @@ class ThoughtBubble(SVGMobject):
        
     
     
+class Brain(SVGMobject):
+    file_name = get_svg("brain.svg")
+    def __init__(self, **kwargs):
+        SVGMobject.__init__(self, **kwargs)
+        self.scale(0.85)
+        self.set_color(GREY_B)
+        self.set_stroke(GREY_B, 2)
+
+
+
 class Speaker(SVGMobject):
     file_name = get_svg("speaker.svg")
     def __init__(self, **kwargs):
