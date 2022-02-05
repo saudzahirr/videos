@@ -1,26 +1,38 @@
 from manimce import *
-from custom.drawings import Heart, Diamond, Spade, Clover
+from custom.drawings import Heart, Diamond, Spade, Club
 
 
 
-class DeckOfCards(RoundedRectangle):
-    def __init__(self, height, width, fill_color, fill_opacity, **kwargs):
-        self.height = height,
-        self.width = width,
-        self.fill_color = fill_color,
-        self.fill_opacity = fill_opacity
-        RoundedRectangle.__init__(self, height, width, fill_color, fill_opacity, **kwargs)
-        self.set_height(height),
-        self.set_width(width),
-        self.set_fill(fill_color, fill_opacity)
+class PlayingCard(VMobject):
+    def __init__(self, **kwargs):
+        VMobject.__init__(self, **kwargs)
+        body = RoundedRectangle(
+            height = 5, width = 3, fill_color = WHITE, fill_opacity = 1.0, corner_radius = 0.10, stroke_width = 5
+        ).scale(0.75)
+        heart = Heart().scale(0.5)
+        diamond = Diamond().scale(0.5)
+        spade = Spade().scale(0.5)
+        club = Club().scale(0.5)
+        
+        body.add(
+            club.next_to(
+                body.get_corner(UL), DR,
+                buff = MED_LARGE_BUFF * 1/4
+            ),
+            club.copy().next_to(
+                body.get_corner(DR), UL,
+                buff = MED_LARGE_BUFF * 1/4
+            ),
+        )
+        self.add(body)
 
 
 
 class Test(Scene):
     def construct(self):
         self.play(
-            Create(
-                DeckOfCards(height = 5, width = 3, fill_color = WHITE, fill_opacity = 1.2)
+            DrawBorderThenFill(
+                PlayingCard()
             )
         )
         self.wait()
