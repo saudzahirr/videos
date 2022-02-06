@@ -244,7 +244,7 @@ class Heart(SVGMobject):
     file_name = get_svg("heart.svg")
     def __init__(self, **kwargs):
         SVGMobject.__init__(self, **kwargs)
-        self.set_color(RED_E)
+        self.set_fill(RED_E, 2.0)
         self.scale(0.5)
 
 
@@ -253,7 +253,7 @@ class Diamond(SVGMobject):
     file_name = get_svg("diamond.svg")
     def __init__(self, **kwargs):
         SVGMobject.__init__(self, **kwargs)
-        self.set_color(RED_E)
+        self.set_fill(RED_E, 2.0)
         self.scale(0.5)
 
 
@@ -262,7 +262,7 @@ class Spade(SVGMobject):
     file_name = get_svg("spade.svg")
     def __init__(self, **kwargs):
         SVGMobject.__init__(self, **kwargs)
-        self.set_color(BLACK)
+        self.set_fill(BLACK, 2.0)
         self.scale(0.5)
 
 
@@ -271,7 +271,7 @@ class Club(SVGMobject):
     file_name = get_svg("club.svg")
     def __init__(self, **kwargs):
         SVGMobject.__init__(self, **kwargs)
-        self.set_color(BLACK)
+        self.set_fill(BLACK, 2.0)
         self.scale(0.5)
     
 
