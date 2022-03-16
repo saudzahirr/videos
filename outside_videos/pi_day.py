@@ -66,10 +66,10 @@ class PiDay(Scene):
         euler.to_edge(13.5 * LEFT)
         
         self.add(euler)
-        self.wait(1/2)
+        self.wait()
 
-        history = Tex(r"Euler also used infinite series of" "\\\\",
-                    "arctan$(z)$ and calculated an" "\\\\",
+        history = Tex(r"Leonhard Euler used infinite series" "\\\\",
+                    "of arctan$(z)$ and calculated an" "\\\\",
                     "infinite series for $\\pi$."
         )
         history.shift(3 * LEFT)
