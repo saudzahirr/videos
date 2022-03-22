@@ -15,7 +15,7 @@ pip install manim
 pip install manimgl
 # Manim used by 3Blue1Brown.
 ```
-Manim runs on Python 3.6 or higher (Python 3.8 is recommended).
+Manim runs on Python 3.6 or higher (Python 3.9 is recommended).
 
 System requirements are [FFmpeg](https://ffmpeg.org/), [OpenGL](https://www.opengl.org/) and [LaTeX](https://www.latex-project.org) ([MiKTeX](https://miktex.org/howto/install-miktex)).
 
