@@ -1,5 +1,6 @@
 from manim import *
 from custom.functions import *
+from custom.constants import *
 
 
 
@@ -117,6 +118,9 @@ class Clock(VGroup):
             )
         self.hour_hand = Line(ORIGIN, 0.3 * UP)
         self.minute_hand = Line(ORIGIN, 0.6 * UP)
+        # for hand in self.hour_hand, self.minute_hand:
+        #     #Balance out where the center is
+        #     hand.add(VectorizedPoint(-hand.get_end()))
 
         VGroup.__init__(
             self, circle,
@@ -306,17 +310,48 @@ class Club(SVGMobject):
 
 
 
+def PascalsTriangle(n):
+    triangle = str()
+    for a in range(0, n):
+        for b in range(0, a + 1):
+            triangle += str(C(a, b))
+            triangle += " \\ "
+        triangle += "\\\\"
+        
+    return Tex(triangle, tex_template = tex_temp).scale(1.15)
+
+
+
+TemplateForMusicTeX = TexTemplate(
+    preamble=r"""
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{mtxlatex}
+\usepackage{graphicx}
+"""
+)
+
+def MusicTeX(*tex_strings, **kwargs):
+    return Tex(
+        *tex_strings,
+        tex_template = TemplateForMusicTeX,
+        tex_environment = "music", # <- Change enviroment
+        **kwargs
+    )
+
+
+
 class Checkmark(Tex):
     color = GREEN
     def __init__(self, **kwargs):
-        super().__init__("\\ding{51}")
+        super().__init__("\\checkmark")
 
 
 
 class Exmark(Tex):
     color = RED
     def __init__(self, **kwargs):
-        super().__init__("\\ding{55}")
+        super().__init__("\\exmark")
 
 
 
@@ -492,8 +527,7 @@ class ThoughtBubble(SVGMobject):
         
         
         
-        
-        
+             
         
 """
 Some Classes like SpeechBubble & ThoughtBubble etc.
