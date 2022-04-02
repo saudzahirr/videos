@@ -2,6 +2,7 @@ from manim import *
 from custom.functions import *
 from custom.drawings import SpeechBubble, ThoughtBubble
 
+
 LEFT_EYE_INDEX = 0
 RIGHT_EYE_INDEX = 1
 LEFT_PUPIL_INDEX = 2
@@ -20,8 +21,8 @@ def sigma_creature(self, mode, color):
     
 
     body = SVGMobject(get_svg("sigma.svg"))
-    body_parts.set_stroke(WHITE, 0.0)
     eye_parts = body_parts[LEFT_EYE_INDEX : RIGHT_PUPIL_INDEX + 1]
+    eye_parts.set_stroke(WHITE)
     mouth = body_parts[MOUTH_INDEX]
 
     if color is None:
@@ -34,7 +35,7 @@ def sigma_creature(self, mode, color):
     eye_parts.next_to(body.get_top(), UP, buff = 0.0)
     eye_parts.shift(0.10 * RIGHT)
     eye_parts.add(body, mouth)
-    character = eye_parts.scale(1.5)
+    character = eye_parts.scale(1.25)
         
     return character
 
@@ -99,7 +100,7 @@ def blink_eye(self, mobject, times, delay):
 
 
 
-def change_mode(self, mobject, new_mode):
+def change_mode(self, mobject, new_mode, direction, scale_value):
     body_parts = SVGMobject(get_svg(new_mode + ".svg"))
     body = SVGMobject(get_svg("sigma.svg"))
     body_parts.set_stroke(WHITE, 0.0)
@@ -112,9 +113,19 @@ def change_mode(self, mobject, new_mode):
     eye_parts.next_to(body.get_top(), UP, buff = 0.0)
     eye_parts.shift(0.10 * RIGHT)
     eye_parts.add(body, mouth)
-    new_mobject = eye_parts.scale(1.5)
 
-    self.play(
-        mobject.animate.become(new_mobject),
-        rate_func = smooth
-    )
+    if scale_value is None:
+        new_mobject = eye_parts.scale(1.25)
+    else:
+        new_mobject = eye_parts.scale(1.25 * scale_value)
+    
+    new_mobject.move_to(mobject)
+    look(self, new_mobject, direction)
+
+    return new_mobject
+
+    # self.play(
+    #     mobject.animate.become(new_mobject),
+    #     # run_time = 0.1,
+    #     rate_func = smooth
+    # )
