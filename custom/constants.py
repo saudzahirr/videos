@@ -1,3 +1,4 @@
+from manim import *
 import numpy as np
 
 
@@ -72,3 +73,4 @@ INDEPENDENCE = "#46466E"
 COBALT = "#0047AB"
 RED_F = "#D02028"
 
+tex_temp = TexTemplateLibrary.threeb1b
