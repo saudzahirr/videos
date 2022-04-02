@@ -37,6 +37,22 @@ def get_norm(vect):
 
 
 
+def C(n, k):
+    """
+    C(n, k) = n! / (n - k)! k!
+    """
+    c = 1
+
+    if (k > n - k):
+        k = n - k
+    for a in range(0, k):
+        c = c * (n - a)
+        c = c // (a + 1)
+    
+    return c
+
+
+
 def quaternion_multiplication(q1, q2):
     w1, x1, y1, z1 = q1
     w2, x2, y2, z2 = q2
