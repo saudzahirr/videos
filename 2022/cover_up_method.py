@@ -2,7 +2,29 @@ from manimce import *
 
 
 
+# Colors.
+CURVE_COLOR = BLUE
+
 # Helpers.
+
+def number_plane(x, y):
+    plane = NumberPlane(
+        x_range = [-x, x],
+        y_range = [-y, y],
+        x_length = 2*x,
+        y_length = 2*y,
+        background_line_style = {
+            "stroke_color": GREY_B,
+            "stroke_opacity": 0.5,
+            "stroke_width": 1,
+        },
+        faded_line_ratio = 2,
+    )
+    plane.axes.set_stroke(opacity=0.5)
+    plane.add_coordinates(font_size=18)
+    plane.add(SurroundingRectangle(plane, WHITE, buff = 0.0, stroke_width = 2))
+    return plane
+
 
 def get_figure(filename, person_name, height = 3, label_direction = DOWN):
 
@@ -233,11 +255,11 @@ class History(Scene):
 
         # bernoulli = get_figure("Johann_Bernoulli.jpg", "Johann Bernoulli")
         # bernoulli.to_edge(RIGHT)
-        leibniz = get_figure("Gottfried_Wilhelm_Leibniz.jpg", "Gottfried Wilhelm Leibniz")
+        leibniz = get_figure("Gottfried_Wilhelm_Leibniz.jpg", "Gottfried Leibniz")
         leibniz.to_edge(LEFT)
 
         manuscript = ImageMobject(get_image("Leibniz's_Manuscript.png"))
-        manuscript.scale(0.85)
+        manuscript.scale(0.86)
         manuscript.to_edge(UR)
         # manuscript.bring_to_back()
 
@@ -262,6 +284,25 @@ class History(Scene):
         for formula in formulas:
             formula.set_stroke(BLACK, 5, background = True)
 
+        plane = number_plane(3.5, 3.5)
+        plane.set_height(6.0)
+        plane.scale(0.75)
+        plane.set_stroke(BLACK, 1, background = True)
+        plane.add_background_rectangle()
+        plane.to_edge(DR)
+
+        func_curve = plane.plot(
+            lambda x: 1 / (x**2 + 1),
+            x_range = [-3.5, +3.5],
+            color = CURVE_COLOR, stroke_width = 3
+        )
+
+        area = plane.get_area(
+            func_curve,
+            x_range = [-3.5, 3.5],
+            color = BLUE_B,
+        )
+
         self.play(
             FadeIn(leibniz)
         )
@@ -276,6 +317,19 @@ class History(Scene):
 
         self.play(
             FadeIn(formulas, shift = DOWN),
+            run_time = 2,
+            rate_func = smooth
+        )
+        self.wait()
+
+        self.play(
+            Create(plane),
+            run_time = 2,
+            rate_func = smooth
+        )
+        self.play(
+            Write(func_curve),
+            FadeIn(area),
             run_time = 2,
             rate_func = smooth
         )
