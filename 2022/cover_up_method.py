@@ -232,34 +232,50 @@ class History(Scene):
         year.to_edge(UL)
 
         # bernoulli = get_figure("Johann_Bernoulli.jpg", "Johann Bernoulli")
-        # bernoulli.to_edge(LEFT)
-        # leibniz = get_figure("Gottfried_Wilhelm_Leibniz.jpg", "Gottfried Wilhelm Leibniz")
-        # leibniz.to_edge(RIGHT)
+        # bernoulli.to_edge(RIGHT)
+        leibniz = get_figure("Gottfried_Wilhelm_Leibniz.jpg", "Gottfried Wilhelm Leibniz")
+        leibniz.to_edge(LEFT)
 
-        kw = {
-            "x" : YELLOW,
-            "p" : BLUE_B,
-            "q" : BLUE_C
-        }
+        manuscript = ImageMobject(get_image("Leibniz's_Manuscript.png"))
+        manuscript.scale(0.85)
+        manuscript.to_edge(UR)
+        # manuscript.bring_to_back()
+
+        kw = {"tex_to_color_map": {
+            "{p}": BLUE_B,
+            "{q}": BLUE_C,
+            "{x}": YELLOW
+        }}
+
 
         formulas = VGroup(
-            MathTex("\\int \\frac{p(x)}{q(x)} dx", kw),
+            MathTex("\\int { {p}({x}) \\over {q}({x}) } dx", **kw),
             MathTex("\\int {dx \\over x^{2} + 1}"),
-            MathTex("= {1 \\over 2 \\sqrt{-1}} \\int {\\left ( {1 \\over x - \\sqrt{-1}} - {1 \\over x + \\sqrt{-1}}  \\right )} dx")
+            MathTex("= {1 \\over 2 \\sqrt{-1}} \\int {\\left ( {1 \\over x - \\sqrt{-1}} - {1 \\over x + \\sqrt{-1}}  \\right )} dx"),
             MathTex("= {1 \\over 2 \\sqrt{-1}} \\cdot \\mathrm{log} \\left ( {x - \\sqrt{-1}} \\over {x + \\sqrt{-1}} \\right )")
         )
         formulas.scale(0.75)
+        formulas[2:].scale(0.85, about_edge = UP)
         formulas.arrange(DOWN)
+        formulas.shift(0.5 * DOWN)
 
-        # self.play(
-        #     FadeIn(bernoulli, leibniz)
-        # )
-        self.play(Write(year))
+        for formula in formulas:
+            formula.set_stroke(BLACK, 5, background = True)
+
+        self.play(
+            FadeIn(leibniz)
+        )
+        self.play(
+            Write(year),
+            FadeIn(manuscript),
+            rate_func = smooth
+        )
         self.wait()
+        
+        self.add_foreground_mobject(formulas)
 
         self.play(
             FadeIn(formulas, shift = DOWN),
-            # lag_ratio = 0.5,
             run_time = 2,
             rate_func = smooth
         )
