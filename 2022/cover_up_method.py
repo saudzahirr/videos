@@ -2,6 +2,22 @@ from manimce import *
 
 
 
+# Helpers.
+
+def get_figure(filename, person_name, height = 3, label_direction = DOWN):
+
+    image = ImageMobject(get_portrait(filename))
+    image.set_height(height)
+    rect = SurroundingRectangle(image, buff = 0)
+    rect.set_stroke(WHITE, 2)
+    name = Tex(person_name, font_size = 36)
+    name.next_to(image, label_direction)
+    
+    return Group(rect, image, name)
+
+
+
+# Scenes.
 
 class RationalFractions(Scene):
     def construct(self):
