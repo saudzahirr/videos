@@ -61,19 +61,28 @@ class RationalFractions(Scene):
             Cross(examples[6])
         )
 
-        cross_label = Tex(
-            "Irrational Fractions!"
-        )
-        cross_label.scale(1.25)
+        cross_label = Tex("Irrational Fractions!")
+        cross_label.scale(1.35)
         cross_label.next_to(examples[5], UP, buff = 0.5)
         cross_label.set_stroke(BLACK, 5, background = True)
 
+        proper_fractions = Tex(
+            "Proper Rational Fractions!" "\\\\",
+            "deg $f(x) <$ deg $p(x)$."
+        )
+        proper_fractions.scale(1.35)
+        proper_fractions.next_to(examples[2], UL, buff = 0.75)
+        proper_fractions.set_stroke(BLACK, 5, background = True)
         
         self.play(
             Write(definition),
+            run_time = 2,
+            rate_func = smooth
+        )
+        self.play(
             Write(explanation[0]),
-            Write(explanation[1:], lag_ratio = 0.3),
-            run_time = 4,
+            Write(explanation[1:], lag_ratio = 0.4),
+            run_time = 3,
             rate_func = smooth
         )
         self.wait(2)
@@ -104,10 +113,43 @@ class RationalFractions(Scene):
 
         self.play(
             Write(cross_label),
-            # run_time = 2,
+            run_time = 2,
             rate_func = smooth
         )
         self.wait()
+
+        self.play(
+            FadeOut(
+                VGroup(
+                    examples[3],
+                    examples[5],
+                    examples[6],
+                    cross, cross_label
+                )
+            ),
+            run_time = 2,
+            rate_func = smooth
+        )
+        self.wait()
+
+        
+        VGroup(
+            examples[3],
+            examples[5],
+            examples[6]
+        ).shift(5 * FRAME_WIDTH)
+
+        self.play(
+            examples[2:].animate.set_color(GREY_B)
+        )
+        self.wait()
+
+        self.play(
+            Write(proper_fractions[1]),
+            lag_ratio = 0.5,
+            rate_func = smooth
+        )
+        self.wait(2)
         
 
         
