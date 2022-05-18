@@ -1,6 +1,116 @@
 from manimce import *
 
 
+
+
+class RationalFractions(Scene):
+    def construct(self):
+        title = Tex(
+            r"Rational Fractions"
+        )
+        title.scale(1.5)
+        title.set_stroke(BLACK, 5, background = True)
+        title.to_edge(UP)
+
+        self.add(title)
+
+        definition = MathTex("f(x) = { p(x) \\over q(x)}")
+        definition.set_stroke(BLACK, 5, background = True)
+        definition.shift(UP)
+
+        explanation = Tex(
+            "$p(x)$ and $q(x)$ are polynomials." "\\\\",
+            "(", "not transcendental functions!" "\\\\",
+            "$\mathrm{sin}(x), \\ \mathrm{log}(x), \\ \mathrm{e}^{x}$",
+            " \\ etc.)"
+        )
+        
+        explanation[2].set_color(RED)
+        explanation[3].set_color(BLUE)
+        explanation.next_to(definition, DOWN, buff = 0.5)
+
+        examples = VGroup(
+            MathTex("9 \\over {(x + 3)(x + 7)}"),
+            MathTex("{2x \\over x^{2} - 1} "),
+            MathTex("{3x + 1 \\over x^{2} + 2x - 3} "),
+            MathTex("{\sqrt{x+2} \over x^{2} - 3}"),
+            MathTex("{x^2-3 \\over x+1}"),
+            MathTex("\\mathrm{cos}(x) \\over \\mathrm{sin} \\left( x \\over 2 \\right)"),
+            MathTex("\\mathrm{log}(x) \\over {x^2 + 1}"),
+            MathTex("{x^{2} - 1} \\over {x^{2} - 5}")
+        )
+
+        coords = [
+            [0, 0, 0],
+            [-4, 2, 0],
+            [4, 0, 0],
+            [0, 2, 0],
+            [3, -2, 0],
+            [-2, -2, 0],
+            [-3, 0, 0],
+            [-5, -2, 0]
+        ]
+
+        for example, coord in zip(examples, coords):
+            example.move_to(coord)
+
+        
+        cross = VGroup(
+            Cross(examples[3]),
+            Cross(examples[5]),
+            Cross(examples[6])
+        )
+
+        cross_label = Tex(
+            "Irrational Fractions!"
+        )
+        cross_label.scale(1.25)
+        cross_label.next_to(examples[5], UP, buff = 0.5)
+        cross_label.set_stroke(BLACK, 5, background = True)
+
+        
+        self.play(
+            Write(definition),
+            Write(explanation[0]),
+            Write(explanation[1:], lag_ratio = 0.3),
+            run_time = 4,
+            rate_func = smooth
+        )
+        self.wait(2)
+
+        self.play(
+            FadeOut(definition, shift = DOWN),
+            FadeOut(explanation, shift = DOWN),
+            run_time = 1,
+            rate_func = smooth
+        )
+
+        self.play(
+            LaggedStart(
+                *[
+                    GrowFromPoint(example, coord)
+                    for example, coord in zip(examples, coords)
+                ]
+            )
+        )
+        self.wait(2)
+
+        self.play(
+            Create(cross),
+            run_time = 2,
+            rate_func = smooth
+        )
+        self.wait()
+
+        self.play(
+            Write(cross_label),
+            # run_time = 2,
+            rate_func = smooth
+        )
+        self.wait()
+        
+
+        
 class PartialFractions(Scene):
     def construct(self):
         partial_fraction = Tex(
