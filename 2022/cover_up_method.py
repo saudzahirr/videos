@@ -225,7 +225,7 @@ class PartialFractions(Scene):
         
         
         
-        class History(Scene):
+class History(Scene):
     def construct(self):
         year = Tex("1702")
         year.scale(1.5)
@@ -264,5 +264,3 @@ class PartialFractions(Scene):
             rate_func = smooth
         )
         self.wait()
-
-        
