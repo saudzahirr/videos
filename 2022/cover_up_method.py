@@ -71,7 +71,7 @@ class RationalFractions(Scene):
             "deg $f(x) <$ deg $p(x)$."
         )
         proper_fractions.scale(1.35)
-        proper_fractions.next_to(examples[2], UL, buff = 0.75)
+        proper_fractions.next_to(examples[7], RIGHT, buff = 0.0)
         proper_fractions.set_stroke(BLACK, 5, background = True)
         
         self.play(
@@ -79,13 +79,15 @@ class RationalFractions(Scene):
             run_time = 2,
             rate_func = smooth
         )
+        self.wait()
+
         self.play(
             Write(explanation[0]),
             Write(explanation[1:], lag_ratio = 0.4),
             run_time = 3,
             rate_func = smooth
         )
-        self.wait(2)
+        self.wait(3)
 
         self.play(
             FadeOut(definition, shift = DOWN),
@@ -102,7 +104,7 @@ class RationalFractions(Scene):
                 ]
             )
         )
-        self.wait(2)
+        self.wait(3)
 
         self.play(
             Create(cross),
@@ -140,7 +142,8 @@ class RationalFractions(Scene):
         ).shift(5 * FRAME_WIDTH)
 
         self.play(
-            examples[2:].animate.set_color(GREY_B)
+            Write(proper_fractions[0]),
+            examples[3:].animate.set_color(GREY_B)
         )
         self.wait()
 
