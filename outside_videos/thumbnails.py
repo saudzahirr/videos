@@ -129,6 +129,6 @@ class AngleIdentity(Scene):
         equation.set_color_by_tex('\\theta', BLUE_C)
         equation.scale(2.65)
         equation.add_background_rectangle()
-        self.add_foreground_mobjects(equation)s
+        self.add_foreground_mobjects(equation)
 
         
