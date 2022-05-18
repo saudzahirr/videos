@@ -222,3 +222,45 @@ class PartialFractions(Scene):
             self.wait()
 
         self.wait()
+        
+        
+        
+        class History(Scene):
+    def construct(self):
+        year = Tex("1702")
+        year.scale(1.5)
+        year.to_edge(UL)
+
+        # bernoulli = get_figure("Johann_Bernoulli.jpg", "Johann Bernoulli")
+        # bernoulli.to_edge(LEFT)
+        # leibniz = get_figure("Gottfried_Wilhelm_Leibniz.jpg", "Gottfried Wilhelm Leibniz")
+        # leibniz.to_edge(RIGHT)
+
+        kw = {
+            "x" : YELLOW,
+            "p" : BLUE_B,
+            "q" : BLUE_C
+        }
+
+        formulas = VGroup(
+            MathTex("\\int \\frac{p(x)}{q(x)} dx", kw),
+            MathTex("\\int {dx \\over x^{2} + 1}"),
+            MathTex("= {1 \\over 2 \\sqrt{-1}} \\int {\\left ( {1 \\over x - \\sqrt{-1}} - {1 \\over x + \\sqrt{-1}}  \\right )} dx")
+            MathTex("= {1 \\over 2 \\sqrt{-1}} \\cdot \\mathrm{log} \\left ( {x - \\sqrt{-1}} \\over {x + \\sqrt{-1}} \\right )")
+        )
+        formulas.scale(0.75)
+        formulas.arrange(DOWN)
+
+        # self.play(
+        #     FadeIn(bernoulli, leibniz)
+        # )
+        self.play(Write(year))
+        self.wait()
+
+        self.play(
+            FadeIn(formulas, shift = DOWN),
+            # lag_ratio = 0.5,
+            run_time = 2,
+            rate_func = smooth
+        )
+        self.wait()
