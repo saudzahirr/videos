@@ -68,9 +68,10 @@ class RationalFractions(Scene):
 
         proper_fractions = Tex(
             "Proper Rational Fractions!" "\\\\",
-            "deg $f(x) <$ deg $p(x)$."
+            "deg $p(x) <$ deg $q(x)$."
         )
         proper_fractions.scale(1.35)
+        proper_fractions[1].scale(0.85, about_edge=UP)
         proper_fractions.next_to(examples[7], RIGHT, buff = 0.0)
         proper_fractions.set_stroke(BLACK, 5, background = True)
         
@@ -152,6 +153,13 @@ class RationalFractions(Scene):
             lag_ratio = 0.5,
             rate_func = smooth
         )
+        self.wait()
+
+        # self.play(
+        #     FadeOut(examples[3:]),
+        #     examples[1].animate.next_to(examples[0], LEFT, buff = 1),
+        #     rate_func = smooth
+        # )
         self.wait(2)
         
 
