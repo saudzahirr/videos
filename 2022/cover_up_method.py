@@ -264,3 +264,5 @@ class PartialFractions(Scene):
             rate_func = smooth
         )
         self.wait()
+
+        
