@@ -253,8 +253,8 @@ class History(Scene):
         year.scale(1.5)
         year.to_edge(UL)
 
-        # bernoulli = get_figure("Johann_Bernoulli.jpg", "Johann Bernoulli")
-        # bernoulli.to_edge(RIGHT)
+        bernoulli = get_figure("Johann_Bernoulli.jpg", "Johann Bernoulli")
+        bernoulli.to_edge(RIGHT)
         leibniz = get_figure("Gottfried_Wilhelm_Leibniz.jpg", "Gottfried Leibniz")
         leibniz.to_edge(LEFT)
 
@@ -304,10 +304,19 @@ class History(Scene):
         )
 
         self.play(
-            FadeIn(leibniz)
-        )
-        self.play(
+            FadeIn(leibniz, shift = DOWN),
+            FadeIn(bernoulli, shift = DOWN),
             Write(year),
+            rate_func = smooth
+        )
+        self.wait(2)
+
+        self.play(
+            FadeOut(bernoulli, shift = RIGHT),
+            rate_func = smooth
+        )
+
+        self.play(
             FadeIn(manuscript),
             rate_func = smooth
         )
