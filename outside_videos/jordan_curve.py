@@ -20,7 +20,7 @@ class JordanCurveScene(Scene):
             "an `inside' region (", "light blue", ") and an `outside' region (", "pink", ")."
         )
         explanation[3].set_color(BLUE_B)
-        explanation[5].set_color(DARK_PINK)
+        explanation[5].set_color(RED_A)
         explanation.to_edge(UL)
         explanation.set_stroke(BLACK, 3, background = True)
         
