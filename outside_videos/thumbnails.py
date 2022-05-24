@@ -89,26 +89,8 @@ class GoldenRatio(Scene):
         self.add(ptolemy)
         self.add_foreground_mobjects(equation, circle, phi)
 
-        
-        
-class HammingCodes(Scene):
-    def construct(self):
-        title = Tex(r"Hamming Codes")
-        title.scale(2.5)
-        title.to_edge(UP)
-        punchcard = SVGMobject("punchcard_relay.svg")
-        punchcard.scale(2)
-        punchcard.set_opacity(0.5)
-        punchcard.next_to(title, 3 * DOWN)
-        punchcard[3:7].set_fill(GREY_E, opacity = 2)
-        cover = ImageMobject("computer_science.jpg")
-        cover.scale(1.5)
-        cover.fade(0.6)
-        self.add(cover)
-        self.add_foreground_mobjects(title, punchcard)
 
-        
-        
+                
 class AngleIdentity(Scene):
     def construct(self):
         background_image = ImageMobject("angle_identity.png")
