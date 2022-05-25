@@ -20,13 +20,21 @@ class FibonacciMapping(Scene):
         )
         plane.scale(2)
 
+        formula = Tex(
+            "$F_{n} = {\\varphi^{n} - \\left( - \\varphi \\right)^{n}} \\over \\sqrt{5}$"
+        )
+        formula.scale(1.25)
+        formula.to_corner(UL)
+        formula.set_stroke(BLACK, 5, background = True)
+        formula.add_background_rectangle()
+
         grid = plane.copy()
         grid.set_stroke(GREY_B, 2)
         grid.prepare_for_nonlinear_transform()
         self.add(grid)
 
         plane.add_coordinates(font_size = 20)
-        self.add_foreground_mobject(plane)
+        self.add_foreground_mobjects(plane, formula)
 
         self.play(
             grid.animate.apply_complex_function(lambda z: F(z)),
