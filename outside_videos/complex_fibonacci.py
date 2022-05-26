@@ -7,7 +7,7 @@ def F(n):
     return b
 
 
-class ComplexFibonacci(Scene):
+class ComplexFibonacciFunction(Scene):
     def construct(self):
         plane = ComplexPlane(
             x_range = (-FRAME_WIDTH*2, FRAME_WIDTH*2),
