@@ -7,7 +7,7 @@ def F(n):
     return b
 
 
-class ComplexFibonacciFunction(Scene):
+class ComplexFibonacci(MovingCameraScene):
     def construct(self):
         plane = ComplexPlane(
             x_range = (-FRAME_WIDTH*2, FRAME_WIDTH*2),
@@ -50,19 +50,34 @@ class ComplexFibonacciFunction(Scene):
         self.add_foreground_mobjects(plane, formula)
         self.wait(2)
 
-        complex_fibonacci_curve = plane.plot(
-            lambda t: complex_to_R3(F(complex(t, t))),
-            t_range = (-5, +5)
-        )
-
-        # complex_fibonacci_curve = ParametricFunction(
+        # complex_fibonacci_curve = plane.plot(
         #     lambda t: complex_to_R3(F(complex(t, t))),
         #     t_range = (-5, +5)
         # )
 
+        complex_fibonacci_curve = ParametricFunction(
+            lambda t: complex_to_R3(F(complex(t, t))),
+            t_range = (-FRAME_WIDTH, +FRAME_WIDTH),
+            color = YELLOW
+        )
+
         self.play(
             Write(complex_fibonacci_curve),
             rate_func = smooth,
-            run_time = 3,
+            # run_time = 3,
+        )
+        self.wait(2)
+
+        frame = self.camera.frame
+        frame.save_state()
+
+        self.play(
+            FadeOut(formula, rect),
+            rate_func = smooth
+        )
+        self.play(
+            frame.animate.scale(5),
+            rate_func = smooth,
+            # run_time = 5
         )
         self.wait(2)
