@@ -1,16 +1,17 @@
 from manimce import *
 
 
-def F(x):
+def F(n):
     a = (1 + sqrt(5)) / 2
-    b = (a**x - (-a)**x) / sqrt(5)
+    b = (a**n - (-a)**n) / sqrt(5)
     return b
 
 
-class FibonacciMapping(Scene):
+class ComplexFibonacci(Scene):
     def construct(self):
         plane = ComplexPlane(
-            x_range = (-FRAME_WIDTH, FRAME_WIDTH), y_range = (-FRAME_HEIGHT, FRAME_HEIGHT),
+            x_range = (-FRAME_WIDTH*2, FRAME_WIDTH*2),
+            y_range = (-FRAME_HEIGHT*2, FRAME_HEIGHT*2),
             background_line_style={
                 "stroke_color": GREY_B,
                 "stroke_opacity": 0.5,
@@ -43,19 +44,25 @@ class FibonacciMapping(Scene):
         formula.add(golden_ratio)
         
         rect = BackgroundRectangle(formula, fill_opacity = 0.5, buff = SMALL_BUFF)
-
-        grid = plane.copy()
-        grid.set_stroke(GREY_B, 2)
-        grid.prepare_for_nonlinear_transform()
-        self.add(grid, rect)
+        self.add(rect)
 
         plane.add_coordinates(font_size = 30)
         self.add_foreground_mobjects(plane, formula)
         self.wait(2)
 
+        complex_fibonacci_curve = plane.plot(
+            lambda t: complex_to_R3(F(complex(t, t))),
+            t_range = (-5, +5)
+        )
+
+        # complex_fibonacci_curve = ParametricFunction(
+        #     lambda t: complex_to_R3(F(complex(t, t))),
+        #     t_range = (-5, +5)
+        # )
+
         self.play(
-            grid.animate.apply_complex_function(lambda z: F(z)),
+            Write(complex_fibonacci_curve),
             rate_func = smooth,
-            run_time = 10,
+            run_time = 3,
         )
         self.wait(2)
