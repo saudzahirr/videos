@@ -3,7 +3,7 @@ from manimce import *
 
 def F(n):
     a = (1 + sqrt(5)) / 2
-    b = (a**n - (-a)**n) / sqrt(5)
+    b = (a**n - (-a)**(-n)) / sqrt(5)
     return b
 
 
