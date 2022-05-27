@@ -55,14 +55,9 @@ class ComplexFibonacci(MovingCameraScene):
         golden_ratio.next_to(formula.get_bottom(), DOWN)
         golden_ratio.set_stroke(BLACK, 5, background = True)
         formula.add(golden_ratio)
-        rect = BackgroundRectangle(formula, fill_opacity = 0.75, buff = SMALL_BUFF)
 
-        self.add_foreground_mobjects(formula)
         self.play(
-            Write(
-                formula
-            ),
-            FadeIn(rect),
+            Write(formula),
             rate_func = smooth,
             run_time = 3
         )
