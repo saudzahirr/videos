@@ -1,8 +1,6 @@
 from manimce import *
 from numpy import *
 
-
-
 # Binet's Formula.
 
 def F(n):
@@ -35,6 +33,14 @@ class ComplexFibonacci(MovingCameraScene):
             "{\\varphi}": YELLOW}
         }
 
+        title = Tex(
+            "Binet's Formula"
+        )
+        title.scale(1.5)
+        title.to_edge(UP)
+        title.set_stroke(BLACK, 5, background = True)
+        self.add(title)
+
         formula = MathTex(
             "F_{n} = { { {\\varphi}^{n} - \\left( - {\\varphi} \\right)^{-{n} } } \\over 2 {\\varphi} - 1 }",
             **kw
@@ -51,8 +57,25 @@ class ComplexFibonacci(MovingCameraScene):
         formula.add(golden_ratio)
         rect = BackgroundRectangle(formula, fill_opacity = 0.75, buff = SMALL_BUFF)
 
+        self.add_foreground_mobjects(formula)
+        self.play(
+            Write(
+                formula
+            ),
+            FadeIn(rect),
+            rate_func = smooth,
+            run_time = 3
+        )
+        self.wait()
+        self.clear()
+
         plane.add_coordinates(font_size = 30)
         self.add_foreground_mobjects(plane)
+        self.play(
+            Create(plane),
+            rate_func = smooth,
+            run_time = 2
+        )
         self.wait(2)
 
         complex_fibonacci_curve = ParametricFunction(
@@ -64,6 +87,7 @@ class ComplexFibonacci(MovingCameraScene):
             t_range = [-FRAME_WIDTH, +FRAME_WIDTH],
             color = YELLOW
         )
+        complex_fibonacci_curve.scale(2, about_edge = UP)
 
         # Not Useful.
 
@@ -76,7 +100,7 @@ class ComplexFibonacci(MovingCameraScene):
         self.play(
             Write(complex_fibonacci_curve),
             rate_func = smooth,
-            run_time = 5,
+            run_time = 10,
         )
         self.wait(2)
 
@@ -86,17 +110,6 @@ class ComplexFibonacci(MovingCameraScene):
         self.play(
             frame.animate.scale(5),
             rate_func = smooth,
-            run_time = 5
+            run_time = 10
         )
         self.wait(2)
-
-        # self.add_foreground_mobjects(formula)
-        # self.play(
-        #     Write(
-        #         formula
-        #     ),
-        #     FadeIn(rect),
-        #     rate_func = smooth,
-        #     run_time = 3
-        # )
-        # self.wait()
