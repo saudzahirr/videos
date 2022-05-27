@@ -1,4 +1,5 @@
 from manimce import *
+from numpy import *
 
 
 def F(n):
@@ -7,19 +8,22 @@ def F(n):
     return b
 
 
+a = (1 + sqrt(5)) / 2
+
+
 class ComplexFibonacci(MovingCameraScene):
     def construct(self):
         plane = ComplexPlane(
-            x_range = (-FRAME_WIDTH*2, FRAME_WIDTH*2),
-            y_range = (-FRAME_HEIGHT*2, FRAME_HEIGHT*2),
+            x_range = (-2*FRAME_WIDTH, 2*FRAME_WIDTH),
+            y_range = (-2*FRAME_HEIGHT, 2*FRAME_HEIGHT),
             background_line_style={
                 "stroke_color": GREY_B,
                 "stroke_opacity": 0.5,
-                "stroke_width": 1
+                "stroke_width": 2
             },
             faded_line_ratio = 4
         )
-        plane.scale(2)
+        # plane.scale(2)
 
         kw = {"tex_to_color_map": {
             "F": BLUE_C,
@@ -28,10 +32,9 @@ class ComplexFibonacci(MovingCameraScene):
         }
 
         formula = MathTex(
-            "F_{n} = { { {\\varphi}^{n} - \\left( - {\\varphi} \\right)^{n} } \\over 2 {\\varphi} - 1 }",
+            "F_{n} = { { {\\varphi}^{n} - \\left( - {\\varphi} \\right)^{-{n} } } \\over 2 {\\varphi} - 1 }",
             **kw
         )
-        formula.scale(1.25)
         formula.to_corner(UL)
         formula.set_stroke(BLACK, 5, background = True)
 
@@ -43,28 +46,27 @@ class ComplexFibonacci(MovingCameraScene):
         golden_ratio.set_stroke(BLACK, 5, background = True)
         formula.add(golden_ratio)
         
-        rect = BackgroundRectangle(formula, fill_opacity = 0.5, buff = SMALL_BUFF)
+        rect = BackgroundRectangle(formula, fill_opacity = 0.75, buff = SMALL_BUFF)
         self.add(rect)
 
         plane.add_coordinates(font_size = 30)
         self.add_foreground_mobjects(plane, formula)
         self.wait(2)
 
-        # complex_fibonacci_curve = plane.plot(
-        #     lambda t: complex_to_R3(F(complex(t, t))),
-        #     t_range = (-5, +5)
-        # )
-
         complex_fibonacci_curve = ParametricFunction(
-            lambda t: complex_to_R3(F(complex(t, t))),
-            t_range = (-FRAME_WIDTH, +FRAME_WIDTH),
+            lambda t: [
+                (a**t - a**(-t) * cos(pi*t)) / sqrt(5),
+                (a**(-t) * sin(pi*t)) / sqrt(5),
+                0
+            ],
+            t_range = [-FRAME_WIDTH, +FRAME_WIDTH],
             color = YELLOW
         )
 
         self.play(
             Write(complex_fibonacci_curve),
             rate_func = smooth,
-            # run_time = 3,
+            run_time = 3,
         )
         self.wait(2)
 
@@ -75,9 +77,11 @@ class ComplexFibonacci(MovingCameraScene):
             FadeOut(formula, rect),
             rate_func = smooth
         )
+        self.remove_foreground_mobjects(formula)
+        self.remove(rect)
         self.play(
             frame.animate.scale(5),
             rate_func = smooth,
-            # run_time = 5
+            run_time = 5
         )
         self.wait(2)
