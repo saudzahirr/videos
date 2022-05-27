@@ -1,6 +1,8 @@
 from manimce import *
 from numpy import *
 
+
+
 # Binet's Formula.
 
 def F(n):
