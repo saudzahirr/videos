@@ -68,7 +68,7 @@ class ComplexFibonacci(MovingCameraScene):
         self.clear()
 
         plane.add_coordinates(font_size = 30)
-        
+
         self.play(
             Create(plane),
             rate_func = smooth,
