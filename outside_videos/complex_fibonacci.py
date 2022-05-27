@@ -1,15 +1,15 @@
 from manimce import *
 from numpy import *
 
-# Binet's Formula.
 
+
+# Binet's Formula.
 def F(n):
     a = (1 + sqrt(5)) / 2
     b = (a**n - (-a)**(-n)) / sqrt(5)
     return b
 
 # Golden Ratio.
-
 a = (1 + sqrt(5)) / 2
 
 
@@ -25,7 +25,6 @@ class ComplexFibonacci(MovingCameraScene):
             },
             faded_line_ratio = 4
         )
-        plane.scale(2)
 
         kw = {"tex_to_color_map": {
             "F": BLUE_C,
@@ -39,7 +38,11 @@ class ComplexFibonacci(MovingCameraScene):
         title.scale(1.5)
         title.to_edge(UP)
         title.set_stroke(BLACK, 5, background = True)
-        self.add(title)
+        self.play(
+            Write(title),
+            rate_func = smooth,
+            run_time = 2
+        )
 
         formula = MathTex(
             "F_{n} = { { {\\varphi}^{n} - \\left( - {\\varphi} \\right)^{-{n} } } \\over 2 {\\varphi} - 1 }",
@@ -57,9 +60,8 @@ class ComplexFibonacci(MovingCameraScene):
         formula.add(golden_ratio)
 
         self.play(
-            Write(formula),
-            rate_func = smooth,
-            run_time = 3
+            FadeIn(formula, shift = UP),
+            rate_func = smooth
         )
         self.wait()
         self.clear()
@@ -69,7 +71,7 @@ class ComplexFibonacci(MovingCameraScene):
         self.play(
             Create(plane),
             rate_func = smooth,
-            run_time = 2
+            run_time = 3
         )
         self.wait(2)
 
@@ -107,3 +109,4 @@ class ComplexFibonacci(MovingCameraScene):
             run_time = 12
         )
         self.wait(2)
+        self.clear()
