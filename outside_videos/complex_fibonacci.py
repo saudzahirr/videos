@@ -82,7 +82,6 @@ class ComplexFibonacci(MovingCameraScene):
             t_range = [-FRAME_WIDTH, +FRAME_WIDTH],
             color = YELLOW
         )
-        complex_fibonacci_curve.scale(2, about_edge = UP)
 
         # Not Useful.
 
@@ -95,7 +94,7 @@ class ComplexFibonacci(MovingCameraScene):
         self.play(
             Write(complex_fibonacci_curve),
             rate_func = smooth,
-            run_time = 10,
+            run_time = 12,
         )
         self.wait(2)
 
@@ -105,6 +104,6 @@ class ComplexFibonacci(MovingCameraScene):
         self.play(
             frame.animate.scale(5),
             rate_func = smooth,
-            run_time = 10
+            run_time = 12
         )
         self.wait(2)
