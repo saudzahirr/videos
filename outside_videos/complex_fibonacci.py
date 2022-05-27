@@ -41,7 +41,7 @@ class ComplexFibonacci(MovingCameraScene):
         self.play(
             Write(title),
             rate_func = smooth,
-            run_time = 2
+            run_time = 3
         )
 
         formula = MathTex(
@@ -61,13 +61,14 @@ class ComplexFibonacci(MovingCameraScene):
 
         self.play(
             FadeIn(formula, shift = UP),
-            rate_func = smooth
+            rate_func = smooth,
+            run_time = 2
         )
-        self.wait()
+        self.wait(2)
         self.clear()
 
         plane.add_coordinates(font_size = 30)
-        self.add_foreground_mobjects(plane)
+        
         self.play(
             Create(plane),
             rate_func = smooth,
