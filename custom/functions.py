@@ -53,6 +53,24 @@ def C(n, k):
 
 
 
+def F(N):
+    """
+    Fibonacci Sequence.
+    F(n + 1) = F(n) + F(n - 1)
+    """
+    a = 0
+    b = 1
+    F = [a, b]
+    for j in range(1, N + 1):
+        c = a + b
+        a = b
+        b = c
+        F.append(c)
+    
+    return F[N]
+
+
+
 def quaternion_multiplication(q1, q2):
     w1, x1, y1, z1 = q1
     w2, x2, y2, z2 = q2
