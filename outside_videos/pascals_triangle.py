@@ -46,4 +46,4 @@ class FibonacciNumbersInPascalsTriangle(Scene):
         fibonacci_numbers.shift(0.2 * RIGHT)
 
 
-        self.add_foreground_mobjects(line, title, pascal_triangle, fibonacci_numbers)
+        self.add(line, title, pascal_triangle, fibonacci_numbers)
