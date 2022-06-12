@@ -21,7 +21,7 @@ class Introduction(Scene):
         bridge_diagram.set_stroke(WHITE, 2)
         bridge_diagram.scale(0.85)
         bridge_diagram.shift(DOWN)
-        bridge_diagram.shift(LEFT)
+        bridge_diagram.shift(0.35 * LEFT)
         bridge_diagram.rotate(-10 * DEGREES)
 
         title = Tex("Seven Bridges of Königsberg.")
@@ -50,19 +50,19 @@ class Introduction(Scene):
         self.add_foreground_mobjects(title)
         self.play(
             Write(title),
-            run_time = 3,
+            run_time = 6,
             rate_func = smooth
         )
-        self.wait()
+        self.wait(3)
 
         self.add_foreground_mobjects(bridge_diagram, problem)
         self.play(
             Write(bridge_diagram),
             Write(problem),
-            run_time = 5,
+            run_time = 8,
             rate_func = smooth
         )
-        self.wait()
+        self.wait(6)
         self.clear()
         logo(self)
         
