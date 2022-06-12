@@ -6,6 +6,68 @@ from manimce import *
 
 
 
+class Introduction(Scene):
+    def construct(self):
+        image = ImageMobject(get_image("Königsberg_Karte.jpg"))
+        image.set_height(FRAME_HEIGHT)
+        image.set_width(FRAME_WIDTH)
+
+        full_rect = FullScreenRectangle()
+        full_rect.scale(1.25)
+        full_rect.flip()
+        full_rect.set_fill(BLACK, opacity = 0.6)
+
+        bridge_diagram = SVGMobject(get_svg("bridge.svg"))
+        bridge_diagram.set_stroke(WHITE, 2)
+        bridge_diagram.scale(0.85)
+        bridge_diagram.shift(DOWN)
+        bridge_diagram.shift(LEFT)
+        bridge_diagram.rotate(-10 * DEGREES)
+
+        title = Tex("Seven Bridges of Königsberg.")
+        title.set_color(YELLOW)
+        title.set_stroke(BLACK, 3, background = True)
+        title.scale(1.5)
+        title.to_edge(UP)
+
+        problem = Tex(
+            "A walk through the city that would cross" "\\\\",
+            "each of those bridges once and only once."
+        )
+        problem.set_stroke(BLACK, 3, background = True)
+        problem.scale(0.85)
+        problem.next_to(title, 3 * DOWN)
+
+
+        self.add(image)
+        self.wait(2)
+
+        self.play(
+            FadeIn(full_rect),
+            rate_func = smooth
+        )
+
+        self.add_foreground_mobjects(title)
+        self.play(
+            Write(title),
+            run_time = 3,
+            rate_func = smooth
+        )
+        self.wait()
+
+        self.add_foreground_mobjects(bridge_diagram, problem)
+        self.play(
+            Write(bridge_diagram),
+            Write(problem),
+            run_time = 5,
+            rate_func = smooth
+        )
+        self.wait()
+        self.clear()
+        logo(self)
+        
+        
+        
 class EulersSolution(Scene):
     def construct(self):
         image = ImageMobject(get_image("Konigsberg.jpg"))
