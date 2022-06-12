@@ -67,6 +67,176 @@ class Introduction(Scene):
         logo(self)
         
         
+ 
+class History(Scene):
+    def construct(self):
+        euler_portrait = ImageMobject(get_portrait("Euler3.jpg"))
+        euler_portrait.scale(0.65)
+        euler_portrait.add(SurroundingRectangle(euler_portrait, WHITE, buff = 0.0, stroke_width = 2))
+        euler_portrait.to_edge(LEFT)
+        leonhard_euler = Tex("Leonhard Euler")
+        leonhard_euler.set_width(euler_portrait.get_width())
+        leonhard_euler.next_to(euler_portrait, DOWN)
+
+
+        ehler_portrait = Rectangle(height = 3, width = 2.5, stroke_color = WHITE, fill_color = BLACK, fill_opacity = 0.8)
+        ehler_portrait.add(Tex("No Image.").scale(0.85).set_color(GREY_B))
+        ehler_portrait.set_height(euler_portrait.get_height())
+        ehler_portrait.set_width(euler_portrait.get_width())
+        ehler_portrait.to_edge(RIGHT)
+        carl_ehler = Tex("Carl Gottlieb Ehler")
+        carl_ehler.set_width(ehler_portrait.get_width())
+        carl_ehler.next_to(ehler_portrait, DOWN)
+
+        year = Tex("1736")
+        year.scale(1.35)
+        year.to_edge(UL)
+        self.add(year)
+
+        # calligraphy = TexTemplate(
+        #     preamble = r"""
+        #     \usepackage{calligra}
+        #     """
+        # )
+
+        # letters = VGroup(
+        #     Tex(
+        #         "Ehler: You would render to me and our friend Kuhn a most" "\\\\",
+        #         "valuable service, putting us greatly in your debt, most" "\\\\",
+        #         "learned sir, if you would send us the solution, which" "\\\\",
+        #         "you know well, to the problem of the seven Konigsberg bridges" "\\\\",
+        #         "together with a proof. It would prove to an outstanding example" "\\\\",
+        #         "of the calculus of position [calculi situs] worthy of your" "\\\\",
+        #         "great genius. I have added a sketch of the said bridges.",
+        #         tex_template = calligraphy
+        #     ),
+        #     Tex(
+        #         "Euler: Thus you see, most noble sir, how this type of" "\\\\",
+        #         "solution bears little relationship to mathematics and I do not" "\\\\",
+        #         "understand why you expect a mathematician to produce it" "\\\\",
+        #         "rather than anyone else, for the solution is based on" "\\\\",
+        #         "reason alone, and its discovery does not depend on any" "\\\\",
+        #         "mathematical principle. Because of this, I do not know why" "\\\\",
+        #         "even questions which bear so little relationship to mathematics" "\\\\",
+        #         "are solved more quickly by mathematicians than by others." "\\\\",
+        #         "In the meantime most noble sir, you have a assigned this question" "\\\\",
+        #         "to the geometry of position but I am ignorant as to what this new" "\\\\",
+        #         "discipline involves, and as to which types of problem Leibniz and" "\\\\",
+        #         "Wolff expected to see expressed this way.",
+        #         tex_template = calligraphy
+        #     )
+        # )
+
+        # for letter in letters:
+        #     letter.scale(0.5)
+        
+        eulers_letter = Tex(
+            "Euler: Thus you see, most noble sir," "\\\\",
+            "how this type of solution bears little" "\\\\",
+            "relationship to mathematics", "...",
+        )
+        eulers_letter.scale(0.75)
+
+
+        self.play(
+            FadeIn(
+                Group(ehler_portrait, euler_portrait),
+                shift = UP
+            ),
+            FadeIn(
+                VGroup(carl_ehler, leonhard_euler)
+            ),
+            rate_func = smooth
+        )
+        self.wait(4)
+
+        self.play(
+            Write(eulers_letter),
+            run_time = 3,
+            rate_func = smooth
+        )
+        self.wait(2)
+
+        self.play(
+            eulers_letter[1:3].animate.set_color(YELLOW),
+            run_time = 4,
+            lag_ratio = 0.5,
+            rate_func = smooth
+        )
+        self.wait(4)
+
+        self.play(
+            FadeOut(eulers_letter),
+            FadeOut(
+                Group(ehler_portrait, carl_ehler)
+            ),
+            rate_func = smooth
+        )
+        self.wait()
+
+
+        # Geometry of Position (Graph Theory)
+
+        title = Tex(
+            "Geometry of Position", "$^{*}$"
+        )
+        title[0].set_color(BLUE)
+        title.scale(1.5)
+        title.to_edge(UP)
+
+        label = Tex("$^{*}$Now known as graph theory.")
+        label.set_width(6)
+        label.scale(0.55)
+        label.to_edge(DR)
+
+        self.play(
+            Write(title[0]),
+            run_time = 2,
+            rate_func = smooth
+        )
+        self.wait(2)
+
+        self.play(
+            Write(title[1]),
+            Write(label),
+            run_time = 2,
+            rate_func = smooth
+        )
+        self.wait(2)
+
+        self.play(
+            FadeOut(label, title[1]),
+            rate_func = smooth
+        )
+
+        manuscipts = Group(
+            ImageMobject(get_image("Solutio_problematis_ad_geometriam_situs_pertinentis,_Fig._1.png")),
+            ImageMobject(get_image("Solutio_problematis_ad_geometriam_situs_pertinentis,_Fig._2.png"))
+        )
+        manuscipts.arrange(DOWN, buff = 0.5)
+        manuscipts.next_to(euler_portrait, RIGHT, buff = 2.0)
+
+        for manuscipt in manuscipts:
+            manuscipt.scale(0.75)
+
+        seminal_paper = Tex(
+            "\\textit{Solutio problematis ad geometriam situs pertinentis.}" "\\\\",
+            "(The solution of a problem relating to the geometry of position)"
+        )
+        seminal_paper.scale(0.75)
+        seminal_paper[1].scale(0.6, about_edge = UP)
+        # seminal_paper.set_width(manuscipts[1].get_width())
+        seminal_paper.next_to(manuscipts[1], DOWN)
+
+        self.play(
+            FadeIn(manuscipts),
+            Write(seminal_paper),
+            run_time = 2,
+            rate_func = smooth
+        )
+        self.wait(2)
+        
+        
         
 class EulersSolution(Scene):
     def construct(self):
