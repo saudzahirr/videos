@@ -8,7 +8,7 @@ from manimce import *
 
 class Introduction(Scene):
     def construct(self):
-        image = ImageMobject(get_image("Königsberg_Karte.jpg"))
+        image = ImageMobject(get_image("Königsberg.jpg"))
         image.set_height(FRAME_HEIGHT)
         image.set_width(FRAME_WIDTH)
 
@@ -65,12 +65,12 @@ class Introduction(Scene):
         self.wait(6)
         self.clear()
         logo(self)
-        
-        
- 
+
+
+
 class History(Scene):
     def construct(self):
-        euler_portrait = ImageMobject(get_portrait("Euler3.jpg"))
+        euler_portrait = ImageMobject(get_portrait("Euler.jpg"))
         euler_portrait.scale(0.65)
         euler_portrait.add(SurroundingRectangle(euler_portrait, WHITE, buff = 0.0, stroke_width = 2))
         euler_portrait.to_edge(LEFT)
@@ -209,35 +209,69 @@ class History(Scene):
             rate_func = smooth
         )
 
-        manuscipts = Group(
-            ImageMobject(get_image("Solutio_problematis_ad_geometriam_situs_pertinentis,_Fig._1.png")),
-            ImageMobject(get_image("Solutio_problematis_ad_geometriam_situs_pertinentis,_Fig._2.png"))
+        manuscripts = Group(
+            ImageMobject(get_image("Fig1.png")),
+            ImageMobject(get_image("Fig2.png"))
         )
-        manuscipts.arrange(DOWN, buff = 0.5)
-        manuscipts.next_to(euler_portrait, RIGHT, buff = 2.0)
+        manuscripts.arrange(DOWN, buff = 0.25)
+        manuscripts.next_to(euler_portrait, RIGHT, buff = 2.0)
 
-        for manuscipt in manuscipts:
-            manuscipt.scale(0.75)
+        for manuscript in manuscripts:
+            manuscript.scale(0.75)
 
         seminal_paper = Tex(
             "\\textit{Solutio problematis ad geometriam situs pertinentis.}" "\\\\",
             "(The solution of a problem relating to the geometry of position)"
         )
+        seminal_paper[0].set_color(YELLOW)
         seminal_paper.scale(0.75)
-        seminal_paper[1].scale(0.6, about_edge = UP)
-        # seminal_paper.set_width(manuscipts[1].get_width())
-        seminal_paper.next_to(manuscipts[1], DOWN)
+        seminal_paper[1].scale(0.85, about_edge = UP)
+        seminal_paper.next_to(manuscripts[1], DOWN)
 
         self.play(
-            FadeIn(manuscipts),
-            Write(seminal_paper),
-            run_time = 2,
+            FadeIn(manuscripts),
             rate_func = smooth
         )
+        self.play(
+            Write(seminal_paper),
+            run_time = 4,
+            rate_func = smooth
+        )
+        self.wait(4)
+
+        self.play(
+            FadeOut(title[0], year, euler_portrait, leonhard_euler, manuscripts, seminal_paper)
+        )
+        self.clear()
+
+
+
+class IntroductionToGraphTheory(Scene):
+    def construct(self):
+        # Topics of Graph Theory.
+        topics = VGroup(
+            Tex(
+                "1. Nodes or Vertex"
+            ),
+            Tex(
+                "2. Edges and Degree"
+            ),
+            Tex(
+                "3. Eulerian Path"
+            ),
+        )
+        topics.arrange(
+            DOWN, buff = 1,
+            aligned_edge = LEFT
+        )
+
+        self.play(
+            Write(topics)
+        )
         self.wait(2)
-        
-        
-        
+
+
+
 class EulersSolution(Scene):
     def construct(self):
         image = ImageMobject(get_image("Konigsberg.jpg"))
