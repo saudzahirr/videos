@@ -700,10 +700,11 @@ class EulerPolyhedralFormula(ThreeDScene):
         cube.scale(1.5)
         cube.faces.set_fill(BLUE_D, 0)
         self.add(cube)
-        self.set_camera_orientation(phi = 45 * DEGREES, focal_distance = 3)
+        self.set_camera_orientation(phi = 45 * DEGREES)
         self.begin_ambient_camera_rotation(rate = 0.2)
         self.wait(5)
-        self.move_camera(phi = 0, gamma = 0, theta = -90 * DEGREES, run_time = 2)
+        self.move_camera(phi = 0, gamma = 0, theta = -90 * DEGREES, focal_distance = 3, run_time = 2)
+        self.stop_ambient_camera_rotation()
         self.wait(2)
 
         for a, face, color in zip(range(len(cube.faces)), cube.faces, [BLUE_D, YELLOW, TEAL_C, MAROON_B, GREY_BROWN]):
@@ -712,4 +713,5 @@ class EulerPolyhedralFormula(ThreeDScene):
             else:
                 face.set_fill(color, 0.5)
                 self.wait(1/2)
-        self.wait()
+        self.camera.background_color = GREY_E
+        self.wait(2)
