@@ -47,60 +47,7 @@ class Robot(SVGMobject):
     def __init__(self, **kwargs):
         SVGMobject.__init__(self, **kwargs)
         self.scale(2)
-
-
-
-class Piano(VGroup):
-    n_white_keys = 52
-    black_pattern = [0, 2, 3, 5, 6]
-    white_keys_per_octave = 7
-    white_key_dims = (0.15, 1.0)
-    black_key_dims = (0.1, 0.66)
-    key_buff = 0.02
-    white_key_color = WHITE
-    black_key_color = GREY_E
-    total_width = 13
-
-    def __init__(self, **kwargs):
-        super().__init__(**kwargs)
-        self.add_white_keys()
-        self.add_black_keys()
-        self.sort_keys()
-        self[:-1].reverse_points()
-        self.set_width(self.total_width)
-
-    def add_white_keys(self):
-        key = Rectangle(*self.white_key_dims)
-        key.set_fill(self.white_key_color, 1)
-        key.set_stroke(width=0)
-        self.white_keys = key.get_grid(1, self.n_white_keys, buff=self.key_buff)
-        self.add(*self.white_keys)
-
-    def add_black_keys(self):
-        key = Rectangle(*self.black_key_dims)
-        key.set_fill(self.black_key_color, 1)
-        key.set_stroke(width=0)
-
-        self.black_keys = VGroup()
-        for i in range(len(self.white_keys) - 1):
-            if i % self.white_keys_per_octave not in self.black_pattern:
-                continue
-            wk1 = self.white_keys[i]
-            wk2 = self.white_keys[i + 1]
-            bk = key.copy()
-            bk.move_to(midpoint(wk1.get_top(), wk2.get_top()), UP)
-            big_bk = bk.copy()
-            big_bk.stretch((bk.get_width() + self.key_buff) / bk.get_width(), 0)
-            big_bk.stretch((bk.get_height() + self.key_buff) / bk.get_height(), 1)
-            big_bk.move_to(bk, UP)
-            for wk in wk1, wk2:
-                wk.become(Difference(wk, big_bk).match_style(wk))
-            self.black_keys.add(bk)
-        self.add(*self.black_keys)
-
-    def sort_keys(self):
-        self.sort(lambda p: p[0])
-
+    
 
 
 class Clock(VGroup):
@@ -158,72 +105,6 @@ class ClockPassesTime(Animation):
     def interpolate_mobject(self, alpha):
         for rotation in self.hour_rotation, self.minute_rotation:
             rotation.interpolate_mobject(alpha)
-
-
-
-class Speedometer(VMobject):
-    def generate_points(self):
-        arc_angle = 4 * np.pi / 3
-        num_ticks = 8
-        tick_length = 0.2
-        needle_width = 0.1
-        needle_height = 0.8
-        needle_color = YELLOW
-        
-        start_angle = np.pi / 2 + arc_angle / 2
-        end_angle = np.pi / 2 - arc_angle / 2
-        self.add(Arc(
-            start_angle=start_angle,
-            angle=-arc_angle
-        ))
-        tick_angle_range = np.linspace(start_angle, end_angle, num_ticks)
-        for index, angle in enumerate(tick_angle_range):
-            vect = rotate_vector(RIGHT, angle)
-            tick = Line((1 - tick_length) * vect, vect)
-            label = Tex(str(10 * index))
-            label.set_height(tick_length)
-            label.shift((1 + tick_length) * vect)
-            self.add(tick, label)
-
-        needle = Polygon(
-            LEFT, UP, RIGHT,
-            stroke_width=0,
-            fill_opacity=1,
-            fill_color=needle_color
-        )
-        needle.stretch_to_fit_width(needle_width)
-        needle.stretch_to_fit_height(needle_height)
-        needle.rotate(start_angle - np.pi / 2, about_point=ORIGIN)
-        self.add(needle)
-        self.needle = needle
-
-        self.center_offset = self.get_center()
-
-    def get_center(self):
-        result = VMobject.get_center(self)
-        if hasattr(self, "center_offset"):
-            result -= self.center_offset
-        return result
-
-    def get_needle_tip(self):
-        return self.needle.get_anchors()[1]
-
-    def get_needle_angle(self):
-        return angle_of_vector(
-            self.get_needle_tip() - self.get_center()
-        )
-
-    def rotate_needle(self, angle):
-        self.needle.rotate(angle, about_point=self.get_center())
-        return self
-
-    def move_needle_to_velocity(self, velocity):
-        max_velocity = 10 * (self.num_ticks - 1)
-        proportion = float(velocity) / max_velocity
-        start_angle = np.pi / 2 + self.arc_angle / 2
-        target_angle = start_angle - self.arc_angle * proportion
-        self.rotate_needle(target_angle - self.get_needle_angle())
-        return self
 
 
 
@@ -310,6 +191,170 @@ class Club(SVGMobject):
 
 
 
+def PlayingCard(
+    value = None, suit = None, key = None,  # String like "8H" or "KS"
+    height = 4, height_to_width = 8 / 5, card_height_to_symbol_height = 7,
+    card_width_to_corner_num_width = 10, card_height_to_corner_num_height = 10,
+    color = GREY_A, turned_over = False
+    ):
+    possible_suits = ["heart", "diamond", "spade", "club"],
+    possible_values = list(map(str, list(range(2, 11)))) + ["J", "Q", "K", "A"]
+    
+    card = RoundedRectangle(height = height, width = height / height_to_width)
+    card.set_fill(WHITE, 1.2)
+
+
+    def get_value(value, possible_values):
+        if value is None:
+            value = random.choice(possible_values)
+        value = str(value).upper()
+        if value == "1":
+            value = "A"
+        if value not in possible_values:
+            raise Exception("Invalid Card Value!")
+
+        face_card_to_value = {
+            "J": 11,
+            "Q": 12,
+            "K": 13,
+            "A": 14,
+        }
+        try:
+            numerical_value = int(value)
+        except Exception:
+            numerical_value = face_card_to_value[value]
+        return value
+    
+    def get_symbol(suit, possible_suits):
+        if suit is None:
+            suit = random.choice(possible_suits)
+            print(suit)
+        if suit not in possible_suits:
+            raise Exception("Invalid Suit Value!")
+
+        def SuitSymbol(suit):
+            from custom.drawings import Heart, Diamond, Spade, Club
+            suit_symbols = {
+                "heart": Heart(),
+                "diamond": Diamond(),
+                "spade": Spade(),
+                "club": Club(),
+            }
+            return suit_symbols[random.choice(suit)]
+
+        symbol_height = float(height) / card_height_to_symbol_height
+        symbol = SuitSymbol(suit)
+        symbol.scale(0.85)
+        
+        return symbol
+    
+    def get_design(card, value, symbol):
+
+        def get_ace_design(card, symbol):
+            design = symbol.copy().scale(1.5)
+            design.move_to(card)
+            return design
+
+        def get_number_design(card, value, symbol):
+            num = int(value)
+            n_rows = {
+                2: 2,
+                3: 3,
+                4: 2,
+                5: 2,
+                6: 3,
+                7: 3,
+                8: 3,
+                9: 4,
+                10: 4
+            }[num]
+            n_cols = 1 if num in [2, 3] else 2
+            insertion_indices = {
+                5: [0],
+                7: [0],
+                8: [0, 1],
+                9: [1],
+                10: [0, 2]
+            }.get(num, [])
+            
+            top = card.get_top() + symbol.get_height() * DOWN
+            bottom = card.get_bottom() + symbol.get_height() * UP
+            column_points = [
+                interpolate(top, bottom, alpha)
+                for alpha in np.linspace(0, 1, n_rows)
+            ]
+            design = VGroup(*[
+                symbol.copy().move_to(point)
+                for point in column_points
+            ])
+            if n_cols == 2:
+                space = 0.2 * card.get_width()
+                column_copy = design.copy().shift(space * RIGHT)
+                design.shift(space * LEFT)
+                design.add(*column_copy)
+            design.add(*[
+                symbol.copy().move_to(
+                    center_of_mass(column_points[i:i + 2])
+                )
+                for i in insertion_indices
+            ])
+            for symbol in design:
+                if symbol.get_center()[1] < card.get_center()[1]:
+                    symbol.rotate(np.pi)
+            
+            return design
+
+        if value == "A":
+            return get_ace_design(card, symbol)
+        if value in list(map(str, list(range(2, 11)))):
+            return get_number_design(card, value, symbol)
+        else:
+            return None # self.get_face_card_design(value, symbol)
+
+        
+    def get_corner_numbers(card, value, symbol):
+        value_mob = Tex(value)
+        width = card.get_width() / card_width_to_corner_num_width
+        height = card.get_height() / card_height_to_corner_num_height
+        value_mob.set_width(width)
+        value_mob.stretch_to_fit_height(height)
+        value_mob.next_to(
+            card.get_corner(UP + LEFT), DOWN + RIGHT,
+            buff = MED_LARGE_BUFF * width
+        )
+        value_mob.set_color(symbol.get_color())
+        corner_symbol = symbol.copy()
+        corner_symbol.set_width(width)
+        corner_symbol.next_to(
+            value_mob, DOWN,
+            buff = MED_SMALL_BUFF * width
+        )
+        corner_group = Group(value_mob, corner_symbol)
+        opposite_corner_group = corner_group.copy()
+        opposite_corner_group.rotate(
+            PI, about_point = card.get_center()
+        )
+
+        return Group(corner_group, opposite_corner_group)
+    
+    if turned_over is True:
+        card.set_fill(GREY_D)
+        card.set_stroke(GREY_B, 0)
+        contents = VectorizedPoint(card.get_center())
+        card.add(contents)
+        return card
+    
+    else:
+        value = get_value(value, possible_values)
+        symbol = get_symbol(suit, possible_suits)
+        design = get_design(card, value, symbol)
+        corner_numbers = get_corner_numbers(card, value, symbol)
+        card.add(design)
+        card.add(corner_numbers)
+        return card
+    
+    
+    
 def PascalsTriangle(n):
     triangle = str()
     for a in range(0, n):
