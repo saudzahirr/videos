@@ -535,12 +535,12 @@ class CubeScene(ThreeDScene):
             [1, 1, 1], [1, 1, -1], [1, -1, 1], [1, -1, -1],
             [-1, 1, 1], [-1, 1, -1], [-1, -1, 1], [-1, -1, -1]
         ]
-        edge_list=[
+        edge_list = [
             [0, 1], [0, 2], [0, 4], [1, 3],
             [1, 5], [2, 6], [2, 3], [3, 7],
             [4, 6], [4, 5], [7, 5], [7, 6]
         ]
-        faces_list=[
+        faces_list = [
             [1, 3, 7, 5], [0, 1, 3, 2], [4, 5, 7, 6],
             [1, 5, 4, 0], [3, 7, 6, 2], [2, 0, 4, 6]
         ]
@@ -686,12 +686,12 @@ class EulerPolyhedralFormula(ThreeDScene):
             [1, 1, 1], [1, 1, -1], [1, -1, 1], [1, -1, -1],
             [-1, 1, 1], [-1, 1, -1], [-1, -1, 1], [-1, -1, -1]
         ]
-        edge_list=[
+        edge_list = [
             [0, 1], [0, 2], [0, 4], [1, 3],
             [1, 5], [2, 6], [2, 3], [3, 7],
             [4, 6], [4, 5], [7, 5], [7, 6]
         ]
-        faces_list=[
+        faces_list = [
             [1, 3, 7, 5], [0, 1, 3, 2], [4, 5, 7, 6],
             [1, 5, 4, 0], [3, 7, 6, 2], [2, 0, 4, 6]
         ]
@@ -713,5 +713,5 @@ class EulerPolyhedralFormula(ThreeDScene):
             else:
                 face.set_fill(color, 0.5)
                 self.wait(1/2)
-        self.camera.background_color = GREY_E
+        self.camera.background_color = BLUE_A
         self.wait(2)
