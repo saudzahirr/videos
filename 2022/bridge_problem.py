@@ -332,3 +332,68 @@ class EulersSolution(Scene):
             FadeIn(dots)
         )
         self.wait()
+        
+        
+        
+class DodecahedronScene(ThreeDScene):
+    def construct(self):
+        self.set_camera_orientation(phi = 75 * DEGREES, theta = 30 * DEGREES)
+        dodecahedron = Dodecahedron(edge_length = 2.5)
+        self.add(dodecahedron)
+        self.begin_ambient_camera_rotation(rate = 0.2)
+        self.wait(5)
+
+
+
+class IcosahedronScene(ThreeDScene):
+    def construct(self):
+        self.set_camera_orientation(phi = 75 * DEGREES, theta = 30 * DEGREES)
+        icosahedron = Icosahedron(edge_length = 3.75)
+        self.add(icosahedron)
+        self.begin_ambient_camera_rotation(rate = 0.2)
+        self.wait(5)
+
+
+
+class OctahedronScene(ThreeDScene):
+    def construct(self):
+        self.set_camera_orientation(phi = 75 * DEGREES, theta = 30 * DEGREES)
+        octahedron = Octahedron(edge_length = 4.5)
+        self.add(octahedron)
+        self.begin_ambient_camera_rotation(rate = 0.2)
+        self.wait(5)
+
+
+
+class TetrahedronScene(ThreeDScene):
+    def construct(self):
+        self.set_camera_orientation(phi = 75 * DEGREES, theta = 30 * DEGREES)
+        tetrahedron = Tetrahedron(edge_length = 6.5)
+        self.add(tetrahedron)
+        self.begin_ambient_camera_rotation(rate = 0.2)
+        self.wait(5)
+
+
+
+class SquarePyramidScene(ThreeDScene):
+    def construct(self):
+        self.set_camera_orientation(phi = 75 * DEGREES, theta = 30 * DEGREES)
+        vertex_coords = [
+            [1, 1, 0],
+            [1, -1, 0],
+            [-1, -1, 0],
+            [-1, 1, 0],
+            [0, 0, 2]
+        ]
+        faces_list = [
+            [0, 1, 4],
+            [1, 2, 4],
+            [2, 3, 4],
+            [3, 0, 4],
+            [0, 1, 2, 3]
+        ]
+        square_pyramid = Polyhedron(vertex_coords, faces_list)
+        square_pyramid.scale(2.5)
+        self.add(square_pyramid)
+        self.begin_ambient_camera_rotation(rate = 0.2)
+        self.wait(5)
