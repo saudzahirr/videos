@@ -3,39 +3,10 @@ Seven Bridges of Königsberg Problem.
 """
 
 from manimce import *
+from helpers import *
 from custom.drawings import Checkmark, Brain
 import numpy as np
 import random
-
-
-DARK_BLUE = interpolate_color(BLUE_D, BLUE_E, 0.5)
-
-def number_plane(x, y):
-    plane = NumberPlane(
-        x_range = [-x, x],
-        y_range = [-y, y],
-        x_length = 2*x,
-        y_length = 2*y,
-        background_line_style = {
-            "stroke_color": GREY_B,
-            "stroke_opacity": 1,
-            "stroke_width": 1,
-        },
-        faded_line_ratio = 2,
-    )
-    plane.axes.set_stroke(opacity = 1.5)
-    plane.set_fill(GREY_BROWN)
-    plane.add(SurroundingRectangle(plane, WHITE, buff = 0.0, stroke_width = 2))
-    return plane
-
-
-def glow_dot(point, r_min = 0.05, r_max = 0.15, color = YELLOW, n = 20, opacity_mult = 1.0):
-    result = VGroup(*(
-        Dot(point, radius = interpolate(r_min, r_max, a))
-        for a in linspace(0, 1, n)
-    ))
-    result.set_fill(color, opacity = opacity_mult / n)
-    return result
 
 
 
@@ -527,7 +498,12 @@ class EulersSolution(Scene):
 
 class CubeScene(ThreeDScene):
     def construct(self):
-        self.set_camera_orientation(phi = 75 * DEGREES, theta = 30 * DEGREES)
+        self.set_camera_orientation(phi = 75 * DEGREES)
+        title = Tex("Cube")
+        title.set_stroke(BLACK, 5, background = True)
+        title.scale(2)
+        title.to_edge(UP)
+
         grid = number_plane(10, 10)
         grid.shift(2 * IN)
 
@@ -535,101 +511,119 @@ class CubeScene(ThreeDScene):
             [1, 1, 1], [1, 1, -1], [1, -1, 1], [1, -1, -1],
             [-1, 1, 1], [-1, 1, -1], [-1, -1, 1], [-1, -1, -1]
         ]
-        edge_list = [
+        edge_list=[
             [0, 1], [0, 2], [0, 4], [1, 3],
             [1, 5], [2, 6], [2, 3], [3, 7],
             [4, 6], [4, 5], [7, 5], [7, 6]
         ]
-        faces_list = [
+        faces_list=[
             [1, 3, 7, 5], [0, 1, 3, 2], [4, 5, 7, 6],
             [1, 5, 4, 0], [3, 7, 6, 2], [2, 0, 4, 6]
         ]
         
         cube = Polyhedron(vertex_coords, faces_list, graph_config = {"edge_config" : {"stroke_color": WHITE}})
-        cube.scale(1.5)
-        cube.faces.set_fill(GREY_BROWN, 0.5)
+        cube.scale(2.5)
+        cube.faces.set_fill(GREY_BROWN, 0.75)
         
-        self.add(grid)
-        self.play(
-            DrawBorderThenFill(cube)
-        )
-        self.begin_ambient_camera_rotation(rate = 0.2)
-        self.wait(5)
+        self.add(grid, cube)
+        self.add_fixed_in_frame_mobjects(title)
+        self.begin_ambient_camera_rotation(rate = 0.1)
+        self.wait(8)
 
 
 
 class DodecahedronScene(ThreeDScene):
     def construct(self):
-        self.set_camera_orientation(phi = 75 * DEGREES, theta = 30 * DEGREES)
+        self.set_camera_orientation(phi = 75 * DEGREES)
+        title = Tex("Dodecahedron")
+        title.set_stroke(BLACK, 5, background = True)
+        title.scale(2)
+        title.to_edge(UP)
+
         grid = number_plane(10, 10)
         grid.shift(2 * IN)
 
         dodecahedron = Dodecahedron(edge_length = 2.5)
+        dodecahedron.faces.set_fill(BLUE_D, 0.75)
 
-        self.add(grid)
-        self.play(
-            DrawBorderThenFill(dodecahedron)
-        )
-        self.begin_ambient_camera_rotation(rate = 0.2)
-        self.wait(5)
+        self.add(grid, dodecahedron)
+        self.add_fixed_in_frame_mobjects(title)
+        self.begin_ambient_camera_rotation(rate = 0.1)
+        self.wait(8)
 
 
 
 class IcosahedronScene(ThreeDScene):
     def construct(self):
-        self.set_camera_orientation(phi = 75 * DEGREES, theta = 30 * DEGREES)
+        self.set_camera_orientation(phi = 75 * DEGREES)
+        title = Tex("Icosahedron")
+        title.set_stroke(BLACK, 5, background = True)
+        title.scale(2)
+        title.to_edge(UP)
+
         grid = number_plane(10, 10)
         grid.shift(2 * IN)
 
         icosahedron = Icosahedron(edge_length = 3.75, graph_config = {"edge_config" : {"stroke_color": WHITE}})
-        icosahedron.faces.set_fill(MAROON_B, 0.5)
+        icosahedron.faces.set_fill(MAROON_B, 0.75)
 
-        self.add(grid)
-        self.play(
-            DrawBorderThenFill(icosahedron)
-        )
-        self.begin_ambient_camera_rotation(rate = 0.2)
-        self.wait(5)
+        self.add(grid, icosahedron)
+        self.add_fixed_in_frame_mobjects(title)
+        self.begin_ambient_camera_rotation(rate = 0.1)
+        self.wait(8)
 
 
 
 class OctahedronScene(ThreeDScene):
     def construct(self):
-        self.set_camera_orientation(phi = 75 * DEGREES, theta = 30 * DEGREES)
+        self.set_camera_orientation(phi = 75 * DEGREES)
+        title = Tex("Octahedron")
+        title.set_stroke(BLACK, 5, background = True)
+        title.scale(2)
+        title.to_edge(UP)
+
         grid = number_plane(10, 10)
         grid.shift(2 * IN)
 
         octahedron = Octahedron(edge_length = 4.5, graph_config = {"edge_config" : {"stroke_color": WHITE}})
+        octahedron.faces.set_fill(PURPLE, 0.75)
 
-        self.add(grid)
-        self.play(
-            DrawBorderThenFill(octahedron)
-        )
-        self.begin_ambient_camera_rotation(rate = 0.2)
-        self.wait(5)
+        self.add(grid, octahedron)
+        self.add_fixed_in_frame_mobjects(title)
+        self.begin_ambient_camera_rotation(rate = 0.1)
+        self.wait(8)
 
 
 
 class TetrahedronScene(ThreeDScene):
     def construct(self):
-        self.set_camera_orientation(phi = 75 * DEGREES, theta = 30 * DEGREES)
+        self.set_camera_orientation(phi = 75 * DEGREES)
+        title = Tex("Tetrahedron")
+        title.set_stroke(BLACK, 5, background = True)
+        title.scale(2)
+        title.to_edge(UP)
+
         grid = number_plane(10, 10)
         grid.shift(2 * IN)
 
-        tetrahedron = Tetrahedron(edge_length = 6.5, color = GREEN_C, graph_config = {"edge_config" : {"stroke_color": WHITE}})
+        tetrahedron = Tetrahedron(edge_length = 6.5, graph_config = {"edge_config" : {"stroke_color": WHITE}})
+        tetrahedron.faces.set_fill(GREEN_C, 0.75)
 
-        self.add(grid)
-        self.play(
-            DrawBorderThenFill(tetrahedron)
-        )
-        self.begin_ambient_camera_rotation(rate = 0.2)
-        self.wait(5)
+        self.add(grid, tetrahedron)
+        self.add_fixed_in_frame_mobjects(title)
+        self.begin_ambient_camera_rotation(rate = 0.1)
+        self.wait(8)
 
 
 
 class SquarePyramidScene(ThreeDScene):
     def construct(self):
         self.set_camera_orientation(phi = 75 * DEGREES, theta = 30 * DEGREES)
+        title = Tex("Square Pyramid")
+        title.set_stroke(BLACK, 5, background = True)
+        title.scale(2)
+        title.to_edge(UP)
+
         grid = number_plane(10, 10)
         grid.shift(2 * IN)
 
@@ -648,70 +642,202 @@ class SquarePyramidScene(ThreeDScene):
             [0, 1, 2, 3]
         ]
         square_pyramid = Polyhedron(vertex_coords, faces_list, graph_config = {"edge_config" : {"stroke_color": WHITE}})
-        square_pyramid.faces.set_fill(TEAL_C, 0.5)
+        square_pyramid.faces.set_fill(TEAL_C, 0.75)
         square_pyramid.scale(2.5)
 
-        self.add(grid)
-        self.play(
-            DrawBorderThenFill(square_pyramid)
-        )
-        self.begin_ambient_camera_rotation(rate = 0.2)
-        self.wait(5)
+        self.add(grid, square_pyramid)
+        self.add_fixed_in_frame_mobjects(title)
+        self.begin_ambient_camera_rotation(rate = 0.1)
+        self.wait(8)
 
 
 
 class PlatonicSolidsAnimation(Scene):
     def construct(self):
-        self.camera.background_color = GREY_E
-        screen = ScreenRectangle(stroke_width = 2, stroke_color = WHITE, fill_opacity = 1, fill_color = BLACK)
-        screen.set_height(FRAME_HEIGHT)
-        screen.to_edge(LEFT)
-        self.add(screen)
-        self.wait(2)
-
-        # screens = VGroup()
-        # for a in range(6):
-        #     screens.add(
-        #         ScreenRectangle(stroke_width = 2, stroke_color = WHITE, fill_opacity = 1, fill_color = BLACK).scale(0.60)
-        #     )
-        # screens.arrange_in_grid()
-        # self.add(screens)
-        # self.wait()
+        self.add(
+            FullScreenRectangle(stroke_width = 2, stroke_color = GREY_D, fill_opacity = 1, fill_color = BLACK),
+            Line(DOWN, UP).set_stroke(GREY_D, 4).set_height(FRAME_HEIGHT),
+            Line(LEFT, RIGHT).set_stroke(GREY_D, 4).set_width(FRAME_WIDTH)
+        )
+        self.wait(8)
 
 
 
 class EulerPolyhedralFormula(ThreeDScene):
     def construct(self):
-        vertex_coords = [
-            [1, 1, 1], [1, 1, -1], [1, -1, 1], [1, -1, -1],
-            [-1, 1, 1], [-1, 1, -1], [-1, -1, 1], [-1, -1, -1]
-        ]
-        edge_list = [
-            [0, 1], [0, 2], [0, 4], [1, 3],
-            [1, 5], [2, 6], [2, 3], [3, 7],
-            [4, 6], [4, 5], [7, 5], [7, 6]
-        ]
-        faces_list = [
-            [1, 3, 7, 5], [0, 1, 3, 2], [4, 5, 7, 6],
-            [1, 5, 4, 0], [3, 7, 6, 2], [2, 0, 4, 6]
-        ]
-        
-        cube = Polyhedron(vertex_coords, faces_list, graph_config = {"edge_config" : {"stroke_color": WHITE}})
-        cube.scale(1.5)
-        cube.faces.set_fill(BLUE_D, 0)
-        self.add(cube)
         self.set_camera_orientation(phi = 45 * DEGREES)
+        cube = Cube(side_length = 3)
+        cube.set_fill(BLUE, 0)
+        cube.set_stroke(WHITE, 2)
+        
+        formula = Tex("$V - E + F = 2$")
+        formula.scale(1.25)
+        formula.to_edge(UL)
+
+        explanation = Tex(
+            "Dots $\\rightarrow$ Vertices" "\\\\",
+            "Lines $\\rightarrow$ Edges" "\\\\",
+            "Regions $\\rightarrow$ Faces",
+            tex_to_color_map = {
+                "V" : YELLOW,
+                "E" : YELLOW,
+                "F" : YELLOW
+            },
+            tex_environment = "flushleft"
+        )
+        explanation.to_edge(DL)
+
+        example = Group(
+            Count(0),
+            MathTex("-"),
+            Count(0),
+            Tex("0", fill_opacity = 0).scale(0.25),  # Defined default text for spacing.
+            MathTex("+"),
+            Count(0),
+            MathTex("="),
+            MathTex("2")
+        )
+
+        for part in example:
+            part.scale(1.25)
+        example.arrange(RIGHT)
+        example.next_to(formula, DOWN)
+
+        # points = []
+        # for vect in UR, UL, DR, DL:
+        #     points.append(cube.get_boundary_point(vect))
+        #     print(cube.get_boundary_point(vect))
+        
+        points = [
+            [1.5, 1.5, -1.5], [-1.5, 1.5, -1.5],
+            [-1.5, -1.5, -1.5], [1.5, -1.5, -1.5],
+            [2.775, 2.775, -1.5], [-2.775, 2.775, -1.5],
+            [-2.775, -2.775, -1.5], [2.775, -2.775, -1.5]
+        ]
+
+        dots = VGroup()
+        for point in points:
+            dots.add(
+                Dot(point)
+            )
+        
+        lines = VGroup(
+            Line([1.5, 1.5, -1.5], [-1.5, 1.5, -1.5]),
+            Line([-1.5, 1.5, -1.5], [-1.5, -1.5, -1.5]),
+            Line([-1.5, -1.5, -1.5], [1.5, -1.5, -1.5]),
+            Line([1.5, 1.5, -1.5], [1.5, -1.5, -1.5]),
+            Line([2.775, 2.775, -1.5], [-2.775, 2.775, -1.5]),
+            Line([-2.775, 2.775, -1.5], [-2.775, -2.775, -1.5]),
+            Line([-2.775, -2.775, -1.5], [2.775, -2.775, -1.5]),
+            Line([2.775, 2.775, -1.5], [2.775, -2.775, -1.5]),
+            Line([1.5, 1.5, -1.5], [2.775, 2.775, -1.5]),
+            Line([-1.5, 1.5, -1.5], [-2.775, 2.775, -1.5]),
+            Line([-1.5, -1.5, -1.5], [-2.775, -2.775, -1.5]),
+            Line([1.5, -1.5, -1.5], [2.775, -2.775, -1.5])
+        )
+        
+        for line in lines:
+            line.set_stroke(YELLOW, 3)
+        
+        regions = Group()
+        for a, face, color in zip(range(len(cube)), cube, ["#3B528B", WHITE, TEAL_E, MAROON_B, GREY_BROWN, GREEN_D]):
+            if a == 1:
+                face.set_fill(BLUE, 0)
+            else:
+                regions.add(
+                    face.copy().set_fill(color, 1)
+                )
+        
+        screen = FullScreenRectangle(stroke_width = 2, stroke_color = BLACK, fill_opacity = 1, fill_color = BLACK)
+        screen.set_fill(BLUE_D, 1)
+        regions.add(screen)
+
+
+        self.add_foreground_mobject(cube)
         self.begin_ambient_camera_rotation(rate = 0.2)
         self.wait(5)
-        self.move_camera(phi = 0, gamma = 0, theta = -90 * DEGREES, focal_distance = 3, run_time = 2)
+        self.move_camera(phi = 0, gamma = 0, theta = -90 * DEGREES, focal_distance = 5, run_time = 2)
         self.stop_ambient_camera_rotation()
         self.wait(2)
+        # self.add(screen)
+        # self.wait(2)
 
-        for a, face, color in zip(range(len(cube.faces)), cube.faces, [BLUE_D, YELLOW, TEAL_C, MAROON_B, GREY_BROWN]):
-            if a == 5:
-                break
-            else:
-                face.set_fill(color, 0.5)
-                self.wait(1/2)
-        self.camera.background_color = BLUE_A
+        self.add_foreground_mobjects(formula)
+        self.play(
+            Write(formula),
+            run_time = 2,
+            rate_func = smooth
+        )
         self.wait(2)
+        self.add_fixed_in_frame_mobjects(explanation)
+        self.play(
+            Write(explanation),
+            run_time = 4,
+            lag_ratio = 0.5
+        )
+
+        self.wait()
+        self.add_foreground_mobjects(example[0])
+        self.play(
+            LaggedStart(
+                *[
+                    Draw(dot)
+                    for dot in dots
+                ]
+            ),
+            example[0].tracker.animate.set_value(8),
+            rate_func = smooth
+        )
+        self.wait()
+        self.play(
+            LaggedStart(
+                *[
+                    FadeOut(dot)
+                    for dot in dots
+                ]
+            ),
+            run_time = 1,
+            rate_func = smooth
+        )
+        self.add_foreground_mobjects(example[2])
+        self.play(
+            Write(example[1]),
+            LaggedStart(
+                *[
+                    Draw(line)
+                    for line in lines
+                ]
+            ),
+            example[2].tracker.animate.set_value(12),
+            rate_func = smooth
+        )
+        self.add_foreground_mobjects(example[5])
+        self.bring_to_back(regions[len(regions) - 1])
+        self.add_foreground_mobjects(regions[:len(regions) - 1])
+        self.play(
+            Write(example[4]),
+            LaggedStart(
+                *[
+                    FadeIn(region)
+                    for region in regions
+                ]
+            ),
+            example[5].tracker.animate.set_value(6),
+            rate_func = smooth
+        )
+        self.wait()
+        self.play(
+            LaggedStart(
+                *[
+                    Write(text)
+                    for text in example[6:]
+                ]
+            ),
+            rate_func = smooth
+        )
+        self.wait(4)
+
+
+class Test(Scene):
+    def construct(self):
+        pass
