@@ -52,7 +52,7 @@ BOLD = "BOLD"
 
 tex_temp = TexTemplateLibrary.threeb1b
 
-#Screen Background Colors.
+# Screen Background Colors.
 GREEN_SCREEN = "#04F404"
 BLUE_SCREEN = "#0047BB"
 GREEN_SCREEN_A = "#009933"
