@@ -50,7 +50,21 @@ ITALIC = "ITALIC"
 OBLIQUE = "OBLIQUE"
 BOLD = "BOLD"
 
+tex_temp = TexTemplateLibrary.threeb1b
+
+#Screen Background Colors.
+GREEN_SCREEN = "#04F404"
+BLUE_SCREEN = "#0047BB"
+GREEN_SCREEN_A = "#009933"
+GREEN_SCREEN_B = "#00FF00"
+GREEN_SCREEN_C = "#00FF11"
+GREEN_SCREEN_D = "#00FF22"
+GREEN_SCREEN_E = "#00FF33"
+
 # Extra Colors.
+COBALT = "#0047AB"
+RED_F = "#D02028"
+
 CHAR_TREE = "#7FFF00"
 LIME = "#00FF00"
 LAWN_GREEN = "#7CFC00"
@@ -69,8 +83,3 @@ MELON = "#FEAAAB"
 RUBY = "#DD105E"
 PERSIAN_PINK = "#EC83BF"
 INDEPENDENCE = "#46466E"
-
-COBALT = "#0047AB"
-RED_F = "#D02028"
-
-tex_temp = TexTemplateLibrary.threeb1b
