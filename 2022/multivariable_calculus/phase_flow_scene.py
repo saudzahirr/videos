@@ -50,8 +50,16 @@ class PhaseFlowScene(Scene):
                 run_time = 1,
                 rate_func = linear
             )
-        
-    
+
+
+    def get_streamlines(self, function):
+        stream_lines = StreamLines(
+            function, stroke_width = 3, max_anchors_per_line = 15, virtual_time = 1, color = BLUE
+        )
+        self.add(stream_lines)
+        stream_lines.start_animation(warm_up = False, flow_speed = 2.5, time_width = 0.5)
+
+
     def get_label(self, label):
         matrix_function = MathTex(label)
         matrix_function.scale(1.25)
