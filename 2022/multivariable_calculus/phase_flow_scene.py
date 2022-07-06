@@ -61,15 +61,11 @@ class PhaseFlowScene(Scene):
         matrix_function.add_background_rectangle()
 
 
-    def phase_flow(self, function, run_time, virtual_time = None, rate_func = linear):
-        if virtual_time is None:
-            virtual_time = run_time
-            
+    def phase_flow(self, function, run_time, rate_func = linear):
         self.play(
             PhaseFlow(
                 function = function, mobject = self.dots,
             ),
             run_time = run_time,
-            virtual_time = virtual_time,
             rate_func = rate_func
         )
