@@ -1,5 +1,5 @@
 from manimce import *
-from Fourier_Series.fourier_series_mobject import *
+from 2022.Fourier_Series.fourier_series_mobject import *
 
 
 
