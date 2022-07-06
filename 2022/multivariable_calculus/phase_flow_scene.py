@@ -57,7 +57,7 @@ class PhaseFlowScene(Scene):
             function, stroke_width = 3, max_anchors_per_line = 15, virtual_time = 1, color = BLUE
         )
         self.add(stream_lines)
-        stream_lines.start_animation(warm_up = False, flow_speed = 2.5, time_width = 0.5)
+        stream_lines.start_animation(warm_up = False, flow_speed = 1, time_width = 0.5)
 
 
     def get_label(self, label):
