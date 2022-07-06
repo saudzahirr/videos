@@ -12,8 +12,8 @@ class PhaseFlowExampleOne(PhaseFlowScene):
         """
 
         self.get_plane(show_axis = True, add_cordinate_labels = False)
-        self.get_dots(color = YELLOW, show_creation = True)
         self.get_label(label)
+        self.get_dots(color = YELLOW, show_creation = True)
         self.get_vector_field(function, show_vector_field = False)
         self.phase_flow(function, run_time = 10, rate_func = linear)
         self.wait()
@@ -23,15 +23,29 @@ class PhaseFlowExampleTwo(PhaseFlowScene):
     def construct(self):
         function = lambda p: (p[0] * UP - p[1] * RIGHT) / 5
         label = """\\begin{bmatrix} \\ x' \\ \\\\ \\ y' \\ \\end{bmatrix} = 
-        {1 \\over 5} \\begin{bmatrix} \\ { - y } \\ \\\\ \\ { x } \\ \\end{bmatrix}"
+        {1 \\over 5} \\begin{bmatrix} \\ { - y } \\ \\\\ \\ { x } \\ \\end{bmatrix}
         """
 
         self.get_plane(show_axis = True, add_cordinate_labels = False)
-        self.get_dots(color = YELLOW, show_creation = True)
         self.get_label(label)
+        self.get_dots(color = YELLOW, show_creation = True)
         self.get_vector_field(function, show_vector_field = False)
         self.phase_flow(function, run_time = 10, rate_func = linear)
         self.wait()
+
+
+class ComplexVectorField(PhaseFlowScene):
+    def construct(self):
+        function = lambda p: (-p[0] * RIGHT + p[1] * UP)
+        label = """\\begin{bmatrix} \\ x' \\ \\\\ \\ y' \\ \\end{bmatrix} = 
+        \\begin{bmatrix} \\ { - x } \\ \\\\ \\ { y } \\ \\end{bmatrix}
+        """
+
+        self.get_plane(show_axis = True, add_cordinate_labels = False)
+        self.get_label(label)
+        self.get_vector_field(function, show_vector_field = True)
+        self.get_streamlines(function)
+        self.wait(5)
 
 
 class PositiveDivergence(PhaseFlowScene):
@@ -40,8 +54,8 @@ class PositiveDivergence(PhaseFlowScene):
         label = """p' = {p \\over { 2 \\sqrt{ \\norm{ p \\over 2 } } } }"""
 
         self.get_plane(show_axis = True, add_cordinate_labels = False)
-        self.get_dots(color = YELLOW, show_creation = True)
         self.get_label(label)
+        self.get_dots(color = YELLOW, show_creation = True)
         self.get_vector_field(function, show_vector_field = False)
         self.phase_flow(function, run_time = 10, rate_func = linear)
         self.wait()
@@ -53,8 +67,8 @@ class NegativeDivergence(PhaseFlowScene):
         label = """p' = {-p \\over { 2 \\sqrt{ \\norm{ p \\over 2 } } } }"""
 
         self.get_plane(show_axis = True, add_cordinate_labels = False)
-        self.get_dots(color = YELLOW, show_creation = True)
         self.get_label(label)
+        self.get_dots(color = YELLOW, show_creation = True)
         self.get_vector_field(function, show_vector_field = False)
         self.phase_flow(function, run_time = 10, rate_func = linear)
         self.wait()
@@ -67,8 +81,8 @@ class IncompressibleFluid(PhaseFlowScene):
         \\begin{bmatrix} \\ {1} \\ \\\\ \\  \\mathrm{sin}(x) \\ \\end{bmatrix}"""
 
         self.get_plane(show_axis = True, add_cordinate_labels = False)
-        self.get_dots(color = YELLOW, show_creation = True)
         self.get_label(label)
+        self.get_dots(color = YELLOW, show_creation = True)
         self.get_vector_field(function, show_vector_field = False)
         self.phase_flow(function, run_time = 10, rate_func = linear)
         self.wait()
@@ -81,10 +95,10 @@ class ConstantPositiveCurl(PhaseFlowScene):
         {1 \\over 2} \\begin{bmatrix} \\ { -y } \\ \\\\ \\ { x } \\ \\end{bmatrix}"""
 
         self.get_plane(show_axis = True, add_cordinate_labels = False)
-        self.get_dots(color = YELLOW, show_creation = True)
         self.get_label(label)
+        self.get_dots(color = YELLOW, show_creation = True)
         self.get_vector_field(function, show_vector_field = False)
-        self.phase_flow(function, run_time = 4, rate_func = linear)
+        self.phase_flow(function, run_time = 10, rate_func = linear)
         self.wait()
 
 
@@ -95,8 +109,8 @@ class SingleSwirl(PhaseFlowScene):
         { { \\begin{bmatrix} \\ { -y } \\ \\\\ \\ { x } \\ \\end{bmatrix} } \\over { \\sqrt{ x^{2} + y^{2} } }"""
 
         self.get_plane(show_axis = True, add_cordinate_labels = False)
-        self.get_dots(color = YELLOW, show_creation = True)
         self.get_label(label)
+        self.get_dots(color = YELLOW, show_creation = True)
         self.get_vector_field(function, show_vector_field = False)
         self.phase_flow(function, run_time = 10, rate_func = linear)
         self.wait()
@@ -109,8 +123,8 @@ class DropletFlow(PhaseFlowScene):
         \\begin{bmatrix} \\ { y } \\ \\\\ \\ { \\mathrm{sin}(2\\pi x) } \\ \\end{bmatrix}"""
 
         self.get_plane(show_axis = True, add_cordinate_labels = False)
-        self.get_dots(color = BLUE, show_creation = True)
         self.get_label(label)
+        self.get_dots(color = YELLOW, show_creation = True)
         self.get_vector_field(function, show_vector_field = False)
         self.phase_flow(function, run_time = 10, rate_func = linear)
         self.wait()
