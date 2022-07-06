@@ -1,5 +1,7 @@
 from manimce import *
-from helpers import *
+from phase_flow_scene import *
+
+use_opengl_renderer = True
 
 
 class PhaseFlowExampleOne(PhaseFlowScene):
