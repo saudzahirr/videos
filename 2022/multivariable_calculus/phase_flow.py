@@ -1,5 +1,5 @@
 from manimce import *
-from multivariable_calculus.helpers import *
+from helpers import *
 
 
 class PhaseFlowExampleOne(PhaseFlowScene):
