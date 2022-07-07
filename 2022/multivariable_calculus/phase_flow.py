@@ -34,11 +34,39 @@ class PhaseFlowExampleTwo(PhaseFlowScene):
         self.wait()
 
 
-class ComplexVectorField(PhaseFlowScene):
+class ComplexVectorFieldExampleOne(PhaseFlowScene):
     def construct(self):
         function = lambda p: (-p[0] * RIGHT + p[1] * UP)
         label = """\\begin{bmatrix} \\ x' \\ \\\\ \\ y' \\ \\end{bmatrix} = 
         \\begin{bmatrix} \\ { - x } \\ \\\\ \\ { y } \\ \\end{bmatrix}
+        """
+
+        self.get_plane(show_axis = True, add_cordinate_labels = False)
+        self.get_label(label)
+        self.get_vector_field(function, show_vector_field = True)
+        self.get_streamlines(function)
+        self.wait(5)
+
+
+class ComplexVectorFieldExampleTwo(PhaseFlowScene):
+    def construct(self):
+        function = lambda p: (p[0]**2 - p[1]**2) * RIGHT + 2 * p[0] * p[1] * UP
+        label = """\\begin{bmatrix} \\ x' \\ \\\\ \\ y' \\ \\end{bmatrix} = 
+        \\begin{bmatrix} \\ { x^{2} - y^{2} } \\ \\\\ \\ { -2xy } \\ \\end{bmatrix}
+        """
+
+        self.get_plane(show_axis = True, add_cordinate_labels = False)
+        self.get_label(label)
+        self.get_vector_field(function, show_vector_field = True)
+        self.get_streamlines(function)
+        self.wait(5)
+
+
+class ComplexCirculation(PhaseFlowScene):
+    def construct(self):
+        function = lambda p: (p[0] - p[1]) * RIGHT + (p[0] + p[1]) * UP
+        label = """\\begin{bmatrix} \\ x' \\ \\\\ \\ y' \\ \\end{bmatrix} = 
+        \\begin{bmatrix} \\ { x - y } \\ \\\\ \\ { x + y } \\ \\end{bmatrix}
         """
 
         self.get_plane(show_axis = True, add_cordinate_labels = False)
