@@ -1,7 +1,6 @@
 from manimce import *
 
 
-
 class PhaseFlowScene(Scene):
 
     def get_plane(self, show_axis = True, add_cordinate_labels = False):
@@ -54,10 +53,10 @@ class PhaseFlowScene(Scene):
 
     def get_streamlines(self, function):
         stream_lines = StreamLines(
-            function, stroke_width = 3, max_anchors_per_line = 15, virtual_time = 1, color = BLUE
+            function, stroke_width = 3, max_anchors_per_line = 10, virtual_time = 1, color = GREY_A
         )
         self.add(stream_lines)
-        stream_lines.start_animation(warm_up = False, flow_speed = 1, time_width = 0.5)
+        stream_lines.start_animation(warm_up = False, flow_speed = 3/4, time_width = 0.5)
 
 
     def get_label(self, label):
