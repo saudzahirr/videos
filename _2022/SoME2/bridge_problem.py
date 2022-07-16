@@ -3,7 +3,7 @@ Seven Bridges of Königsberg Problem.
 """
 
 from manimce import *
-from 2022.SoME2.helpers import *
+from _2022.SoME2.helpers import *
 from custom.drawings import Checkmark, Brain
 import numpy as np
 import random
