@@ -1,5 +1,5 @@
 from manimce import *
-from 2022.multivariable_calculus.phase_flow_scene import *
+from _2022.multivariable_calculus.phase_flow_scene import *
 
 use_opengl_renderer = True
 
