@@ -355,15 +355,28 @@ def PlayingCard(
     
     
     
-def PascalsTriangle(n):
-    triangle = str()
-    for a in range(0, n):
-        for b in range(0, a + 1):
-            triangle += str(C(a, b))
-            triangle += " \\ "
-        triangle += "\\\\"
-        
-    return Tex(triangle, tex_template = tex_temp).scale(1.15)
+class PascalsTriangle(VGroup):
+    def __init__(self, n_rows = 9, distance = 0.8, max_width_to_distance_ratio = 0.7, angle = 0.2 * PI, **kwargs):
+        VGroup.__init__(self, **kwargs)
+        self.n_rows = n_rows
+        self.distance = distance
+        self.max_width_to_distance_ratio = max_width_to_distance_ratio
+        self.angle = angle
+
+        distance = self.distance
+        angle = self.angle
+        max_width = self.max_width_to_distance_ratio * distance
+        t_down = rotate_vector(distance * DOWN, -angle)
+        t_right = 2 * distance * sin(angle)*RIGHT
+
+        for n in range(self.n_rows):
+            row = VGroup()
+            for k in range(n + 1):
+                num = Tex(str(C(n, k)), stroke_width = 1)
+                num.shift(n * t_down + k * t_right)
+                row.add(num)
+            self.add(row)
+        self.center()
 
 
 
