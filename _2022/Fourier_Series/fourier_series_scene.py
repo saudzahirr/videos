@@ -49,7 +49,7 @@ class FourierSeriesScene(ZoomedScene, MovingCameraScene):
         complex_points = np.array([complex(*path.point_from_proportion(alpha)[:2]) for alpha in np.arange(0, 1, 1 / N)])
         complex_points = (complex_points - np.mean(complex_points)) / np.max(abs(complex_points)) * 4
         
-        ec = FourierEpicyclesMObject(complex_points, num_coefs = 1000, speed_factor = 1/20,
+        ec = ComplexFourierSeries(complex_points, num_coefs = 1000, speed_factor = 1/20,
                                      circles_color = YELLOW, circles_opacity = 0.75)
         self.add_foreground_mobjects(ec)
         self.wait(12)
