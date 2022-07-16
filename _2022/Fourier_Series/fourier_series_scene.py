@@ -1,5 +1,5 @@
 from manimce import *
-from 2022.Fourier_Series.fourier_series_mobject import *
+from _2022.Fourier_Series.fourier_series_mobject import *
 
 
 
