@@ -399,17 +399,21 @@ def MusicTeX(*tex_strings, **kwargs):
 
 
 
-class Checkmark(Tex):
-    color = GREEN
+class Checkmark(SVGMobject):
+    file_name = get_svg("checkmark.svg")
     def __init__(self, **kwargs):
-        super().__init__("\\checkmark")
+        SVGMobject.__init__(self, **kwargs)
+        self.scale(1/3)
+        self.set_color(GREEN)
 
 
 
-class Exmark(Tex):
-    color = RED
+class Exmark(SVGMobject):
+    file_name = get_svg("exmark.svg")
     def __init__(self, **kwargs):
-        super().__init__("\\exmark")
+        SVGMobject.__init__(self, **kwargs)
+        self.scale(1/3)
+        self.set_color(RED)
 
 
 
