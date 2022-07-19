@@ -11,11 +11,7 @@ class Checkmark(Tex):
 
 
 class Exmark(Tex):
-    def __init__(
-        self,
-        tex_template = tex_temp,
-        **kwargs
-    ):
+    def __init__(self, **kwargs):
         super().__init__("\\exmark")
         self.scale(2.5)
         self.set_color(RED)
