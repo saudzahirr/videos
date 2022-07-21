@@ -378,8 +378,64 @@ class PascalsTriangle(VGroup):
             self.add(row)
         self.center()
 
+        
 
+class Piano(VGroup):
+    n_white_keys = 52
+    black_pattern = [0, 2, 3, 5, 6]
+    white_keys_per_octave = 7
+    white_key_dims = (0.15, 1.0)
+    black_key_dims = (0.1, 0.66)
+    key_buff = 0.02
+    white_key_color = WHITE
+    black_key_color = GREY_E
+    total_width = 13
 
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+        self.add_white_keys()
+        self.add_black_keys()
+        self.sort_keys()
+        self[:-1].reverse_points()
+        self.set_width(self.total_width)
+
+    def add_white_keys(self):
+        key = Rectangle(width = self.white_key_dims[0], height = self.white_key_dims[1])
+        key.set_fill(self.white_key_color, 1)
+        key.set_stroke(width = 0)
+        keys = VGroup()
+        for n in range(self.n_white_keys):
+            keys.add(key.copy())
+        self.white_keys = keys.arrange_in_grid(1, self.n_white_keys, buff=self.key_buff)
+        self.add(*self.white_keys)
+
+    def add_black_keys(self):
+        key = Rectangle(width = self.black_key_dims[0], height = self.black_key_dims[1])
+        key.set_fill(self.black_key_color, 1)
+        key.set_stroke(width=0)
+
+        self.black_keys = VGroup()
+        for i in range(len(self.white_keys) - 1):
+            if i % self.white_keys_per_octave not in self.black_pattern:
+                continue
+            wk1 = self.white_keys[i]
+            wk2 = self.white_keys[i + 1]
+            bk = key.copy()
+            bk.move_to(midpoint(wk1.get_top(), wk2.get_top()), UP)
+            big_bk = bk.copy()
+            big_bk.stretch((bk.get_width() + self.key_buff) / bk.get_width(), 0)
+            big_bk.stretch((bk.get_height() + self.key_buff) / bk.get_height(), 1)
+            big_bk.move_to(bk, UP)
+            for wk in wk1, wk2:
+                wk.become(Difference(wk, big_bk).match_style(wk))
+            self.black_keys.add(bk)
+        self.add(*self.black_keys)
+
+    def sort_keys(self):
+        self.sort(lambda p: p[0])
+        
+        
+        
 TemplateForMusicTeX = TexTemplate(
     preamble=r"""
 \usepackage[utf8]{inputenc}
